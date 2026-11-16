@@ -1,0 +1,594 @@
+export type CategoryId = "toys" | "home" | "electronics" | "sports";
+export type CategoryFilter = CategoryId | "all";
+export type SortKey = "featured" | "price-asc" | "price-desc" | "rating";
+
+export interface ProductSpec {
+  label: string;
+  value: string;
+}
+
+export interface Product {
+  id: string;
+  title: string;
+  brand: string;
+  category: CategoryId;
+  price: number;
+  /** Pre-discount price; present only when the item is actually on sale. */
+  compareAtPrice?: number;
+  rating: number;
+  reviewCount: number;
+  image: string;
+  badge?: "Шинэ" | "Хямдрал" | "Эрэлттэй";
+  /** 0 means sold out — card stays visible but purchase is disabled. */
+  stock: number;
+  warrantyMonths: number;
+  summary: string;
+  description: string;
+  features: string[];
+  specs: ProductSpec[];
+  /** Extra search terms (Latin spellings, synonyms) customers commonly type. */
+  keywords?: string[];
+}
+
+export interface CartLine {
+  productId: string;
+  quantity: number;
+}
+
+export const CATEGORIES: ReadonlyArray<{ id: CategoryFilter; label: string }> = [
+  { id: "all", label: "Бүгд" },
+  { id: "toys", label: "Тоглоом" },
+  { id: "home", label: "Гэр ахуй" },
+  { id: "electronics", label: "Цахилгаан бараа" },
+  { id: "sports", label: "Спорт" },
+];
+
+export const CATEGORY_LABEL: Record<CategoryId, string> = {
+  toys: "Тоглоом",
+  home: "Гэр ахуй",
+  electronics: "Цахилгаан бараа",
+  sports: "Спорт",
+};
+
+export const PRICE_BANDS = [
+  { id: "all", label: "Бүх үнэ", min: 0, max: Number.POSITIVE_INFINITY },
+  { id: "under-100k", label: "100,000₮ хүртэл", min: 0, max: 100_000 },
+  { id: "100k-500k", label: "100,000₮ – 500,000₮", min: 100_000, max: 500_000 },
+  { id: "500k-1500k", label: "500,000₮ – 1,500,000₮", min: 500_000, max: 1_500_000 },
+  { id: "over-1500k", label: "1,500,000₮-өөс дээш", min: 1_500_000, max: Number.POSITIVE_INFINITY },
+] as const;
+
+export type PriceBandId = (typeof PRICE_BANDS)[number]["id"];
+
+export const SORT_OPTIONS: ReadonlyArray<{ id: SortKey; label: string }> = [
+  { id: "featured", label: "Санал болгох" },
+  { id: "price-asc", label: "Үнэ: Багаас их" },
+  { id: "price-desc", label: "Үнэ: Ихээс бага" },
+  { id: "rating", label: "Үнэлгээ өндөр" },
+];
+
+export const FREE_DELIVERY_THRESHOLD = 200_000;
+export const DELIVERY_FEE = 5_000;
+
+/**
+ * Fixed en-US grouping keeps server and client output identical (no hydration drift
+ * from differing ICU data) and matches how ₮ prices are printed on local receipts.
+ */
+export function formatMNT(value: number): string {
+  return `${Math.round(value).toLocaleString("en-US")}₮`;
+}
+
+const unsplash = (photoId: string) =>
+  `https://images.unsplash.com/${photoId}?auto=format&fit=crop&w=900&q=80`;
+
+export const PRODUCTS: Product[] = [
+  // ——— Тоглоом ———
+  {
+    id: "toy-blocks-1000",
+    title: "Бүтээлч барилгын блок, 1000 ширхэг",
+    brand: "BrickLab",
+    category: "toys",
+    price: 129_000,
+    compareAtPrice: 159_000,
+    rating: 4.8,
+    reviewCount: 412,
+    image: unsplash("photo-1587654780291-39c9404d746b"),
+    badge: "Хямдрал",
+    stock: 34,
+    warrantyMonths: 6,
+    summary: "Хүүхдийн уран сэтгэмж, гарын нарийн хөдөлгөөнийг хөгжүүлэх блок.",
+    description:
+      "Хоргүй ABS хуванцараар хийгдсэн 1000 ширхэг блок нь 24 өнгөтэй, бусад томоохон брэндийн блоктой нийцтэй. Хадгалах хайрцаг болон 30 загварын зааврын номтой.",
+    features: ["Хоргүй ABS материал", "Бусад брэндтэй нийцтэй", "Хадгалах хайрцагтай", "30 загварын заавар"],
+    specs: [
+      { label: "Ширхэг", value: "1000" },
+      { label: "Нас", value: "4+" },
+      { label: "Материал", value: "ABS хуванцар" },
+      { label: "Жин", value: "1.6 кг" },
+    ],
+    keywords: ["lego", "лего", "block"],
+  },
+  {
+    id: "toy-rc-car",
+    title: "Удирдлагатай уралдааны машин 4WD",
+    brand: "TurboKid",
+    category: "toys",
+    price: 189_000,
+    rating: 4.6,
+    reviewCount: 238,
+    image: unsplash("photo-1594787318286-3d835c1d207f"),
+    badge: "Эрэлттэй",
+    stock: 18,
+    warrantyMonths: 6,
+    summary: "Цагт 30 км хурдлах, бартаат замд зориулсан 4 дугуйн хөтлөгчтэй машин.",
+    description:
+      "2.4GHz алсын удирдлагатай, цэнэглэдэг батарейтай. Ус цацралтаас хамгаалагдсан тул гадаа, цасан дээр ч тоглох боломжтой. Нэг цэнэглэлтээр 25 минут ажиллана.",
+    features: ["4WD хөтлөгч", "2.4GHz удирдлага", "Ус цацралтаас хамгаалалттай", "Нөөц батарей дагалдана"],
+    specs: [
+      { label: "Хурд", value: "30 км/ц" },
+      { label: "Батарей", value: "2 × 1200mAh" },
+      { label: "Ажиллах хугацаа", value: "~50 мин (2 батарей)" },
+      { label: "Нас", value: "8+" },
+    ],
+    keywords: ["rc", "car", "машин"],
+  },
+  {
+    id: "toy-teddy-60",
+    title: "Зөөлөн баавгай тоглоом, 60 см",
+    brand: "CuddleHouse",
+    category: "toys",
+    price: 59_000,
+    rating: 4.9,
+    reviewCount: 527,
+    image: unsplash("photo-1559454403-b8fb88521f11"),
+    stock: 60,
+    warrantyMonths: 3,
+    summary: "Нярай хүүхдэд ч аюулгүй, гипоаллерген хөвөн дүүргэгчтэй.",
+    description:
+      "Хэт зөөлөн полиэстер плюш даавуу, гипоаллерген дүүргэгчтэй. Нүд, хамар нь оёдлоор хийгдсэн тул салж унах эрсдэлгүй. Угаалгын машинд 30°C-д угаах боломжтой.",
+    features: ["Гипоаллерген дүүргэгч", "Оёдлон нүд — аюулгүй", "Машинд угаах боломжтой"],
+    specs: [
+      { label: "Өндөр", value: "60 см" },
+      { label: "Нас", value: "0+" },
+      { label: "Материал", value: "Полиэстер плюш" },
+      { label: "Угаалга", value: "30°C, зөөлөн горим" },
+    ],
+    keywords: ["teddy", "bear", "баавгай"],
+  },
+  {
+    id: "toy-wood-puzzle",
+    title: "Боловсролын модон пазл, амьтдын цуглуулга",
+    brand: "Modon",
+    category: "toys",
+    price: 45_000,
+    rating: 4.7,
+    reviewCount: 189,
+    image: unsplash("photo-1596461404969-9ae70f2830c1"),
+    badge: "Шинэ",
+    stock: 42,
+    warrantyMonths: 3,
+    summary: "Монгол таван хошуу малын дүрстэй 6 пазлын иж бүрдэл.",
+    description:
+      "Байгалийн хус модоор хийгдсэн, усан суурьтай будгаар будсан. Хүүхэд өнгө, хэлбэр ялгах, малын нэр сурахад тусална. Ирмэгийг зөөлрүүлж өнгөлсөн.",
+    features: ["Байгалийн хус мод", "Усан суурьтай хоргүй будаг", "Монгол хэлтэй картуудтай"],
+    specs: [
+      { label: "Пазлын тоо", value: "6" },
+      { label: "Нас", value: "2+" },
+      { label: "Материал", value: "Хус мод" },
+      { label: "Хэмжээ", value: "30 × 22 см" },
+    ],
+    keywords: ["puzzle", "пазл", "wood"],
+  },
+  {
+    id: "toy-mini-drone",
+    title: "Хүүхдийн мини дрон, HD камертай",
+    brand: "SkyPilot",
+    category: "toys",
+    price: 249_000,
+    compareAtPrice: 289_000,
+    rating: 4.4,
+    reviewCount: 96,
+    image: unsplash("photo-1507582020474-9a35b7d455d9"),
+    badge: "Хямдрал",
+    stock: 4,
+    warrantyMonths: 12,
+    summary: "Нэг товчоор хөөрч буух, өндрийг автоматаар барих анхан шатны дрон.",
+    description:
+      "Хамгаалалтын хүрээтэй тул дотор орчинд аюулгүй нисгэнэ. 720p камераас утас руу шууд дүрс дамжуулна. Эхлэгчдэд зориулсан хурдны 3 горимтой.",
+    features: ["720p HD камер", "Автомат өндөр барих", "Сэнсний хамгаалалт", "3 хурдны горим"],
+    specs: [
+      { label: "Нислэгийн хугацаа", value: "12 мин" },
+      { label: "Зай", value: "80 м хүртэл" },
+      { label: "Камер", value: "720p, Wi-Fi FPV" },
+      { label: "Нас", value: "12+" },
+    ],
+    keywords: ["drone", "дрон"],
+  },
+  {
+    id: "toy-magnetic-board",
+    title: "Соронзон зургийн самбар, 2 талт",
+    brand: "Modon",
+    category: "toys",
+    price: 39_000,
+    rating: 4.5,
+    reviewCount: 143,
+    image: unsplash("photo-1515488042361-ee00e0ddd4e4"),
+    stock: 0,
+    warrantyMonths: 3,
+    summary: "Нэг тал нь цагаан самбар, нөгөө тал нь шохойн самбар.",
+    description:
+      "Хөлийг нь тохируулж өндрийг 3 түвшинд өөрчилнө. Соронзон үсэг, тоо, маркер, шохой, арчуур дагалдана.",
+    features: ["2 талт самбар", "Өндөр тохируулгатай", "Соронзон үсэг тоо дагалдана"],
+    specs: [
+      { label: "Өндөр", value: "90–120 см" },
+      { label: "Нас", value: "3+" },
+      { label: "Материал", value: "Мод, ган хавтан" },
+      { label: "Дагалдах хэрэгсэл", value: "48 соронзон дүрс" },
+    ],
+    keywords: ["board", "самбар"],
+  },
+
+  // ——— Гэр ахуй ———
+  {
+    id: "home-air-purifier",
+    title: "Агаар цэвэршүүлэгч, HEPA H13 шүүлтүүртэй",
+    brand: "PureAir",
+    category: "home",
+    price: 690_000,
+    compareAtPrice: 790_000,
+    rating: 4.8,
+    reviewCount: 361,
+    image: unsplash("photo-1585771724684-38269d6639fd"),
+    badge: "Эрэлттэй",
+    stock: 22,
+    warrantyMonths: 24,
+    summary: "Өвлийн утааны улиралд 40 м² өрөөний агаарыг 12 минутад цэвэршүүлнэ.",
+    description:
+      "3 үе шаттай шүүлтүүр (урьдчилсан, HEPA H13, идэвхжүүлсэн нүүрс) нь PM2.5 тоосонцрын 99.97%-ийг шүүнэ. Агаарын чанарын мэдрэгч, шөнийн чимээгүй горим, утасны аппликейшнтэй.",
+    features: ["HEPA H13 шүүлтүүр", "PM2.5 мэдрэгч", "Шөнийн горим 22 дБ", "Wi-Fi аппликейшн"],
+    specs: [
+      { label: "Хамрах талбай", value: "40 м²" },
+      { label: "CADR", value: "380 м³/ц" },
+      { label: "Чимээ", value: "22–52 дБ" },
+      { label: "Чадал", value: "45 Вт" },
+    ],
+    keywords: ["air purifier", "утаа", "агаар"],
+  },
+  {
+    id: "home-robot-vacuum",
+    title: "Робот тоос сорогч, нойтон арчилттай",
+    brand: "CleanBot",
+    category: "home",
+    price: 1_290_000,
+    rating: 4.7,
+    reviewCount: 274,
+    image: unsplash("photo-1603618090561-412154b4bd1b"),
+    stock: 9,
+    warrantyMonths: 24,
+    summary: "LiDAR навигацаар байрны зургийг гаргаж, өрөө тус бүрээр цэвэрлэнэ.",
+    description:
+      "4000Pa сорох хүчтэй, хивс таньж хүчийг автоматаар нэмэгдүүлнэ. Нойтон арчих модуль, 2.5 цаг тасралтгүй ажиллагаа, цэнэглэгч суурь руугаа өөрөө буцна.",
+    features: ["LiDAR навигаци", "4000Pa сорох хүч", "Нойтон арчилт", "Өөрөө цэнэглэгдэнэ"],
+    specs: [
+      { label: "Сорох хүч", value: "4000 Pa" },
+      { label: "Батарей", value: "5200 mAh" },
+      { label: "Ажиллах хугацаа", value: "150 мин" },
+      { label: "Тоосны сав", value: "450 мл" },
+    ],
+    keywords: ["robot", "vacuum", "тоос"],
+  },
+  {
+    id: "home-kettle",
+    title: "Цахилгаан данх 1.7 л, температур тохируулгатай",
+    brand: "HomeLine",
+    category: "home",
+    price: 89_000,
+    rating: 4.6,
+    reviewCount: 618,
+    image: unsplash("photo-1594213114663-d94db9b17125"),
+    stock: 75,
+    warrantyMonths: 12,
+    summary: "Сүүтэй цай, ногоон цай, хүүхдийн хоолонд тохирох 5 температурын горим.",
+    description:
+      "Зэвэрдэггүй ган дотор талтай, 2200 Вт чадлаар 1.7 л усыг 4 минутад буцалгана. 60 минут дулаан хадгалах, хоосон үед автоматаар унтрах хамгаалалттай.",
+    features: ["5 температурын горим", "Дулаан хадгалах 60 мин", "Хоосон үед автоматаар унтрана"],
+    specs: [
+      { label: "Багтаамж", value: "1.7 л" },
+      { label: "Чадал", value: "2200 Вт" },
+      { label: "Температур", value: "40 / 60 / 80 / 90 / 100°C" },
+      { label: "Материал", value: "Зэвэрдэггүй ган 304" },
+    ],
+    keywords: ["kettle", "данх", "цай"],
+  },
+  {
+    id: "home-espresso",
+    title: "Эспрессо кофе машин, сүү хөөсрүүлэгчтэй",
+    brand: "Barista Pro",
+    category: "home",
+    price: 890_000,
+    rating: 4.5,
+    reviewCount: 147,
+    image: unsplash("photo-1570222094114-d054a817e56b"),
+    badge: "Шинэ",
+    stock: 13,
+    warrantyMonths: 24,
+    summary: "15 бар даралттай, гэртээ кафены чанартай капучино бэлтгэнэ.",
+    description:
+      "Италийн насостой, 15 бар даралт. Уурын хоолойгоор сүүг хөөсрүүлж латте, капучино хийнэ. Халаах хавтан, салдаг усны сав, 2 аяганы шүүлтүүртэй.",
+    features: ["15 бар даралт", "Уурын сүү хөөсрүүлэгч", "Салдаг 1.5 л усны сав", "Аяга халаах хавтан"],
+    specs: [
+      { label: "Даралт", value: "15 бар" },
+      { label: "Усны сав", value: "1.5 л" },
+      { label: "Чадал", value: "1350 Вт" },
+      { label: "Жин", value: "4.2 кг" },
+    ],
+    keywords: ["coffee", "кофе", "espresso"],
+  },
+  {
+    id: "home-desk-lamp",
+    title: "Нүд хамгаалах LED ширээний гэрэл",
+    brand: "Lumen",
+    category: "home",
+    price: 79_000,
+    compareAtPrice: 95_000,
+    rating: 4.7,
+    reviewCount: 302,
+    image: unsplash("photo-1507473885765-e6ed057f782c"),
+    badge: "Хямдрал",
+    stock: 51,
+    warrantyMonths: 12,
+    summary: "Хичээл хийх хүүхдэд зориулсан анивчдаггүй, гэрлийн 5 өнгөтэй гэрэл.",
+    description:
+      "Flicker-free LED, Ra95 өнгө дамжуулалт. Мэдрэгч товчоор гэрлийн тод, өнгийг тохируулна. Сууринд нь утас утасгүй цэнэглэх хавтан суурилуулсан.",
+    features: ["Анивчдаггүй LED", "5 өнгө × 7 түвшин", "Утасгүй цэнэглэгчтэй", "45 мин таймер"],
+    specs: [
+      { label: "Чадал", value: "12 Вт" },
+      { label: "Өнгөний температур", value: "2700K – 6500K" },
+      { label: "Ra", value: "≥ 95" },
+      { label: "Цэнэглэгч", value: "Qi 10 Вт" },
+    ],
+    keywords: ["lamp", "гэрэл", "led"],
+  },
+  {
+    id: "home-bedding-set",
+    title: "Хөвөн даавуун орны цагаан хэрэглэл, 2 хүний",
+    brand: "Sleepwell",
+    category: "home",
+    price: 159_000,
+    rating: 4.8,
+    reviewCount: 211,
+    image: unsplash("photo-1522771739844-6a9f6d5f14af"),
+    stock: 27,
+    warrantyMonths: 6,
+    summary: "100% сатин хөвөн, 4 ширхэгтэй иж бүрдэл.",
+    description:
+      "Хөнжлийн уут, даавуу, 2 дэрний уутнаас бүрдэнэ. 300 утасны нягтралтай сатин хөвөн нь зөөлөн, агаар нэвтрүүлэх чадвартай, угаахад өнгө гардаггүй.",
+    features: ["100% сатин хөвөн", "300 утасны нягтрал", "Өнгө гардаггүй"],
+    specs: [
+      { label: "Хөнжлийн уут", value: "200 × 220 см" },
+      { label: "Даавуу", value: "240 × 260 см" },
+      { label: "Дэрний уут", value: "2 × 50 × 70 см" },
+      { label: "Материал", value: "100% хөвөн" },
+    ],
+    keywords: ["bedding", "хөнжил", "даавуу"],
+  },
+
+  // ——— Цахилгаан бараа ———
+  {
+    id: "elec-anc-headphones",
+    title: "Утасгүй чихэвч, идэвхтэй дуу тусгаарлалттай",
+    brand: "Sonora",
+    category: "electronics",
+    price: 459_000,
+    compareAtPrice: 529_000,
+    rating: 4.8,
+    reviewCount: 689,
+    image: unsplash("photo-1505740420928-5e560c06d30e"),
+    badge: "Эрэлттэй",
+    stock: 38,
+    warrantyMonths: 12,
+    summary: "Нэг цэнэглэлтээр 40 цаг, автобус, нислэгийн чимээг 95% хүртэл дарна.",
+    description:
+      "Hybrid ANC технологи, Bluetooth 5.3, 2 төхөөрөмжид зэрэг холбогдоно. 10 минут цэнэглэхэд 5 цаг ажиллана. Эвхэгддэг загвар, хатуу хайрцагтай.",
+    features: ["Hybrid ANC", "40 цагийн батарей", "Multipoint холболт", "Хурдан цэнэглэлт"],
+    specs: [
+      { label: "Холболт", value: "Bluetooth 5.3" },
+      { label: "Батарей", value: "40 цаг (ANC асаалттай 30 цаг)" },
+      { label: "Цэнэглэх порт", value: "USB-C" },
+      { label: "Жин", value: "250 г" },
+    ],
+    keywords: ["headphones", "чихэвч", "anc", "bluetooth"],
+  },
+  {
+    id: "elec-smartwatch",
+    title: "Ухаалаг цаг, AMOLED дэлгэц, GPS",
+    brand: "Pulse",
+    category: "electronics",
+    price: 599_000,
+    rating: 4.6,
+    reviewCount: 354,
+    image: unsplash("photo-1546868871-7041f2a55e12"),
+    stock: 21,
+    warrantyMonths: 12,
+    summary: "Зүрхний цохилт, цусны хүчилтөрөгч, нойрны хяналт, 14 хоногийн батарей.",
+    description:
+      "1.43\" AMOLED дэлгэц, 120 гаруй спортын горим, суурилуулсан GPS. 5ATM ус хамгаалалттай тул усанд сэлэхэд өмсөнө. Утасны мэдэгдэл, дуудлага хүлээн авна.",
+    features: ["1.43\" AMOLED", "GPS суурилуулсан", "5ATM ус хамгаалалт", "14 хоногийн батарей"],
+    specs: [
+      { label: "Дэлгэц", value: "1.43\" AMOLED 466×466" },
+      { label: "Батарей", value: "14 хоног" },
+      { label: "Ус хамгаалалт", value: "5 ATM" },
+      { label: "Нийцтэй", value: "iOS 14+, Android 8+" },
+    ],
+    keywords: ["smartwatch", "цаг", "watch"],
+  },
+  {
+    id: "elec-tv-55",
+    title: "55\" 4K UHD Smart ТВ",
+    brand: "Vistra",
+    category: "electronics",
+    price: 2_190_000,
+    compareAtPrice: 2_490_000,
+    rating: 4.7,
+    reviewCount: 198,
+    image: unsplash("photo-1593359677879-a4bb92f829d1"),
+    badge: "Хямдрал",
+    stock: 7,
+    warrantyMonths: 24,
+    summary: "HDR10+, Dolby Audio, YouTube, Netflix суулгасан Smart ТВ.",
+    description:
+      "3840×2160 нягтралтай, 60Гц VA панел, HDR10+ дэмжлэгтэй. Дуут удирдлагатай алсын удирдлага, 3 HDMI, Wi-Fi 5. Суурилуулалт Улаанбаатар хотод үнэгүй.",
+    features: ["4K UHD, HDR10+", "Dolby Audio", "Дуут удирдлага", "Үнэгүй суурилуулалт (УБ)"],
+    specs: [
+      { label: "Дэлгэц", value: "55\" 3840×2160" },
+      { label: "Порт", value: "3 × HDMI 2.1, 2 × USB" },
+      { label: "Дуу", value: "2 × 10 Вт, Dolby Audio" },
+      { label: "Ханын бэхэлгээ", value: "VESA 300×300" },
+    ],
+    keywords: ["tv", "телевиз", "ТВ", "4k"],
+  },
+  {
+    id: "elec-bt-speaker",
+    title: "Зөөврийн Bluetooth чанга яригч, IP67",
+    brand: "Sonora",
+    category: "electronics",
+    price: 189_000,
+    rating: 4.5,
+    reviewCount: 421,
+    image: unsplash("photo-1608043152269-423dbba4e7e1"),
+    stock: 46,
+    warrantyMonths: 12,
+    summary: "Хөдөө, зуслан, аялалд зориулсан ус тоосноос хамгаалагдсан чанга яригч.",
+    description:
+      "30 Вт стерео дуу, гүн басс. IP67 зэрэглэлтэй тул усанд унасан ч эвдрэхгүй. 20 цаг тасралтгүй тоглуулж, павербанк болгон утас цэнэглэх боломжтой.",
+    features: ["30 Вт стерео", "IP67 ус, тоос хамгаалалт", "20 цагийн батарей", "Павербанк функц"],
+    specs: [
+      { label: "Чадал", value: "30 Вт" },
+      { label: "Батарей", value: "20 цаг" },
+      { label: "Хамгаалалт", value: "IP67" },
+      { label: "Холболт", value: "Bluetooth 5.3, AUX" },
+    ],
+    keywords: ["speaker", "чанга яригч", "bluetooth"],
+  },
+  {
+    id: "elec-laptop-14",
+    title: "14\" хөнгөн ноутбук, 16GB RAM, 512GB SSD",
+    brand: "Northbook",
+    category: "electronics",
+    price: 3_490_000,
+    rating: 4.6,
+    reviewCount: 87,
+    image: unsplash("photo-1517336714731-489689fd1ca8"),
+    badge: "Шинэ",
+    stock: 5,
+    warrantyMonths: 24,
+    summary: "1.3 кг жинтэй, 18 цагийн батарейтай ажил, сургуульд тохирох ноутбук.",
+    description:
+      "8 цөмт процессор, 16GB LPDDR5 санах ой, 512GB NVMe SSD. 2.8K OLED дэлгэц, кирилл үсэгтэй гэрэлтдэг гар. Windows 11 лицензтэй.",
+    features: ["2.8K OLED дэлгэц", "Кирилл гэрэлтдэг гар", "Windows 11 лицензтэй", "USB-C хурдан цэнэглэлт"],
+    specs: [
+      { label: "Процессор", value: "8 цөмт, 4.7GHz хүртэл" },
+      { label: "Санах ой", value: "16GB LPDDR5" },
+      { label: "Хадгалах", value: "512GB NVMe SSD" },
+      { label: "Жин", value: "1.3 кг" },
+    ],
+    keywords: ["laptop", "ноутбук", "computer", "компьютер"],
+  },
+  {
+    id: "elec-gamepad",
+    title: "Утасгүй тоглоомын удирдлага, PC болон утсанд",
+    brand: "PlayCore",
+    category: "electronics",
+    price: 129_000,
+    rating: 4.3,
+    reviewCount: 156,
+    image: unsplash("photo-1606813907291-d86efa9b94db"),
+    stock: 33,
+    warrantyMonths: 12,
+    summary: "Hall-effect джойстик — удаан хэрэглэхэд шилжилт (drift) үүсэхгүй.",
+    description:
+      "PC, Android, iOS, Switch-тэй нийцтэй. Hall-effect джойстик, тохируулдаг 2 арын товч, чичиргээтэй. Нэг цэнэглэлтээр 20 цаг тоглоно.",
+    features: ["Hall-effect джойстик", "4 платформд нийцтэй", "Арын 2 программчлагдах товч"],
+    specs: [
+      { label: "Холболт", value: "Bluetooth, 2.4GHz, USB-C" },
+      { label: "Батарей", value: "20 цаг" },
+      { label: "Нийцтэй", value: "PC / Android / iOS / Switch" },
+      { label: "Жин", value: "230 г" },
+    ],
+    keywords: ["gamepad", "controller", "джойстик", "game"],
+  },
+
+  // ——— Спорт ———
+  {
+    id: "sport-yoga-mat",
+    title: "Иогийн дэвсгэр 6 мм, гулсдаггүй",
+    brand: "FlexFit",
+    category: "sports",
+    price: 69_000,
+    rating: 4.7,
+    reviewCount: 264,
+    image: unsplash("photo-1601925260368-ae2f83cf8b7f"),
+    stock: 58,
+    warrantyMonths: 6,
+    summary: "TPE материалтай, хоёр талт бүтэцтэй, мөр хүзүүг хамгаална.",
+    description:
+      "Үнэргүй, хоргүй TPE материал. Хоёр талын гулсалтын эсрэг бүтэцтэй, байрлалын шугам тэмдэглэсэн. Үүрэх оосор дагалдана.",
+    features: ["Хоргүй TPE", "Байрлалын шугамтай", "Үүрэх оосортой"],
+    specs: [
+      { label: "Хэмжээ", value: "183 × 61 см" },
+      { label: "Зузаан", value: "6 мм" },
+      { label: "Материал", value: "TPE" },
+      { label: "Жин", value: "0.9 кг" },
+    ],
+    keywords: ["yoga", "иог", "mat"],
+  },
+  {
+    id: "sport-adjustable-dumbbell",
+    title: "Тохируулгатай гантель, 2 × 24 кг",
+    brand: "IronHome",
+    category: "sports",
+    price: 459_000,
+    rating: 4.8,
+    reviewCount: 132,
+    image: unsplash("photo-1638536532686-d610adfc8e5c"),
+    badge: "Эрэлттэй",
+    stock: 11,
+    warrantyMonths: 12,
+    summary: "15 гантелийг орлох, 2.5–24 кг хооронд 3 секундэд тохируулна.",
+    description:
+      "Эргүүлэх бариулаар жинг 15 шатлалд сонгоно. Ган хавтан, резин бүрээстэй тул шал гэмтээхгүй. Хадгалах тавиуртай, гэрийн жижиг талбайд тохиромжтой.",
+    features: ["15 шатлалт жин", "Хурдан тохируулга", "Хадгалах тавиуртай"],
+    specs: [
+      { label: "Жингийн хүрээ", value: "2.5 – 24 кг (ширхэг бүр)" },
+      { label: "Шатлал", value: "15" },
+      { label: "Материал", value: "Ган, резин бүрээс" },
+      { label: "Иж бүрдэл", value: "2 ширхэг + 2 тавиур" },
+    ],
+    keywords: ["dumbbell", "гантель", "fitness"],
+  },
+  {
+    id: "sport-mtb-275",
+    title: "Уулын дугуй 27.5\", 21 хурдтай",
+    brand: "Altai Ride",
+    category: "sports",
+    price: 1_190_000,
+    compareAtPrice: 1_350_000,
+    rating: 4.6,
+    reviewCount: 74,
+    image: unsplash("photo-1485965120184-e220f721d03e"),
+    badge: "Хямдрал",
+    stock: 6,
+    warrantyMonths: 24,
+    summary: "Хөнгөн цагаан рам, урд амортизатор, дискэн тоормостой.",
+    description:
+      "Богд уулын зам, хотын дугуйн замд аль алинд тохиромжтой. 21 хурдны араа, механик дискэн тоормос, 100 мм урд амортизатор. Угсралт, анхны тохиргоо үнэгүй.",
+    features: ["Хөнгөн цагаан рам", "21 хурд", "Дискэн тоормос", "Үнэгүй угсралт"],
+    specs: [
+      { label: "Дугуйн хэмжээ", value: "27.5\"" },
+      { label: "Рам", value: "Хөнгөн цагаан, 17\"" },
+      { label: "Араа", value: "3 × 7 = 21 хурд" },
+      { label: "Жин", value: "14.5 кг" },
+    ],
+    keywords: ["bike", "bicycle", "дугуй", "mtb"],
+  },
+];
