@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
+import { ToastProvider } from "@/components/ui/Toast";
 import "./globals.css";
 
 // Cyrillic subset is required — Mongolian glyphs (Ө, Ү) fall back to system fonts otherwise.
@@ -22,7 +23,10 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="mn" className={inter.variable}>
-      <body className="min-h-screen font-sans antialiased">{children}</body>
+      <body className="min-h-screen font-sans antialiased">
+        {/* One toast stack for the storefront and /admin; call useToast() from any client component. */}
+        <ToastProvider>{children}</ToastProvider>
+      </body>
     </html>
   );
 }

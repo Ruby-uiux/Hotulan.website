@@ -1,10 +1,10 @@
 "use client";
 
-import { AlertCircle, Eye, EyeOff, Loader2, LogIn } from "lucide-react";
+import { AlertCircle, Eye, EyeOff, LogIn } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState, type FormEvent } from "react";
 import { api } from "@/lib/api-client";
-import { btn, inputClass } from "./ui";
+import { Button, Input } from "@/components/ui";
 
 export default function LoginForm({ next, expired }: { next: string; expired: boolean }) {
   const router = useRouter();
@@ -48,51 +48,41 @@ export default function LoginForm({ next, expired }: { next: string; expired: bo
         </p>
       )}
 
-      <div>
-        <label htmlFor="login-username" className="mb-1.5 block text-sm font-medium text-slate-700">
-          Нэвтрэх нэр
-        </label>
-        <input
-          id="login-username"
-          autoComplete="username"
-          autoCapitalize="none"
-          spellCheck={false}
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          className={`${inputClass} h-11`}
-          autoFocus
-        />
-      </div>
+      <Input
+        id="login-username"
+        label="Нэвтрэх нэр"
+        autoComplete="username"
+        autoCapitalize="none"
+        spellCheck={false}
+        value={username}
+        onChange={(e) => setUsername(e.target.value)}
+        autoFocus
+      />
 
-      <div>
-        <label htmlFor="login-password" className="mb-1.5 block text-sm font-medium text-slate-700">
-          Нууц үг
-        </label>
-        <div className="relative">
-          <input
-            id="login-password"
-            type={showPassword ? "text" : "password"}
-            autoComplete="current-password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className={`${inputClass} h-11 pr-11`}
-          />
+      <Input
+        id="login-password"
+        label="Нууц үг"
+        type={showPassword ? "text" : "password"}
+        autoComplete="current-password"
+        value={password}
+        onChange={(e) => setPassword(e.target.value)}
+        trailing={
           <button
             type="button"
             onClick={() => setShowPassword((s) => !s)}
-            className="absolute right-1.5 top-1/2 grid h-8 w-8 -translate-y-1/2 place-items-center rounded-sm text-slate-400 transition hover:bg-slate-100 hover:text-slate-700"
+            className="grid h-8 w-8 place-items-center rounded-sm text-slate-400 transition hover:bg-slate-100 hover:text-slate-700"
             aria-label={showPassword ? "Нууц үг нуух" : "Нууц үг харуулах"}
             aria-pressed={showPassword}
           >
             {showPassword ? <EyeOff className="h-4 w-4" /> : <Eye className="h-4 w-4" />}
           </button>
-        </div>
-      </div>
+        }
+      />
 
-      <button type="submit" disabled={submitting} className={`${btn.primary} h-11 w-full`}>
-        {submitting ? <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" /> : <LogIn className="h-4 w-4" aria-hidden="true" />}
-        {submitting ? "Шалгаж байна…" : "Нэвтрэх"}
-      </button>
+      <Button type="submit" fullWidth loading={submitting} loadingText="Шалгаж байна…">
+        <LogIn className="h-4 w-4" aria-hidden="true" />
+        Нэвтрэх
+      </Button>
     </form>
   );
 }

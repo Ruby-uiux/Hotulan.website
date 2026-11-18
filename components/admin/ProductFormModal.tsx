@@ -1,11 +1,11 @@
 "use client";
 
 import { ImageOff } from "lucide-react";
-import { useState, type FormEvent, type ReactNode } from "react";
+import { useState, type FormEvent } from "react";
 import { formatMNT, type CategoryId, type Product } from "@/lib/catalog";
 import { CATEGORY_OPTIONS } from "@/lib/admin-data";
 import SafeImage from "@/components/store/SafeImage";
-import { Modal, btn, inputClass } from "./ui";
+import { Button, Input, Modal, Select, Textarea } from "@/components/ui";
 
 interface ProductFormModalProps {
   open: boolean;
@@ -77,6 +77,7 @@ export default function ProductFormModal({ open, product, onClose, onSave }: Pro
     <Modal
       open={open}
       onClose={onClose}
+      size="lg"
       title={product ? "Бараа засах" : "Шинэ бараа нэмэх"}
       description={product ? product.title : "Дэлгүүрт шууд нийтлэгдэнэ"}
     >
@@ -165,110 +166,89 @@ function ProductForm({
   return (
     <form onSubmit={handleSubmit} noValidate className="grid gap-5 sm:grid-cols-[1fr_11rem]">
       <div className="space-y-4">
-        <Field label="Барааны нэр" htmlFor="pf-title" error={showError("title")} required>
-          <input
-            id="pf-title"
-            value={form.title}
-            onChange={(e) => set("title", e.target.value)}
-            onBlur={blur("title")}
-            aria-invalid={!!showError("title")}
-            placeholder="Жишээ: Утасгүй чихэвч, ANC"
-            className={inputClass}
-          />
-        </Field>
+        <Input
+          id="pf-title"
+          label="Барааны нэр"
+          required
+          error={showError("title")}
+          value={form.title}
+          onChange={(e) => set("title", e.target.value)}
+          onBlur={blur("title")}
+          placeholder="Жишээ: Утасгүй чихэвч, ANC"
+        />
 
-        <Field label="Ангилал" htmlFor="pf-category" required>
-          <select
-            id="pf-category"
-            value={form.category}
-            onChange={(e) => set("category", e.target.value as CategoryId)}
-            className={inputClass}
-          >
-            {CATEGORY_OPTIONS.map((c) => (
-              <option key={c.id} value={c.id}>
-                {c.label}
-              </option>
-            ))}
-          </select>
-        </Field>
+        <Select
+          id="pf-category"
+          label="Ангилал"
+          required
+          value={form.category}
+          onChange={(e) => set("category", e.target.value as CategoryId)}
+          options={CATEGORY_OPTIONS.map((c) => ({ value: c.id, label: c.label }))}
+        />
 
         <div className="grid gap-4 sm:grid-cols-2">
-          <Field
+          <Input
+            id="pf-regular"
             label="Үндсэн үнэ (₮)"
-            htmlFor="pf-regular"
+            required
             error={showError("regularPrice")}
             hint={regular ? formatMNT(regular) : undefined}
-            required
-          >
-            <input
-              id="pf-regular"
-              inputMode="numeric"
-              value={form.regularPrice}
-              onChange={(e) => set("regularPrice", e.target.value)}
-              onBlur={blur("regularPrice")}
-              aria-invalid={!!showError("regularPrice")}
-              placeholder="129000"
-              className={`${inputClass} tabular-nums`}
-            />
-          </Field>
-          <Field
+            controlClassName="tabular-nums"
+            inputMode="numeric"
+            value={form.regularPrice}
+            onChange={(e) => set("regularPrice", e.target.value)}
+            onBlur={blur("regularPrice")}
+            placeholder="129000"
+          />
+          <Input
+            id="pf-sale"
             label="Хямдралтай үнэ (₮)"
-            htmlFor="pf-sale"
             error={showError("salePrice")}
             hint={discountPct > 0 ? `−${discountPct}% хөнгөлөлт` : "Хоосон бол хямдралгүй"}
-          >
-            <input
-              id="pf-sale"
-              inputMode="numeric"
-              value={form.salePrice}
-              onChange={(e) => set("salePrice", e.target.value)}
-              onBlur={blur("salePrice")}
-              aria-invalid={!!showError("salePrice")}
-              placeholder="Заавал биш"
-              className={`${inputClass} tabular-nums`}
-            />
-          </Field>
+            controlClassName="tabular-nums"
+            inputMode="numeric"
+            value={form.salePrice}
+            onChange={(e) => set("salePrice", e.target.value)}
+            onBlur={blur("salePrice")}
+            placeholder="Заавал биш"
+          />
         </div>
 
-        <Field label="Үлдэгдэл тоо" htmlFor="pf-stock" error={showError("stock")} required>
-          <input
-            id="pf-stock"
-            inputMode="numeric"
-            value={form.stock}
-            onChange={(e) => set("stock", e.target.value)}
-            onBlur={blur("stock")}
-            aria-invalid={!!showError("stock")}
-            className={`${inputClass} tabular-nums sm:w-40`}
-          />
-        </Field>
+        <Input
+          id="pf-stock"
+          label="Үлдэгдэл тоо"
+          required
+          error={showError("stock")}
+          controlClassName="tabular-nums sm:w-40"
+          inputMode="numeric"
+          value={form.stock}
+          onChange={(e) => set("stock", e.target.value)}
+          onBlur={blur("stock")}
+        />
 
-        <Field label="Тодорхойлолт" htmlFor="pf-description">
-          <textarea
-            id="pf-description"
-            rows={4}
-            value={form.description}
-            onChange={(e) => set("description", e.target.value)}
-            placeholder="Материал, хэмжээ, онцлог, дагалдах хэрэгсэл…"
-            className={`${inputClass} h-auto resize-y py-2 leading-relaxed`}
-          />
-        </Field>
+        <Textarea
+          id="pf-description"
+          label="Тодорхойлолт"
+          rows={4}
+          value={form.description}
+          onChange={(e) => set("description", e.target.value)}
+          placeholder="Материал, хэмжээ, онцлог, дагалдах хэрэгсэл…"
+        />
 
-        <Field label="Зургийн URL" htmlFor="pf-image" error={showError("image")}>
-          <input
-            id="pf-image"
-            type="url"
-            value={form.image}
-            onChange={(e) => set("image", e.target.value)}
-            onBlur={blur("image")}
-            aria-invalid={!!showError("image")}
-            placeholder="https://images.unsplash.com/…"
-            className={inputClass}
-          />
-        </Field>
+        <Input
+          id="pf-image"
+          label="Зургийн URL"
+          type="url"
+          error={showError("image")}
+          value={form.image}
+          onChange={(e) => set("image", e.target.value)}
+          onBlur={blur("image")}
+          placeholder="https://images.unsplash.com/…"
+        />
       </div>
 
       <div className="order-first sm:order-none">
-        <p className="mb-1.5 text-sm font-medium text-slate-700">Урьдчилан харах</p>
+        <p className="mb-1.5 text-[13px] font-semibold text-slate-900">Урьдчилан харах</p>
         <div className="aspect-square overflow-hidden rounded-lg border border-slate-200 bg-slate-50">
           {form.image.trim() && !errors.image ? (
             <SafeImage key={form.image.trim()} src={form.image.trim()} alt="Барааны зураг" className="h-full w-full object-cover" />
@@ -293,44 +273,13 @@ function ProductForm({
             </p>
           )
         )}
-        <button type="button" onClick={onCancel} disabled={saving} className={btn.secondary}>
+        <Button variant="outline" onClick={onCancel} disabled={saving}>
           Болих
-        </button>
-        <button type="submit" disabled={saving} className={btn.primary}>
-          {saving ? "Хадгалж байна…" : product ? "Өөрчлөлт хадгалах" : "Бараа нэмэх"}
-        </button>
+        </Button>
+        <Button type="submit" loading={saving} loadingText="Хадгалж байна…">
+          {product ? "Өөрчлөлт хадгалах" : "Бараа нэмэх"}
+        </Button>
       </div>
     </form>
-  );
-}
-
-function Field({
-  label,
-  htmlFor,
-  error,
-  hint,
-  required,
-  children,
-}: {
-  label: string;
-  htmlFor: string;
-  error?: string;
-  hint?: string;
-  required?: boolean;
-  children: ReactNode;
-}) {
-  return (
-    <div>
-      <label htmlFor={htmlFor} className="mb-1.5 block text-sm font-medium text-slate-700">
-        {label}
-        {required && <span className="ml-0.5 text-rose-500">*</span>}
-      </label>
-      {children}
-      {error ? (
-        <p className="mt-1 text-xs font-medium text-rose-600">{error}</p>
-      ) : (
-        hint && <p className="mt-1 text-xs text-slate-500">{hint}</p>
-      )}
-    </div>
   );
 }

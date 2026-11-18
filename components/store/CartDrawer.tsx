@@ -4,7 +4,6 @@ import {
   AlertCircle,
   ArrowLeft,
   CheckCircle2,
-  Loader2,
   Minus,
   Plus,
   ShieldCheck,
@@ -17,6 +16,7 @@ import { useEffect, useRef, useState, type FormEvent } from "react";
 import { DELIVERY_FEE, formatMNT, type Product } from "@/lib/catalog";
 import { DISTRICTS, PAYMENT_LABEL, type PaymentMethod } from "@/lib/admin-data";
 import { useOverlay } from "@/lib/useOverlay";
+import { Button, Input, Select } from "@/components/ui";
 import SafeImage from "./SafeImage";
 
 export interface CartItem {
@@ -184,51 +184,44 @@ export default function CartDrawer({
         ) : stage === "details" ? (
           <form onSubmit={handleSubmit} noValidate className="flex min-h-0 flex-1 flex-col">
             <div className="flex-1 space-y-4 overflow-y-auto px-5 py-5">
-              <CheckoutField label="Овог нэр" htmlFor="co-name" error={showErrors ? fieldErrors.customer : undefined}>
-                <input
-                  id="co-name"
-                  autoComplete="name"
-                  value={details.customer}
-                  onChange={(e) => setDetails((d) => ({ ...d, customer: e.target.value }))}
-                  placeholder="Жишээ: Б. Сарангэрэл"
-                  aria-invalid={showErrors && !!fieldErrors.customer}
-                  className={fieldClass}
-                />
-              </CheckoutField>
-              <CheckoutField label="Утасны дугаар" htmlFor="co-phone" error={showErrors ? fieldErrors.phone : undefined}>
-                <input
-                  id="co-phone"
-                  type="tel"
-                  inputMode="numeric"
-                  autoComplete="tel-national"
-                  value={details.phone}
-                  onChange={(e) => setDetails((d) => ({ ...d, phone: e.target.value }))}
-                  placeholder="9911 2345"
-                  aria-invalid={showErrors && !!fieldErrors.phone}
-                  className={`${fieldClass} tabular-nums`}
-                />
-              </CheckoutField>
-              <CheckoutField label="Дүүрэг (Улаанбаатар)" htmlFor="co-district" error={showErrors ? fieldErrors.district : undefined}>
-                <select
-                  id="co-district"
-                  value={details.district}
-                  onChange={(e) => setDetails((d) => ({ ...d, district: e.target.value }))}
-                  aria-invalid={showErrors && !!fieldErrors.district}
-                  className={fieldClass}
-                >
-                  <option value="" disabled>
-                    Сонгох…
+              <Input
+                id="co-name"
+                label="Овог нэр"
+                autoComplete="name"
+                value={details.customer}
+                onChange={(e) => setDetails((d) => ({ ...d, customer: e.target.value }))}
+                placeholder="Жишээ: Б. Сарангэрэл"
+                error={showErrors ? fieldErrors.customer : undefined}
+              />
+              <Input
+                id="co-phone"
+                label="Утасны дугаар"
+                type="tel"
+                inputMode="numeric"
+                autoComplete="tel-national"
+                controlClassName="tabular-nums"
+                value={details.phone}
+                onChange={(e) => setDetails((d) => ({ ...d, phone: e.target.value }))}
+                placeholder="9911 2345"
+                error={showErrors ? fieldErrors.phone : undefined}
+              />
+              <Select
+                label="Дүүрэг (Улаанбаатар)"
+                error={showErrors ? fieldErrors.district : undefined}
+                placeholder="Сонгох…"
+                id="co-district"
+                value={details.district}
+                onChange={(e) => setDetails((d) => ({ ...d, district: e.target.value }))}
+              >
+                {DISTRICTS.map((d) => (
+                  <option key={d} value={d}>
+                    {d}
                   </option>
-                  {DISTRICTS.map((d) => (
-                    <option key={d} value={d}>
-                      {d}
-                    </option>
-                  ))}
-                </select>
-              </CheckoutField>
+                ))}
+              </Select>
 
               <fieldset>
-                <legend className="mb-1.5 text-sm font-medium text-slate-700">Төлбөрийн хэлбэр</legend>
+                <legend className="mb-1.5 text-[13px] font-semibold text-slate-900">Төлбөрийн хэлбэр</legend>
                 <div className="grid grid-cols-2 gap-2">
                   {(Object.keys(PAYMENT_LABEL) as PaymentMethod[]).map((method) => (
                     <label
@@ -266,20 +259,16 @@ export default function CartDrawer({
                 <span className="font-semibold text-slate-900">Нийт төлөх</span>
                 <span className="text-xl font-extrabold tracking-tight text-slate-900">{formatMNT(total)}</span>
               </div>
-              <button
+              <Button
                 type="submit"
-                disabled={submitting}
-                className="mt-4 inline-flex h-12 w-full items-center justify-center gap-2 rounded-lg bg-brand text-sm font-bold text-white shadow-lg shadow-brand/25 transition hover:bg-brand-dark disabled:cursor-wait disabled:opacity-80"
+                size="lg"
+                fullWidth
+                loading={submitting}
+                loadingText="Илгээж байна…"
+                className="mt-4 shadow-lg shadow-brand/25"
               >
-                {submitting ? (
-                  <>
-                    <Loader2 className="h-4 w-4 animate-spin" aria-hidden="true" />
-                    Илгээж байна…
-                  </>
-                ) : (
-                  "Захиалга баталгаажуулах"
-                )}
-              </button>
+                Захиалга баталгаажуулах
+              </Button>
             </footer>
           </form>
         ) : (
@@ -389,16 +378,17 @@ export default function CartDrawer({
               </dl>
               <p className="mt-1 text-right text-[11px] text-slate-400">НӨАТ орсон үнэ</p>
 
-              <button
-                type="button"
+              <Button
+                size="lg"
+                fullWidth
                 onClick={() => {
                   setSubmitError(null);
                   setStage("details");
                 }}
-                className="mt-4 inline-flex h-12 w-full items-center justify-center gap-2 rounded-lg bg-brand text-sm font-bold text-white shadow-lg shadow-brand/25 transition hover:bg-brand-dark"
+                className="mt-4 shadow-lg shadow-brand/25"
               >
                 Захиалга баталгаажуулах
-              </button>
+              </Button>
               <p className="mt-3 flex items-center justify-center gap-1.5 text-xs text-slate-500">
                 <ShieldCheck className="h-3.5 w-3.5 text-emerald-600" aria-hidden="true" />
                 QPay, SocialPay, карт — аюулгүй төлбөр
@@ -407,31 +397,6 @@ export default function CartDrawer({
           </>
         )}
       </aside>
-    </div>
-  );
-}
-
-const fieldClass =
-  "h-11 w-full rounded-lg border border-slate-200 bg-white px-3 text-sm text-slate-900 placeholder:text-slate-400 transition focus:border-brand focus:outline-none focus:ring-4 focus:ring-brand/10 aria-[invalid=true]:border-rose-400";
-
-function CheckoutField({
-  label,
-  htmlFor,
-  error,
-  children,
-}: {
-  label: string;
-  htmlFor: string;
-  error?: string;
-  children: React.ReactNode;
-}) {
-  return (
-    <div>
-      <label htmlFor={htmlFor} className="mb-1.5 block text-sm font-medium text-slate-700">
-        {label}
-      </label>
-      {children}
-      {error && <p className="mt-1 text-xs font-medium text-rose-600">{error}</p>}
     </div>
   );
 }
@@ -447,13 +412,9 @@ function EmptyCart({ onClose, freeDeliveryThreshold }: { onClose: () => void; fr
         Таалагдсан бараагаа “Сагсанд хийх” товчоор нэмээрэй. {formatMNT(freeDeliveryThreshold)}-өөс дээш захиалгад
         хүргэлт үнэгүй.
       </p>
-      <button
-        type="button"
-        onClick={onClose}
-        className="mt-6 rounded-lg bg-brand px-5 py-2.5 text-sm font-bold text-white transition hover:bg-brand-dark"
-      >
+      <Button onClick={onClose} className="mt-6">
         Дэлгүүр хэсэх
-      </button>
+      </Button>
     </div>
   );
 }
@@ -480,13 +441,9 @@ function OrderConfirmation({ order, onClose }: { order: PlacedOrder; onClose: ()
           <dd className="font-bold text-slate-900">{formatMNT(order.total)}</dd>
         </div>
       </dl>
-      <button
-        type="button"
-        onClick={onClose}
-        className="mt-6 h-11 w-full rounded-lg bg-brand text-sm font-bold text-white transition hover:bg-brand-dark"
-      >
+      <Button fullWidth onClick={onClose} className="mt-6">
         Үргэлжлүүлэн дэлгүүр хэсэх
-      </button>
+      </Button>
     </div>
   );
 }

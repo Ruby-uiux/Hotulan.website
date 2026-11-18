@@ -6,7 +6,8 @@ import { CATEGORY_LABEL, formatMNT, type CategoryId, type Product } from "@/lib/
 import { CATEGORY_OPTIONS } from "@/lib/admin-data";
 import SafeImage from "@/components/store/SafeImage";
 import ProductFormModal from "./ProductFormModal";
-import { EmptyState, Modal, StockBadge, btn, inputClass, stockLevel, type StockLevel } from "./ui";
+import { Button, ConfirmDialog, Input, Select } from "@/components/ui";
+import { EmptyState, StockBadge, stockLevel, type StockLevel } from "./ui";
 
 export type StockFilter = "all" | "low" | "out" | "ok";
 
@@ -88,59 +89,47 @@ export default function ProductsView({
                 : `${products.length}-аас ${filtered.length} бараа харагдаж байна`}
             </p>
           </div>
-          <button type="button" onClick={openCreate} className={btn.primary}>
+          <Button onClick={openCreate}>
             <Plus className="h-4 w-4" aria-hidden="true" />
             Бараа нэмэх
-          </button>
+          </Button>
         </div>
 
         <div className="grid gap-2 sm:grid-cols-[1fr_auto_auto]">
-          <div className="relative">
-            <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" aria-hidden="true" />
-            <input
-              type="search"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder="Нэр, брэнд эсвэл ID-аар хайх"
-              aria-label="Бараа хайх"
-              className={`${inputClass} pl-9 pr-9 [&::-webkit-search-cancel-button]:hidden`}
-            />
-            {query && (
-              <button
-                type="button"
-                onClick={() => setQuery("")}
-                className="absolute right-2 top-1/2 grid h-6 w-6 -translate-y-1/2 place-items-center rounded text-slate-400 hover:bg-slate-100 hover:text-slate-700"
-                aria-label="Хайлт цэвэрлэх"
-              >
-                <X className="h-3.5 w-3.5" />
-              </button>
-            )}
-          </div>
-          <select
+          <Input
+            type="search"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="Нэр, брэнд эсвэл ID-аар хайх"
+            aria-label="Бараа хайх"
+            leading={<Search className="h-4 w-4" />}
+            trailing={
+              query && (
+                <button
+                  type="button"
+                  onClick={() => setQuery("")}
+                  className="grid h-8 w-8 place-items-center rounded-sm text-slate-400 hover:bg-slate-100 hover:text-slate-700"
+                  aria-label="Хайлт цэвэрлэх"
+                >
+                  <X className="h-3.5 w-3.5" />
+                </button>
+              )
+            }
+          />
+          <Select
             value={category}
             onChange={(e) => setCategory(e.target.value as CategoryId | "all")}
             aria-label="Ангиллаар шүүх"
-            className={`${inputClass} sm:w-44`}
-          >
-            <option value="all">Бүх ангилал</option>
-            {CATEGORY_OPTIONS.map((c) => (
-              <option key={c.id} value={c.id}>
-                {c.label}
-              </option>
-            ))}
-          </select>
-          <select
+            controlClassName="sm:w-44"
+            options={[{ value: "all", label: "Бүх ангилал" }, ...CATEGORY_OPTIONS.map((c) => ({ value: c.id, label: c.label }))]}
+          />
+          <Select
             value={stockFilter}
             onChange={(e) => setStockFilter(e.target.value as StockFilter)}
             aria-label="Үлдэгдлээр шүүх"
-            className={`${inputClass} sm:w-44`}
-          >
-            {STOCK_FILTERS.map((f) => (
-              <option key={f.id} value={f.id}>
-                {f.label}
-              </option>
-            ))}
-          </select>
+            controlClassName="sm:w-44"
+            options={STOCK_FILTERS.map((f) => ({ value: f.id, label: f.label }))}
+          />
         </div>
       </header>
 
@@ -150,10 +139,10 @@ export default function ProductsView({
           title="Бараа бүртгэгдээгүй байна"
           body="Эхний бараагаа нэмээд дэлгүүртээ нийтлээрэй."
           action={
-            <button type="button" onClick={openCreate} className={btn.primary}>
+            <Button onClick={openCreate}>
               <Plus className="h-4 w-4" aria-hidden="true" />
               Бараа нэмэх
-            </button>
+            </Button>
           }
         />
       ) : filtered.length === 0 ? (
@@ -163,9 +152,9 @@ export default function ProductsView({
           body="Хайлтын үг эсвэл шүүлтүүрээ өөрчилж үзнэ үү."
           action={
             hasFilters && (
-              <button type="button" onClick={clearFilters} className={btn.secondary}>
+              <Button variant="outline" onClick={clearFilters}>
                 Шүүлтүүр арилгах
-              </button>
+              </Button>
             )
           }
         />
@@ -242,42 +231,20 @@ export default function ProductsView({
         }}
       />
 
-      <Modal
+      <ConfirmDialog
         open={pendingDelete !== null}
         onClose={() => setPendingDelete(null)}
-        size="sm"
+        onConfirm={() => {
+          if (pendingDelete) onDelete(pendingDelete.id);
+          setPendingDelete(null);
+        }}
         title="Бараа устгах уу?"
-        footer={
-          <>
-            <button type="button" data-autofocus onClick={() => setPendingDelete(null)} className={btn.secondary}>
-              Болих
-            </button>
-            <button
-              type="button"
-              onClick={() => {
-                if (pendingDelete) onDelete(pendingDelete.id);
-                setPendingDelete(null);
-              }}
-              className={btn.danger}
-            >
-              <Trash2 className="h-4 w-4" aria-hidden="true" />
-              Устгах
-            </button>
-          </>
+        description={
+          pendingDelete &&
+          `“${pendingDelete.title}” дэлгүүрээс шууд хасагдана. Өмнөх захиалгын түүх өөрчлөгдөхгүй. Энэ үйлдлийг буцаах боломжгүй.`
         }
-      >
-        {pendingDelete && (
-          <div className="flex gap-3">
-            <SafeImage src={pendingDelete.image} alt="" className="h-14 w-14 shrink-0 rounded-md border border-slate-200 object-cover" />
-            <div className="text-sm">
-              <p className="font-semibold text-slate-900">{pendingDelete.title}</p>
-              <p className="mt-1 text-slate-500">
-                Дэлгүүрээс шууд хасагдана. Өмнөх захиалгын түүх өөрчлөгдөхгүй. Энэ үйлдлийг буцаах боломжгүй.
-              </p>
-            </div>
-          </div>
-        )}
-      </Modal>
+        confirmLabel="Устгах"
+      />
     </section>
   );
 }

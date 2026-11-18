@@ -14,7 +14,8 @@ import {
   type Order,
   type OrderStatus,
 } from "@/lib/admin-data";
-import { EmptyState, btn, inputClass } from "./ui";
+import { Button, Input } from "@/components/ui";
+import { EmptyState } from "./ui";
 
 interface OrdersViewProps {
   orders: Order[];
@@ -60,27 +61,27 @@ export default function OrdersView({ orders, onStatusChange }: OrdersViewProps) 
             </h2>
             <p className="text-xs text-slate-500">Төлөвийг жагсаалтаас шууд өөрчилнө</p>
           </div>
-          <div className="relative w-full sm:w-72">
-            <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-400" aria-hidden="true" />
-            <input
-              type="search"
-              value={query}
-              onChange={(e) => setQuery(e.target.value)}
-              placeholder="ID, нэр эсвэл утас"
-              aria-label="Захиалга хайх"
-              className={`${inputClass} pl-9 pr-9 [&::-webkit-search-cancel-button]:hidden`}
-            />
-            {query && (
-              <button
-                type="button"
-                onClick={() => setQuery("")}
-                className="absolute right-2 top-1/2 grid h-6 w-6 -translate-y-1/2 place-items-center rounded text-slate-400 hover:bg-slate-100"
-                aria-label="Хайлт цэвэрлэх"
-              >
-                <X className="h-3.5 w-3.5" />
-              </button>
-            )}
-          </div>
+          <Input
+            type="search"
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+            placeholder="ID, нэр эсвэл утас"
+            aria-label="Захиалга хайх"
+            className="w-full sm:w-72"
+            leading={<Search className="h-4 w-4" />}
+            trailing={
+              query && (
+                <button
+                  type="button"
+                  onClick={() => setQuery("")}
+                  className="grid h-8 w-8 place-items-center rounded-sm text-slate-400 hover:bg-slate-100 hover:text-slate-700"
+                  aria-label="Хайлт цэвэрлэх"
+                >
+                  <X className="h-3.5 w-3.5" />
+                </button>
+              )
+            }
+          />
         </div>
 
         <div className="-mb-px flex gap-1 overflow-x-auto [scrollbar-width:none]" role="tablist" aria-label="Төлөвөөр шүүх">
@@ -114,16 +115,15 @@ export default function OrdersView({ orders, onStatusChange }: OrdersViewProps) 
           title={query.trim() ? `“${query.trim()}” — захиалга олдсонгүй` : `“${STATUS_META[statusFilter as OrderStatus]?.label}” төлөвтэй захиалга алга`}
           body="Өөр төлөв сонгох эсвэл хайлтаа өөрчилнө үү."
           action={
-            <button
-              type="button"
+            <Button
+              variant="outline"
               onClick={() => {
                 setQuery("");
                 setStatusFilter("all");
               }}
-              className={btn.secondary}
             >
               Бүх захиалга харах
-            </button>
+            </Button>
           }
         />
       ) : (
