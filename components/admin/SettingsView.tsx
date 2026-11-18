@@ -91,13 +91,13 @@ export default function SettingsView({ settings, onSave, onResetDemoData }: Sett
         />
       </SettingsGroup>
 
-      <section className="rounded-xl border border-rose-200 bg-white p-5 shadow-sm">
+      <section className="rounded-lg border border-rose-200 bg-white p-5 shadow-sm">
         <h2 className="text-sm font-bold text-slate-900">Демо өгөгдөл</h2>
         <p className="mt-1 text-sm text-slate-500">Бараа, захиалгын өөрчлөлтүүдийг цуцалж анхны жишээ өгөгдөл рүү буцаана.</p>
         <button
           type="button"
           onClick={() => setConfirmReset(true)}
-          className="mt-4 inline-flex h-9 items-center gap-2 rounded-lg border border-rose-200 px-3 text-sm font-semibold text-rose-700 transition hover:bg-rose-50"
+          className="mt-4 inline-flex h-9 items-center gap-2 rounded-md border border-rose-200 px-3 text-sm font-semibold text-rose-700 transition hover:bg-rose-50"
         >
           <RotateCcw className="h-4 w-4" aria-hidden="true" />
           Анхны байдалд оруулах
@@ -106,7 +106,7 @@ export default function SettingsView({ settings, onSave, onResetDemoData }: Sett
 
       {/* Sticky save bar only appears with unsaved changes, so it never competes for attention otherwise. */}
       {dirty && (
-        <div className="sticky bottom-4 z-10 flex animate-pop-in flex-col gap-3 rounded-xl border border-slate-200 bg-white/95 p-3 pl-5 shadow-lg backdrop-blur sm:flex-row sm:items-center sm:justify-between">
+        <div className="sticky bottom-4 z-10 flex animate-pop-in flex-col gap-3 rounded-lg border border-slate-200 bg-white/95 p-3 pl-5 shadow-lg backdrop-blur sm:flex-row sm:items-center sm:justify-between">
           <p className="text-sm font-medium text-slate-700">Хадгалаагүй өөрчлөлт байна</p>
           <div className="flex gap-2">
             <button type="button" onClick={() => setDraft(settings)} className={btn.secondary}>
@@ -152,7 +152,7 @@ export default function SettingsView({ settings, onSave, onResetDemoData }: Sett
 
 function SettingsGroup({ title, description, children }: { title: string; description?: string; children: ReactNode }) {
   return (
-    <section className="grid gap-5 rounded-xl border border-slate-200 bg-white p-5 shadow-sm lg:grid-cols-[16rem_1fr]">
+    <section className="grid gap-5 rounded-lg border border-slate-200 bg-white p-5 shadow-sm lg:grid-cols-[16rem_1fr]">
       <div>
         <h2 className="text-sm font-bold text-slate-900">{title}</h2>
         {description && <p className="mt-1 text-sm text-slate-500">{description}</p>}

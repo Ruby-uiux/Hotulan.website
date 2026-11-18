@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="mn">
+<head>
+<meta charset="utf-8">
+<title>Захиалга амжилттай</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#0000ff;text-decoration:none}a:hover{color:#0000c2}
+</style>
+</helmet>
+<div style="width: 100%; background: #f8fafc; font-family: Inter, ui-sans-serif, system-ui, sans-serif; color: #0f172a">
+  <dc-import name="StoreHeader" hint-size="100%,180px"></dc-import>
+  <main style="max-width: 1000px; margin: 0 auto; padding: 40px 24px 72px; display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-start">
+    <section style="flex: 999 1 460px; min-width: 0; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 32px; display: flex; flex-direction: column; gap: 20px">
+      <span style="width: 56px; height: 56px; border-radius: 999px; background: #dcfce7; color: #15803d; display: grid; place-items: center">
+        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"></path></svg>
+      </span>
+      <div style="display: flex; flex-direction: column; gap: 8px">
+        <h1 style="margin: 0; font-size: 30px; font-weight: 800; letter-spacing: -0.02em">Захиалга хүлээн авлаа</h1>
+        <p style="margin: 0; font-size: 15px; line-height: 1.6; color: #475569">Захиалгын дугаар <b style="color: #0f172a">HTL-482913</b>. Төлбөр баталгаажмагц 9911-2345 дугаарт SMS очно.</p>
+      </div>
+      <ol style="list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0">
+        <sc-for list="{{steps}}" as="s" hint-placeholder-count="4">
+          <li style="display: flex; gap: 14px; min-height: 56px">
+            <span style="display: flex; flex-direction: column; align-items: center">
+              <span style="width: 22px; height: 22px; border-radius: 999px; background: {{s.dot}}; border: 2px solid {{s.ring}}; box-sizing: border-box"></span>
+              <span style="flex: 1; width: 2px; background: #e2e8f0"></span>
+            </span>
+            <span style="display: flex; flex-direction: column; gap: 2px; padding-bottom: 14px">
+              <span style="font-size: 15px; font-weight: 700; color: {{s.fg}}">{{s.t}}</span>
+              <span style="font-size: 13px; color: #64748b">{{s.d}}</span>
+            </span>
+          </li>
+        </sc-for>
+      </ol>
+      <div style="display: flex; gap: 12px; flex-wrap: wrap">
+        <a href="Home.dc.html" style="height: 48px; padding: 0 22px; border-radius: 8px; background: #0000ff; color: #ffffff; display: flex; align-items: center; font-weight: 700">Дэлгүүр үргэлжлүүлэх</a>
+        <a href="#" style="height: 48px; padding: 0 22px; border-radius: 8px; border: 1px solid #cbd5e1; color: #0f172a; display: flex; align-items: center; font-weight: 600">Захиалга хянах</a>
+      </div>
+    </section>
+    <aside style="flex: 1 1 300px; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 28px; display: flex; flex-direction: column; align-items: center; gap: 14px; text-align: center">
+      <span style="font-size: 16px; font-weight: 700">QPay-ээр төлөх</span>
+      <div role="img" aria-label="QPay QR код" style="width: 200px; height: 200px; border-radius: 12px; border: 1px solid #e2e8f0; display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 3px; padding: 14px; box-sizing: border-box">
+        <sc-for list="{{qr}}" as="q" hint-placeholder-count="64"><span style="background: {{q.c}}; border-radius: 2px"></span></sc-for>
+      </div>
+      <span style="font-size: 26px; font-weight: 800">537,000₮</span>
+      <span style="font-size: 13px; color: #64748b">QR 14:52 минутын дараа хүчингүй болно</span>
+      <div style="display: flex; flex-wrap: wrap; justify-content: center; gap: 6px">
+        <span style="padding: 6px 10px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 12px; font-weight: 600">Хаан банк</span>
+        <span style="padding: 6px 10px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 12px; font-weight: 600">Голомт</span>
+        <span style="padding: 6px 10px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 12px; font-weight: 600">ХХБ</span>
+        <span style="padding: 6px 10px; border: 1px solid #e2e8f0; border-radius: 6px; font-size: 12px; font-weight: 600">Төрийн банк</span>
+      </div>
+    </aside>
+  </main>
+  <dc-import name="StoreFooter" hint-size="100%,400px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1000}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var bits = '1110011110100101101101011001110100110101110010111011001010110111';
+    var states = [
+      ['Захиалга үүссэн', '11.17 · 14:32', 2], ['Төлбөр хүлээгдэж байна', 'QPay-ээр төлнө үү', 1],
+      ['Савлаж байна', 'Агуулахаас гаргана', 0], ['Хүргэлтэнд гарсан', 'Маргааш 10:00–14:00', 0]
+    ];
+    return {
+      qr: bits.split('').map(function (b) { return { c: b === '1' ? '#0f172a' : '#ffffff' }; }),
+      steps: states.map(function (s) {
+        return { t: s[0], d: s[1],
+          dot: s[2] === 2 ? '#15803d' : (s[2] === 1 ? '#ffffff' : '#ffffff'),
+          ring: s[2] === 2 ? '#15803d' : (s[2] === 1 ? '#0000ff' : '#cbd5e1'),
+          fg: s[2] === 0 ? '#64748b' : '#0f172a' };
+      })
+    };
+  }
+}
+</script>
+</body>
+</html>

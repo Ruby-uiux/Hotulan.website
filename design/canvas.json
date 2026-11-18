@@ -1,0 +1,532 @@
+{
+ "v": 3,
+ "createdOnFiles": {
+  "v": 1,
+  "at": "2026-11-17T09:00:00Z"
+ },
+ "title": "hotulan.mn — Онлайн дэлгүүр + Админ",
+ "launch": {
+  "view": "canvas",
+  "page": "brainstorm"
+ },
+ "pages": [
+  {
+   "id": "brainstorm",
+   "name": "1. Brainstorm"
+  },
+  {
+   "id": "store",
+   "name": "2. Дэлгүүр"
+  },
+  {
+   "id": "admin",
+   "name": "3. Админ панел"
+  },
+  {
+   "id": "mobile",
+   "name": "4. Mobile"
+  },
+  {
+   "id": "extra",
+   "name": "5. Нэмэлт хуудас"
+  },
+  {
+   "id": "states",
+   "name": "6. Төлөвүүд"
+  },
+  {
+   "id": "handoff",
+   "name": "7. Developer handoff"
+  }
+ ],
+ "boards": {
+  "Main.dc.html": {
+   "x": 0,
+   "y": 0,
+   "w": 1440,
+   "h": 1900,
+   "title": "Brainstorm · Design system",
+   "page": "brainstorm"
+  },
+  "Home.dc.html": {
+   "x": 0,
+   "y": 0,
+   "w": 1440,
+   "h": 2700,
+   "title": "Нүүр хуудас",
+   "page": "store",
+   "expand": "fill"
+  },
+  "Category.dc.html": {
+   "x": 1520,
+   "y": 0,
+   "w": 1440,
+   "h": 1900,
+   "title": "Ангиллын хуудас",
+   "page": "store",
+   "expand": "fill"
+  },
+  "Product.dc.html": {
+   "x": 3040,
+   "y": 0,
+   "w": 1440,
+   "h": 1750,
+   "title": "Барааны дэлгэрэнгүй",
+   "page": "store",
+   "expand": "fill"
+  },
+  "Checkout.dc.html": {
+   "x": 4560,
+   "y": 0,
+   "w": 1440,
+   "h": 1450,
+   "title": "Сагс · Захиалга",
+   "page": "store",
+   "expand": "fill"
+  },
+  "OrderSuccess.dc.html": {
+   "x": 6080,
+   "y": 0,
+   "w": 1440,
+   "h": 1000,
+   "title": "Захиалга амжилттай",
+   "page": "store",
+   "expand": "fill"
+  },
+  "StoreHeader.dc.html": {
+   "x": 0,
+   "y": 3120,
+   "w": 1440,
+   "h": 180,
+   "title": "Компонент · Header",
+   "page": "store"
+  },
+  "StoreFooter.dc.html": {
+   "x": 1520,
+   "y": 3120,
+   "w": 1440,
+   "h": 400,
+   "title": "Компонент · Footer",
+   "page": "store"
+  },
+  "AdminDashboard.dc.html": {
+   "x": 0,
+   "y": 0,
+   "w": 1440,
+   "h": 1150,
+   "title": "Хяналтын самбар",
+   "page": "admin",
+   "expand": "fill"
+  },
+  "AdminProducts.dc.html": {
+   "x": 1520,
+   "y": 0,
+   "w": 1440,
+   "h": 1150,
+   "title": "Бараа",
+   "page": "admin",
+   "expand": "fill"
+  },
+  "AdminProductForm.dc.html": {
+   "x": 3040,
+   "y": 0,
+   "w": 1440,
+   "h": 1400,
+   "title": "Шинэ бараа нэмэх",
+   "page": "admin",
+   "expand": "fill"
+  },
+  "AdminCategories.dc.html": {
+   "x": 4560,
+   "y": 0,
+   "w": 1440,
+   "h": 1150,
+   "title": "Ангилал",
+   "page": "admin",
+   "expand": "fill"
+  },
+  "AdminOrders.dc.html": {
+   "x": 6080,
+   "y": 0,
+   "w": 1440,
+   "h": 1150,
+   "title": "Захиалга",
+   "page": "admin",
+   "expand": "fill"
+  },
+  "AdminOrderDetail.dc.html": {
+   "x": 7600,
+   "y": 0,
+   "w": 1440,
+   "h": 1150,
+   "title": "Захиалгын дэлгэрэнгүй",
+   "page": "admin",
+   "expand": "fill"
+  },
+  "AdminAppearance.dc.html": {
+   "x": 0,
+   "y": 1520,
+   "w": 1440,
+   "h": 1500,
+   "title": "Сайтын харагдах байдал",
+   "page": "admin",
+   "expand": "fill"
+  },
+  "AdminDelivery.dc.html": {
+   "x": 1520,
+   "y": 1520,
+   "w": 1440,
+   "h": 1150,
+   "title": "Хүргэлтийн бүс",
+   "page": "admin",
+   "expand": "fill"
+  },
+  "AdminCustomers.dc.html": {
+   "x": 3040,
+   "y": 1520,
+   "w": 1440,
+   "h": 1150,
+   "title": "Хэрэглэгчид",
+   "page": "admin",
+   "expand": "fill"
+  },
+  "AdminPromotions.dc.html": {
+   "x": 4560,
+   "y": 1520,
+   "w": 1440,
+   "h": 1150,
+   "title": "Урамшуулал · Купон",
+   "page": "admin",
+   "expand": "fill"
+  },
+  "AdminStaff.dc.html": {
+   "x": 6080,
+   "y": 1520,
+   "w": 1440,
+   "h": 1150,
+   "title": "Ажилтан · Эрх",
+   "page": "admin",
+   "expand": "fill"
+  },
+  "AdminSettings.dc.html": {
+   "x": 7600,
+   "y": 1520,
+   "w": 1440,
+   "h": 1150,
+   "title": "Тохиргоо",
+   "page": "admin",
+   "expand": "fill"
+  },
+  "AdminSidebar.dc.html": {
+   "x": 0,
+   "y": 3440,
+   "w": 248,
+   "h": 1000,
+   "title": "Компонент · Sidebar",
+   "page": "admin"
+  },
+  "AdminTopbar.dc.html": {
+   "x": 328,
+   "y": 3440,
+   "w": 1192,
+   "h": 72,
+   "title": "Компонент · Topbar",
+   "page": "admin"
+  },
+  "Tokens.dc.html": {
+   "x": 0,
+   "y": 0,
+   "w": 1440,
+   "h": 2100,
+   "title": "Tokens · Tailwind",
+   "page": "handoff"
+  },
+  "Components.dc.html": {
+   "x": 1520,
+   "y": 0,
+   "w": 1440,
+   "h": 2600,
+   "title": "Компонентын сан",
+   "page": "handoff"
+  },
+  "StatesStore.dc.html": {
+   "x": 0,
+   "y": 0,
+   "w": 1440,
+   "h": 1700,
+   "title": "Дэлгүүр — төлөвүүд",
+   "page": "states"
+  },
+  "StatesAdmin.dc.html": {
+   "x": 1520,
+   "y": 0,
+   "w": 1440,
+   "h": 1600,
+   "title": "Админ — төлөвүүд",
+   "page": "states"
+  },
+  "Search.dc.html": {
+   "x": 0,
+   "y": 0,
+   "w": 1440,
+   "h": 1500,
+   "title": "Хайлтын үр дүн",
+   "page": "extra",
+   "expand": "fill"
+  },
+  "Login.dc.html": {
+   "x": 1520,
+   "y": 0,
+   "w": 1440,
+   "h": 900,
+   "title": "Нэвтрэх · OTP",
+   "page": "extra",
+   "expand": "fill"
+  },
+  "MyOrders.dc.html": {
+   "x": 3040,
+   "y": 0,
+   "w": 1440,
+   "h": 1100,
+   "title": "Миний захиалга",
+   "page": "extra",
+   "expand": "fill"
+  },
+  "TrackOrder.dc.html": {
+   "x": 4560,
+   "y": 0,
+   "w": 1440,
+   "h": 1000,
+   "title": "Захиалга хянах",
+   "page": "extra",
+   "expand": "fill"
+  },
+  "InfoPage.dc.html": {
+   "x": 6080,
+   "y": 0,
+   "w": 1440,
+   "h": 1300,
+   "title": "Мэдээллийн хуудас",
+   "page": "extra",
+   "expand": "fill"
+  },
+  "NotFound.dc.html": {
+   "x": 7600,
+   "y": 0,
+   "w": 1440,
+   "h": 800,
+   "title": "404",
+   "page": "extra",
+   "expand": "fill"
+  },
+  "AdminLogin.dc.html": {
+   "x": 9120,
+   "y": 0,
+   "w": 1440,
+   "h": 800,
+   "title": "Админ нэвтрэх",
+   "page": "extra",
+   "expand": "fill"
+  },
+  "MHome.dc.html": {
+   "x": 0,
+   "y": 0,
+   "w": 390,
+   "h": 1800,
+   "title": "Mobile · Нүүр",
+   "page": "mobile"
+  },
+  "MCategory.dc.html": {
+   "x": 470,
+   "y": 0,
+   "w": 390,
+   "h": 1500,
+   "title": "Mobile · Ангилал",
+   "page": "mobile"
+  },
+  "MFilter.dc.html": {
+   "x": 940,
+   "y": 0,
+   "w": 390,
+   "h": 844,
+   "title": "Mobile · Шүүлтүүр sheet",
+   "page": "mobile"
+  },
+  "MProduct.dc.html": {
+   "x": 1410,
+   "y": 0,
+   "w": 390,
+   "h": 1600,
+   "title": "Mobile · Бараа",
+   "page": "mobile"
+  },
+  "MCart.dc.html": {
+   "x": 1880,
+   "y": 0,
+   "w": 390,
+   "h": 1000,
+   "title": "Mobile · Сагс",
+   "page": "mobile"
+  },
+  "MCheckout.dc.html": {
+   "x": 2350,
+   "y": 0,
+   "w": 390,
+   "h": 1700,
+   "title": "Mobile · Захиалга",
+   "page": "mobile"
+  },
+  "MAdminMenu.dc.html": {
+   "x": 0,
+   "y": 2220,
+   "w": 390,
+   "h": 844,
+   "title": "Mobile · Админ цэс",
+   "page": "mobile"
+  },
+  "MAdminDashboard.dc.html": {
+   "x": 470,
+   "y": 2220,
+   "w": 390,
+   "h": 1300,
+   "title": "Mobile · Админ самбар",
+   "page": "mobile"
+  },
+  "MAdminOrders.dc.html": {
+   "x": 940,
+   "y": 2220,
+   "w": 390,
+   "h": 1200,
+   "title": "Mobile · Админ захиалга",
+   "page": "mobile"
+  },
+  "MAdminOrderDetail.dc.html": {
+   "x": 1410,
+   "y": 2220,
+   "w": 390,
+   "h": 1400,
+   "title": "Mobile · Захиалгын дэлгэрэнгүй",
+   "page": "mobile"
+  }
+ },
+ "order": [
+  "Main.dc.html",
+  "Home.dc.html",
+  "Category.dc.html",
+  "Product.dc.html",
+  "Checkout.dc.html",
+  "OrderSuccess.dc.html",
+  "StoreHeader.dc.html",
+  "StoreFooter.dc.html",
+  "AdminDashboard.dc.html",
+  "AdminProducts.dc.html",
+  "AdminProductForm.dc.html",
+  "AdminCategories.dc.html",
+  "AdminOrders.dc.html",
+  "AdminOrderDetail.dc.html",
+  "AdminAppearance.dc.html",
+  "AdminDelivery.dc.html",
+  "AdminCustomers.dc.html",
+  "AdminPromotions.dc.html",
+  "AdminStaff.dc.html",
+  "AdminSettings.dc.html",
+  "AdminSidebar.dc.html",
+  "AdminTopbar.dc.html",
+  "Tokens.dc.html",
+  "Components.dc.html",
+  "StatesStore.dc.html",
+  "StatesAdmin.dc.html",
+  "Search.dc.html",
+  "Login.dc.html",
+  "MyOrders.dc.html",
+  "TrackOrder.dc.html",
+  "InfoPage.dc.html",
+  "NotFound.dc.html",
+  "AdminLogin.dc.html",
+  "MHome.dc.html",
+  "MCategory.dc.html",
+  "MFilter.dc.html",
+  "MProduct.dc.html",
+  "MCart.dc.html",
+  "MCheckout.dc.html",
+  "MAdminMenu.dc.html",
+  "MAdminDashboard.dc.html",
+  "MAdminOrders.dc.html",
+  "MAdminOrderDetail.dc.html"
+ ],
+ "notes": {
+  "t_store": {
+   "x": 0,
+   "y": -300,
+   "text": "Дэлгүүр — худалдан авагчийн урсгал",
+   "kind": "title1",
+   "maxW": 7520,
+   "page": "store"
+  },
+  "t_storecomp": {
+   "x": 0,
+   "y": 2820,
+   "text": "Дахин ашиглагдах компонентууд",
+   "kind": "title1",
+   "maxW": 2960,
+   "page": "store"
+  },
+  "t_admin": {
+   "x": 0,
+   "y": -300,
+   "text": "Админ панел — бүх үйлдэл",
+   "kind": "title1",
+   "maxW": 9040,
+   "page": "admin"
+  },
+  "t_admincomp": {
+   "x": 0,
+   "y": 3140,
+   "text": "Админ компонентууд",
+   "kind": "title1",
+   "maxW": 1520,
+   "page": "admin"
+  },
+  "t_mstore": {
+   "x": 0,
+   "y": -300,
+   "text": "Mobile — дэлгүүр (390px)",
+   "kind": "title1",
+   "maxW": 2740,
+   "page": "mobile"
+  },
+  "t_madmin": {
+   "x": 0,
+   "y": 1920,
+   "text": "Mobile — админ",
+   "kind": "title1",
+   "maxW": 1800,
+   "page": "mobile"
+  },
+  "t_extra": {
+   "x": 0,
+   "y": -300,
+   "text": "Нэмэлт хуудсууд",
+   "kind": "title1",
+   "maxW": 10560,
+   "page": "extra"
+  },
+  "t_states": {
+   "x": 0,
+   "y": -300,
+   "text": "Хоосон, ачаалж буй, алдаа, баталгаажуулах төлөвүүд",
+   "kind": "title1",
+   "maxW": 2960,
+   "page": "states"
+  },
+  "t_handoff": {
+   "x": 0,
+   "y": -300,
+   "text": "Developer handoff",
+   "kind": "title1",
+   "maxW": 2960,
+   "page": "handoff"
+  }
+ },
+ "designSystems": []
+}

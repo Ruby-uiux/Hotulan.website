@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="mn">
+<head>
+<meta charset="utf-8">
+<title>Админ нэвтрэх</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#0000ff;text-decoration:none}a:hover{color:#0000c2}
+</style>
+</helmet>
+<div style="width: 100%; min-height: 800px; background: #0f172a; font-family: Inter, ui-sans-serif, system-ui, sans-serif; color: #0f172a; display: grid; place-items: center; padding: 48px 16px; box-sizing: border-box">
+  <main style="width: 100%; max-width: 420px; display: flex; flex-direction: column; gap: 20px">
+    <div style="display: flex; align-items: center; gap: 10px; justify-content: center">
+      <span style="width: 40px; height: 40px; border-radius: 10px; background: #0000ff; color: #ffffff; display: grid; place-items: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9 4.5 4h15L21 9M3 9h18M3 9v11h18V9M9 20v-6h6v6"></path></svg></span>
+      <span style="font-size: 21px; font-weight: 800; color: #ffffff">hotulan<span style="color: #a5acff">.mn</span> <span style="font-weight: 500; color: #94a3b8; font-size: 15px">Админ</span></span>
+    </div>
+    <form style="background: #ffffff; border-radius: 16px; padding: 28px; display: flex; flex-direction: column; gap: 16px">
+      <h1 style="margin: 0; font-size: 22px; font-weight: 800">Нэвтрэх</h1>
+      <div role="alert" style="padding: 10px 12px; border-radius: 8px; background: #fef2f2; border: 1px solid #fecaca; color: #991b1b; font-size: 13px">Нэр эсвэл нууц үг буруу. 3 удаа үлдсэн.</div>
+      <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600">Нэвтрэх нэр<input type="text" value="admin" autocomplete="username" style="height: 46px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0 12px; font: 400 15px Inter, sans-serif"></label>
+      <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600">Нууц үг<span style="display: flex; height: 46px; border: 1.5px solid #dc2626; border-radius: 8px; overflow: hidden; font-weight: 400"><input type="password" value="password" autocomplete="current-password" aria-invalid="true" style="flex: 1; min-width: 0; border: 0; padding: 0 12px; font: 400 15px Inter, sans-serif; outline: none"><button type="button" style="padding: 0 12px; border: 0; background: none; color: #475569; font: 600 13px Inter, sans-serif">Харуулах</button></span></label>
+      <label style="display: flex; gap: 8px; align-items: center; font-size: 14px"><input type="checkbox" style="width: 18px; height: 18px; accent-color: #0000ff">Энэ төхөөрөмжид 8 цаг сануулах</label>
+      <button type="submit" style="height: 48px; border: 0; border-radius: 8px; background: #0000ff; color: #ffffff; font: 700 15px Inter, sans-serif">Нэвтрэх</button>
+      <span style="font-size: 13px; color: #64748b; text-align: center">2 шатлалт нэвтрэлт идэвхтэй бол дараагийн алхамд код асууна</span>
+    </form>
+    <a href="Home.dc.html" style="text-align: center; color: #a5acff; font-size: 14px">← Дэлгүүр рүү буцах</a>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":800}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

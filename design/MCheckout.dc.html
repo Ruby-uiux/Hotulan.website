@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="mn">
+<head>
+<meta charset="utf-8">
+<title>Mobile — Захиалга</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#0000ff;text-decoration:none}a:hover{color:#0000c2}
+</style>
+</helmet>
+<div style="width: 390px; min-height: 1700px; background: #f8fafc; font-family: Inter, ui-sans-serif, system-ui, sans-serif; color: #0f172a; display: flex; flex-direction: column; position: relative">
+  <header style="background: #ffffff; padding: 8px 16px 8px 4px; display: flex; align-items: center; gap: 4px; border-bottom: 1px solid #e2e8f0">
+    <a href="MCart.dc.html" aria-label="Буцах" style="width: 44px; height: 44px; display: grid; place-items: center; font-size: 20px; color: #0f172a">←</a>
+    <h1 style="flex: 1; margin: 0; font-size: 17px; font-weight: 700">Захиалга</h1>
+    <span style="font-size: 13px; color: #64748b">2 / 3</span>
+  </header>
+  <div style="height: 4px; background: #e2e8f0"><div style="width: 66%; height: 100%; background: #0000ff"></div></div>
+  <main style="padding: 16px 16px 140px; display: flex; flex-direction: column; gap: 16px">
+    <section style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 14px">
+      <h2 style="margin: 0; font-size: 16px; font-weight: 700">Хүлээн авагч</h2>
+      <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600">Нэр *<input type="text" value="Б. Сарангэрэл" autocomplete="name" style="height: 48px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0 12px; font: 400 16px Inter, sans-serif"></label>
+      <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600">Утас *<input type="tel" value="9911-2345" inputmode="tel" autocomplete="tel" style="height: 48px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0 12px; font: 400 16px Inter, sans-serif"></label>
+    </section>
+    <section style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 14px">
+      <div style="display: flex; justify-content: space-between; align-items: center"><h2 style="margin: 0; font-size: 16px; font-weight: 700">Хаяг</h2><span style="padding: 4px 10px; border-radius: 999px; background: #eef0ff; color: #0000c2; font-size: 12px; font-weight: 600">Зөвхөн УБ</span></div>
+      <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600">Дүүрэг *<select style="height: 48px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0 10px; font: 400 16px Inter, sans-serif; background: #ffffff; color: #0f172a"><option>Хан-Уул</option></select></label>
+      <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600">Хороо *<select style="height: 48px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0 10px; font: 400 16px Inter, sans-serif; background: #ffffff; color: #0f172a"><option>15-р хороо</option></select></label>
+      <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600">Байр, орц, тоот *<input type="text" value="Зайсан, 52-р байр, 2 орц, 41 тоот" autocomplete="street-address" style="height: 48px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0 12px; font: 400 16px Inter, sans-serif"></label>
+      <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600">Тэмдэглэл<textarea rows="2" placeholder="Орцны код гэх мэт" style="border: 1px solid #cbd5e1; border-radius: 8px; padding: 12px; font: 400 16px Inter, sans-serif"></textarea></label>
+    </section>
+    <section style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 10px">
+      <h2 style="margin: 0; font-size: 16px; font-weight: 700">Хүргэлтийн цаг</h2>
+      <div style="display: flex; gap: 8px; overflow-x: auto">
+        <label style="flex: none; border: 2px solid #0000ff; background: #eef0ff; border-radius: 10px; padding: 10px 12px; display: flex; gap: 8px; align-items: center; font-size: 13px"><input type="radio" name="ms" checked style="accent-color: #0000ff">Маргааш<br>10–14</label>
+        <label style="flex: none; border: 1px solid #cbd5e1; border-radius: 10px; padding: 11px 13px; display: flex; gap: 8px; align-items: center; font-size: 13px"><input type="radio" name="ms" style="accent-color: #0000ff">Маргааш<br>14–19</label>
+        <label style="flex: none; border: 1px solid #cbd5e1; border-radius: 10px; padding: 11px 13px; display: flex; gap: 8px; align-items: center; font-size: 13px"><input type="radio" name="ms" style="accent-color: #0000ff">Нөгөөдөр</label>
+      </div>
+    </section>
+    <section style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 10px">
+      <h2 style="margin: 0; font-size: 16px; font-weight: 700">Төлбөр</h2>
+      <label style="min-height: 52px; border: 2px solid #0000ff; background: #eef0ff; border-radius: 10px; padding: 0 14px; display: flex; gap: 10px; align-items: center; font-size: 15px; font-weight: 600"><input type="radio" name="mp" checked style="accent-color: #0000ff; width: 18px; height: 18px">QPay</label>
+      <label style="min-height: 52px; border: 1px solid #cbd5e1; border-radius: 10px; padding: 0 15px; display: flex; gap: 10px; align-items: center; font-size: 15px"><input type="radio" name="mp" style="accent-color: #0000ff; width: 18px; height: 18px">Дансаар шилжүүлэх</label>
+      <label style="min-height: 52px; border: 1px solid #cbd5e1; border-radius: 10px; padding: 0 15px; display: flex; gap: 10px; align-items: center; font-size: 15px"><input type="radio" name="mp" style="accent-color: #0000ff; width: 18px; height: 18px">Хүлээн авахдаа төлөх</label>
+    </section>
+  </main>
+  <div style="position: absolute; left: 0; right: 0; bottom: 0; background: #ffffff; border-top: 1px solid #e2e8f0; padding: 12px 16px 20px; display: flex; align-items: center; gap: 12px">
+    <span style="display: flex; flex-direction: column"><span style="font-size: 12px; color: #64748b">Нийт · хүргэлт үнэгүй</span><b style="font-size: 20px">537,000₮</b></span>
+    <a href="OrderSuccess.dc.html" style="flex: 1; height: 52px; border-radius: 10px; background: #0000ff; color: #ffffff; display: grid; place-items: center; font-weight: 700; font-size: 15px">Батлах</a>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1700}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="mn">
+<head>
+<meta charset="utf-8">
+<title>Админ — Ажилтан, эрх</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#0000ff;text-decoration:none}a:hover{color:#0000c2}
+</style>
+</helmet>
+<div style="width: 100%; min-height: 1150px; background: #f8fafc; font-family: Inter, ui-sans-serif, system-ui, sans-serif; color: #0f172a; display: flex; flex-wrap: wrap; align-items: stretch">
+  <div style="flex: 1 1 248px; min-width: 248px; display: flex">
+    <dc-import name="AdminSidebar" active="staff" hint-size="100%,100%"></dc-import>
+  </div>
+  <div style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column">
+    <dc-import name="AdminTopbar" heading="Ажилтан, эрх" crumb="Админ · Систем" hint-size="100%,72px"></dc-import>
+    <main style="padding: 28px 32px 40px; display: flex; flex-direction: column; gap: 20px">
+      <section style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden">
+        <div style="padding: 16px 20px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center"><h2 style="margin: 0; font-size: 16px; font-weight: 700">Ажилтнууд (5)</h2><button type="button" style="height: 40px; padding: 0 14px; border: 0; border-radius: 8px; background: #0000ff; color: #ffffff; font: 600 13px Inter, sans-serif">+ Ажилтан урих</button></div>
+        <div style="overflow-x: auto">
+          <table style="width: 100%; border-collapse: collapse; font-size: 14px; min-width: 700px">
+            <thead><tr style="background: #f8fafc; color: #64748b; font-size: 12px; text-align: left"><th scope="col" style="padding: 10px 20px; font-weight: 600">Нэр</th><th scope="col" style="padding: 10px; font-weight: 600">Эрх</th><th scope="col" style="padding: 10px; font-weight: 600">2 шатлалт нэвтрэлт</th><th scope="col" style="padding: 10px; font-weight: 600">Сүүлд нэвтэрсэн</th><th scope="col" style="padding: 10px 20px; font-weight: 600"></th></tr></thead>
+            <tbody>
+              <sc-for list="{{staff}}" as="s" hint-placeholder-count="5">
+                <tr style="border-top: 1px solid #f1f5f9">
+                  <td style="padding: 12px 20px"><span style="display: flex; flex-direction: column"><span style="font-weight: 600">{{s.n}}</span><span style="font-size: 12px; color: #64748b">{{s.e}}</span></span></td>
+                  <td style="padding: 12px 10px"><span style="padding: 3px 8px; border-radius: 999px; font-size: 12px; font-weight: 600; background: {{s.rBg}}; color: {{s.rFg}}">{{s.r}}</span></td>
+                  <td style="padding: 12px 10px; color: {{s.tfaC}}; font-weight: 600; font-size: 13px">{{s.tfa}}</td>
+                  <td style="padding: 12px 10px; color: #475569">{{s.last}}</td>
+                  <td style="padding: 12px 20px; text-align: right"><a href="#" style="font-weight: 600; font-size: 13px; padding: 8px">Засах</a></td>
+                </tr>
+              </sc-for>
+            </tbody>
+          </table>
+        </div>
+      </section>
+
+      <div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start">
+        <section style="flex: 999 1 560px; min-width: 0; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden">
+          <div style="padding: 16px 20px; border-bottom: 1px solid #e2e8f0"><h2 style="margin: 0; font-size: 16px; font-weight: 700">Эрхийн тохиргоо</h2></div>
+          <div style="overflow-x: auto">
+            <table style="width: 100%; border-collapse: collapse; font-size: 13px; min-width: 560px">
+              <thead><tr style="background: #f8fafc; color: #64748b; font-size: 12px; text-align: left"><th scope="col" style="padding: 10px 20px; font-weight: 600">Модуль</th><th scope="col" style="padding: 10px; font-weight: 600; text-align: center">Супер админ</th><th scope="col" style="padding: 10px; font-weight: 600; text-align: center">Менежер</th><th scope="col" style="padding: 10px; font-weight: 600; text-align: center">Агуулах</th><th scope="col" style="padding: 10px; font-weight: 600; text-align: center">Хүргэлт</th></tr></thead>
+              <tbody>
+                <sc-for list="{{perms}}" as="p" hint-placeholder-count="9">
+                  <tr style="border-top: 1px solid #f1f5f9">
+                    <th scope="row" style="padding: 10px 20px; text-align: left; font-weight: 600">{{p.m}}</th>
+                    <sc-for list="{{p.cells}}" as="c" hint-placeholder-count="4">
+                      <td style="padding: 10px; text-align: center"><span style="padding: 3px 8px; border-radius: 6px; font-size: 12px; font-weight: 600; background: {{c.bg}}; color: {{c.fg}}">{{c.t}}</span></td>
+                    </sc-for>
+                  </tr>
+                </sc-for>
+              </tbody>
+            </table>
+          </div>
+        </section>
+        <section style="flex: 1 1 300px; max-width: 380px; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; display: flex; flex-direction: column; gap: 10px">
+          <h2 style="margin: 0; font-size: 16px; font-weight: 700">Үйлдлийн лог</h2>
+          <sc-for list="{{log}}" as="l" hint-placeholder-count="5">
+            <div style="display: flex; flex-direction: column; gap: 2px; padding: 8px 0; border-top: 1px solid #f1f5f9; font-size: 13px"><span><b>{{l.who}}</b> {{l.what}}</span><span style="color: #64748b; font-size: 12px">{{l.when}}</span></div>
+          </sc-for>
+        </section>
+      </div>
+    </main>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1150}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var R = { sa: ['Супер админ', '#0f172a', '#ffffff'], mg: ['Менежер', '#eef0ff', '#0000c2'], wh: ['Агуулах', '#fef3c7', '#92400e'], dr: ['Хүргэлт', '#ede9fe', '#5b21b6'] };
+    function S(n, e, r, tfa, last) { return { n: n, e: e, r: R[r][0], rBg: R[r][1], rFg: R[r][2], tfa: tfa ? 'Идэвхтэй' : 'Идэвхгүй', tfaC: tfa ? '#15803d' : '#b45309', last: last }; }
+    var L = { f: ['Бүрэн', '#dcfce7', '#166534'], e: ['Засах', '#eef0ff', '#0000c2'], v: ['Харах', '#f1f5f9', '#475569'], n: ['—', '#ffffff', '#94a3b8'] };
+    var rows = [
+      ['Хяналтын самбар', 'fvvn'], ['Захиалга', 'feev'], ['Бараа', 'feen'], ['Ангилал', 'fevn'], ['Хэрэглэгчид', 'fvnn'],
+      ['Урамшуулал', 'fenn'], ['Харагдах байдал', 'fenn'], ['Хүргэлтийн бүс', 'fvnv'], ['Ажилтан, тохиргоо', 'fnnn']
+    ];
+    return {
+      staff: [
+        S('Загдаа', 'Эзэмшигч', 'sa', true, 'Одоо'), S('Б. Оюунчимэг', 'Борлуулалтын менежер', 'mg', true, '10 мин өмнө'),
+        S('Д. Ганбат', 'Агуулахын нярав', 'wh', false, 'Өчигдөр'), S('Батбаяр', 'Жолооч', 'dr', false, '2 цаг өмнө'), S('Ганзориг', 'Жолооч', 'dr', false, '1 цаг өмнө')
+      ],
+      perms: rows.map(function (r) {
+        return { m: r[0], cells: r[1].split('').map(function (k) { return { t: L[k][0], bg: L[k][1], fg: L[k][2] }; }) };
+      }),
+      log: [
+        { who: 'Б. Оюунчимэг', what: 'HTL-482910 → Төлөгдсөн', when: 'Өнөөдөр 11:52' },
+        { who: 'Загдаа', what: 'нүүрний баннер “Өвлийн их хямдрал” нэмсэн', when: 'Өнөөдөр 10:14' },
+        { who: 'Д. Ганбат', what: 'Робот тоос сорогч нөөц 8 → 3', when: 'Өчигдөр 18:40' },
+        { who: 'Загдаа', what: '“Гутал” ангиллыг нуусан', when: 'Өчигдөр 16:02' },
+        { who: 'Б. Оюунчимэг', what: 'WINTER20 купон үүсгэсэн', when: '11.15 09:30' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

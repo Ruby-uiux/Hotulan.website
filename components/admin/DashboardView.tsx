@@ -102,7 +102,7 @@ export default function DashboardView({ products, orders, lowStockThreshold, onN
       </div>
 
       <div className="grid gap-6 xl:grid-cols-[1.6fr_1fr]">
-        <section className="rounded-xl border border-slate-200 bg-white shadow-sm" aria-labelledby="recent-orders">
+        <section className="rounded-lg border border-slate-200 bg-white shadow-sm" aria-labelledby="recent-orders">
           <header className="flex items-center justify-between border-b border-slate-200 px-5 py-4">
             <h2 id="recent-orders" className="text-sm font-bold text-slate-900">
               Сүүлийн захиалгууд
@@ -140,7 +140,7 @@ export default function DashboardView({ products, orders, lowStockThreshold, onN
           )}
         </section>
 
-        <section className="rounded-xl border border-slate-200 bg-white shadow-sm" aria-labelledby="low-stock">
+        <section className="rounded-lg border border-slate-200 bg-white shadow-sm" aria-labelledby="low-stock">
           <header className="flex items-center justify-between border-b border-slate-200 px-5 py-4">
             <h2 id="low-stock" className="text-sm font-bold text-slate-900">
               Нөхөх шаардлагатай бараа
@@ -159,7 +159,7 @@ export default function DashboardView({ products, orders, lowStockThreshold, onN
             <ul className="divide-y divide-slate-100">
               {lowStockItems.map((p) => (
                 <li key={p.id} className="flex items-center gap-3 px-5 py-3">
-                  <SafeImage src={p.image} alt="" className="h-10 w-10 shrink-0 rounded-lg border border-slate-200 object-cover" />
+                  <SafeImage src={p.image} alt="" className="h-10 w-10 shrink-0 rounded-md border border-slate-200 object-cover" />
                   <div className="min-w-0 flex-1">
                     <p className="truncate text-sm font-medium text-slate-900">{p.title}</p>
                     <p className="text-xs text-slate-500">
@@ -192,14 +192,14 @@ function StatCard({ icon: Icon, label, value, hint, emphasis, warning, onClick }
   return (
     <Wrapper
       {...(onClick ? { type: "button" as const, onClick } : {})}
-      className={`group rounded-xl border bg-white p-5 text-left shadow-sm transition ${
+      className={`group rounded-lg border bg-white p-5 text-left shadow-sm transition ${
         emphasis ? "border-brand/30 ring-1 ring-brand/10" : "border-slate-200"
       } ${onClick ? "hover:border-slate-300 hover:shadow-md" : ""}`}
     >
       <div className="flex items-start justify-between gap-3">
         <p className="text-sm font-medium text-slate-500">{label}</p>
         <span
-          className={`grid h-9 w-9 shrink-0 place-items-center rounded-lg ${
+          className={`grid h-9 w-9 shrink-0 place-items-center rounded-md ${
             emphasis ? "bg-brand text-white" : warning ? "bg-amber-50 text-amber-600" : "bg-slate-100 text-slate-500"
           }`}
         >
@@ -242,7 +242,7 @@ function RevenueChart({ orders, now }: { orders: Order[]; now: Date }) {
   const gridlines = [ceiling, ceiling / 2, 0];
 
   return (
-    <section className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm" aria-labelledby="revenue-chart">
+    <section className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm" aria-labelledby="revenue-chart">
       <header className="flex flex-wrap items-end justify-between gap-2">
         <div>
           <h2 id="revenue-chart" className="text-sm font-bold text-slate-900">
@@ -282,7 +282,7 @@ function RevenueChart({ orders, now }: { orders: Order[]; now: Date }) {
                   style={{ height: `${Math.max(pct, d.revenue > 0 ? 1.5 : 0)}%` }}
                 />
                 {hovered === i && (
-                  <div className="pointer-events-none absolute bottom-full z-10 mb-2 w-max -translate-y-1 rounded-lg bg-slate-900 px-3 py-2 text-xs text-white shadow-lg">
+                  <div className="pointer-events-none absolute bottom-full z-10 mb-2 w-max -translate-y-1 rounded-md bg-slate-900 px-3 py-2 text-xs text-white shadow-lg">
                     <p className="font-semibold">
                       {d.key.slice(5).replace("-", ".")} ({WEEKDAY_MN[d.date.getUTCDay()]})
                     </p>
@@ -315,7 +315,7 @@ function StatusBreakdown({ orders }: { orders: Order[] }) {
   const total = orders.length;
 
   return (
-    <section className="rounded-xl border border-slate-200 bg-white p-5 shadow-sm" aria-labelledby="status-breakdown">
+    <section className="rounded-lg border border-slate-200 bg-white p-5 shadow-sm" aria-labelledby="status-breakdown">
       <h2 id="status-breakdown" className="text-sm font-bold text-slate-900">
         Захиалгын төлөв
       </h2>
@@ -336,7 +336,7 @@ function StatusBreakdown({ orders }: { orders: Order[] }) {
             {counts.map((c) => (
               <li key={c.id} className="flex items-center justify-between gap-3 text-sm">
                 <span className="flex items-center gap-2 text-slate-700">
-                  <span className={`h-2.5 w-2.5 rounded-sm ${c.dot}`} aria-hidden="true" />
+                  <span className={`h-2.5 w-2.5 rounded-[4px] ${c.dot}`} aria-hidden="true" />
                   {c.label}
                 </span>
                 <span className="tabular-nums text-slate-500">

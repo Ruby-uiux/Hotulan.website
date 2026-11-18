@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="mn">
+<head>
+<meta charset="utf-8">
+<title>Админ — Шинэ бараа нэмэх</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#0000ff;text-decoration:none}a:hover{color:#0000c2}
+</style>
+</helmet>
+<div style="width: 100%; min-height: 1150px; background: #f8fafc; font-family: Inter, ui-sans-serif, system-ui, sans-serif; color: #0f172a; display: flex; flex-wrap: wrap; align-items: stretch">
+  <div style="flex: 1 1 248px; min-width: 248px; display: flex">
+    <dc-import name="AdminSidebar" active="productform" hint-size="100%,100%"></dc-import>
+  </div>
+  <div style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column">
+    <div style="min-height: 72px; box-sizing: border-box; padding: 12px 32px; background: #ffffff; border-bottom: 1px solid #e2e8f0; display: flex; flex-wrap: wrap; align-items: center; gap: 12px">
+      <a href="AdminProducts.dc.html" aria-label="Буцах" style="width: 40px; height: 40px; border: 1px solid #e2e8f0; border-radius: 8px; display: grid; place-items: center; color: #0f172a">←</a>
+      <div style="flex: 1; display: flex; flex-direction: column; gap: 2px">
+        <span style="font-size: 12px; color: #64748b">Бараа</span>
+        <h1 style="margin: 0; font-size: 18px; font-weight: 700">Шинэ бараа нэмэх</h1>
+      </div>
+      <span style="font-size: 13px; color: #64748b">Хадгалаагүй өөрчлөлт</span>
+      <button type="button" style="height: 44px; padding: 0 16px; border: 1px solid #cbd5e1; border-radius: 8px; background: #ffffff; color: #0f172a; font: 600 14px Inter, sans-serif">Ноорог хадгалах</button>
+      <button type="button" style="height: 44px; padding: 0 20px; border: 0; border-radius: 8px; background: #0000ff; color: #ffffff; font: 600 14px Inter, sans-serif">Нийтлэх</button>
+    </div>
+
+    <main style="padding: 28px 32px 40px; display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start">
+      <div style="flex: 999 1 520px; min-width: 0; display: flex; flex-direction: column; gap: 20px">
+        <section style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 22px; display: flex; flex-direction: column; gap: 16px">
+          <h2 style="margin: 0; font-size: 16px; font-weight: 700">Үндсэн мэдээлэл</h2>
+          <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600">Барааны нэр *<input type="text" value="Утасгүй чихэвч, идэвхтэй дуу тусгаарлалттай" style="height: 44px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0 12px; font: 400 15px Inter, sans-serif; color: #0f172a"></label>
+          <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600">Товч тайлбар (картанд харагдана)<input type="text" value="30 цаг ажиллах батарей, ANC" style="height: 44px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0 12px; font: 400 15px Inter, sans-serif; color: #0f172a"></label>
+          <div style="display: flex; flex-direction: column; gap: 6px">
+            <span style="font-size: 13px; font-weight: 600">Дэлгэрэнгүй тайлбар</span>
+            <div style="border: 1px solid #cbd5e1; border-radius: 8px; overflow: hidden">
+              <div role="toolbar" aria-label="Текст засварлах" style="display: flex; gap: 2px; padding: 6px; border-bottom: 1px solid #e2e8f0; background: #f8fafc">
+                <button type="button" aria-label="Тод" style="width: 34px; height: 34px; border: 0; border-radius: 6px; background: none; font: 800 14px Inter, sans-serif; color: #0f172a">B</button>
+                <button type="button" aria-label="Налуу" style="width: 34px; height: 34px; border: 0; border-radius: 6px; background: none; font: italic 600 14px Inter, sans-serif; color: #0f172a">I</button>
+                <button type="button" aria-label="Жагсаалт" style="width: 34px; height: 34px; border: 0; border-radius: 6px; background: none; font: 600 14px Inter, sans-serif; color: #0f172a">•≡</button>
+                <button type="button" aria-label="Холбоос" style="width: 34px; height: 34px; border: 0; border-radius: 6px; background: none; font: 600 14px Inter, sans-serif; color: #0f172a"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"></path></svg></button>
+                <button type="button" aria-label="Хүснэгт" style="width: 34px; height: 34px; border: 0; border-radius: 6px; background: none; font: 600 14px Inter, sans-serif; color: #0f172a">▦</button>
+              </div>
+              <div style="min-height: 110px; padding: 12px; font-size: 15px; line-height: 1.7; color: #334155">Идэвхтэй дуу тусгаарлалт нь автобус, оффисын чимээг 95% хүртэл бууруулна. Нэг цэнэглэлтээр 30 цаг ажиллана.</div>
+            </div>
+          </div>
+        </section>
+
+        <section style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 22px; display: flex; flex-direction: column; gap: 14px">
+          <div style="display: flex; justify-content: space-between; align-items: baseline"><h2 style="margin: 0; font-size: 16px; font-weight: 700">Зураг</h2><span style="font-size: 12px; color: #64748b">Эхний зураг нүүр зураг болно · чирж дараалал солино</span></div>
+          <div style="display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 12px">
+            <div style="grid-column: span 2; grid-row: span 2; aspect-ratio: 1 / 1; border-radius: 10px; background: #eef0ff; border: 2px solid #0000ff; position: relative">
+              <span style="position: absolute; left: 8px; top: 8px; padding: 3px 8px; border-radius: 6px; background: #0000ff; color: #ffffff; font-size: 11px; font-weight: 700">Нүүр зураг</span>
+            </div>
+            <div style="aspect-ratio: 1 / 1; border-radius: 10px; background: #f1f5f9"></div>
+            <div style="aspect-ratio: 1 / 1; border-radius: 10px; background: #f1f5f9"></div>
+            <div style="aspect-ratio: 1 / 1; border-radius: 10px; background: #f1f5f9"></div>
+            <div style="aspect-ratio: 1 / 1; border-radius: 10px; background: #f1f5f9"></div>
+            <button type="button" style="grid-column: span 4; border: 2px dashed #cbd5e1; border-radius: 10px; background: #f8fafc; color: #475569; font: 500 14px Inter, sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 6px; padding: 16px">
+              <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0000ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4M17 8l-5-5-5 5M12 3v12"></path></svg>
+              <span><b style="color: #0000ff">Зураг оруулах</b> эсвэл энд чирж тавина уу</span>
+              <span style="font-size: 12px; color: #64748b">JPG, PNG, WEBP · 5MB хүртэл · 1:1 харьцаа</span>
+            </button>
+          </div>
+        </section>
+
+        <section style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 22px; display: flex; flex-direction: column; gap: 16px">
+          <h2 style="margin: 0; font-size: 16px; font-weight: 700">Үнэ ба нөөц</h2>
+          <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 14px">
+            <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600">Зарах үнэ *<input type="text" value="459,000 ₮" style="height: 44px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0 12px; font: 400 15px Inter, sans-serif"></label>
+            <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600">Хуучин үнэ (зураастай)<input type="text" value="529,000 ₮" style="height: 44px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0 12px; font: 400 15px Inter, sans-serif"></label>
+            <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600">Өртөг (харагдахгүй)<input type="text" value="320,000 ₮" style="height: 44px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0 12px; font: 400 15px Inter, sans-serif"></label>
+            <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600">Барааны код (SKU)<input type="text" value="ELEC-ANC-01" style="height: 44px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0 12px; font: 400 15px Inter, sans-serif"></label>
+            <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600">Баркод<input type="text" value="8801643" style="height: 44px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0 12px; font: 400 15px Inter, sans-serif"></label>
+            <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600">Анхааруулах үлдэгдэл<input type="text" value="10" style="height: 44px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0 12px; font: 400 15px Inter, sans-serif"></label>
+          </div>
+          <div style="padding: 12px 14px; border-radius: 8px; background: #f0fdf4; color: #166534; font-size: 13px; font-weight: 500">Ашиг: 139,000₮ (30.3%) · Хямдрал −13% гэж сайтад харагдана</div>
+        </section>
+
+        <section style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden">
+          <div style="padding: 18px 22px; display: flex; justify-content: space-between; align-items: center"><h2 style="margin: 0; font-size: 16px; font-weight: 700">Хувилбар (өнгө, хэмжээ)</h2><button type="button" style="height: 36px; padding: 0 12px; border: 1px solid #cbd5e1; border-radius: 6px; background: #ffffff; font: 600 13px Inter, sans-serif; color: #0f172a">+ Сонголт нэмэх</button></div>
+          <table style="width: 100%; border-collapse: collapse; font-size: 14px">
+            <thead><tr style="background: #f8fafc; color: #64748b; font-size: 12px; text-align: left"><th scope="col" style="padding: 10px 22px; font-weight: 600">Өнгө</th><th scope="col" style="padding: 10px; font-weight: 600">Үнэ</th><th scope="col" style="padding: 10px; font-weight: 600">Нөөц</th><th scope="col" style="padding: 10px 22px; font-weight: 600">SKU</th></tr></thead>
+            <tbody>
+              <tr style="border-top: 1px solid #f1f5f9"><td style="padding: 10px 22px"><span style="display: inline-block; width: 12px; height: 12px; border-radius: 999px; background: #0f172a; margin-right: 8px"></span>Хар</td><td style="padding: 10px">459,000₮</td><td style="padding: 10px">14</td><td style="padding: 10px 22px; color: #64748b">ELEC-ANC-01-BK</td></tr>
+              <tr style="border-top: 1px solid #f1f5f9"><td style="padding: 10px 22px"><span style="display: inline-block; width: 12px; height: 12px; border-radius: 999px; background: #cbd5e1; margin-right: 8px"></span>Мөнгөлөг</td><td style="padding: 10px">459,000₮</td><td style="padding: 10px">6</td><td style="padding: 10px 22px; color: #64748b">ELEC-ANC-01-SV</td></tr>
+              <tr style="border-top: 1px solid #f1f5f9"><td style="padding: 10px 22px"><span style="display: inline-block; width: 12px; height: 12px; border-radius: 999px; background: #1e3a8a; margin-right: 8px"></span>Цэнхэр</td><td style="padding: 10px">469,000₮</td><td style="padding: 10px">3</td><td style="padding: 10px 22px; color: #64748b">ELEC-ANC-01-BL</td></tr>
+            </tbody>
+          </table>
+        </section>
+      </div>
+
+      <aside style="flex: 1 1 300px; max-width: 360px; display: flex; flex-direction: column; gap: 20px">
+        <section style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; display: flex; flex-direction: column; gap: 12px">
+          <h2 style="margin: 0; font-size: 16px; font-weight: 700">Төлөв</h2>
+          <label style="display: flex; gap: 10px; align-items: center; font-size: 14px"><input type="radio" name="st" checked style="accent-color: #0000ff; width: 18px; height: 18px">Идэвхтэй — сайтад харагдана</label>
+          <label style="display: flex; gap: 10px; align-items: center; font-size: 14px"><input type="radio" name="st" style="accent-color: #0000ff; width: 18px; height: 18px">Ноорог</label>
+          <label style="display: flex; gap: 10px; align-items: center; font-size: 14px"><input type="radio" name="st" style="accent-color: #0000ff; width: 18px; height: 18px">Товлосон огноонд нийтлэх</label>
+        </section>
+        <section style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; display: flex; flex-direction: column; gap: 14px">
+          <h2 style="margin: 0; font-size: 16px; font-weight: 700">Ангилал</h2>
+          <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600">Үндсэн ангилал *<select style="height: 44px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0 10px; font: 400 15px Inter, sans-serif; background: #ffffff; color: #0f172a"><option>Цахилгаан бараа</option></select></label>
+          <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600">Дэд ангилал<select style="height: 44px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0 10px; font: 400 15px Inter, sans-serif; background: #ffffff; color: #0f172a"><option>Чихэвч</option></select></label>
+          <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600">Брэнд<input type="text" value="Sony" style="height: 44px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0 12px; font: 400 15px Inter, sans-serif"></label>
+          <a href="AdminCategories.dc.html" style="font-size: 13px; font-weight: 600">+ Шинэ ангилал үүсгэх</a>
+        </section>
+        <section style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; display: flex; flex-direction: column; gap: 12px">
+          <h2 style="margin: 0; font-size: 16px; font-weight: 700">Шошго</h2>
+          <div style="display: flex; flex-wrap: wrap; gap: 8px">
+            <label style="height: 36px; padding: 0 12px; border-radius: 999px; border: 1px solid #0000ff; background: #eef0ff; color: #0000c2; display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600"><input type="checkbox" checked style="accent-color: #0000ff">Эрэлттэй</label>
+            <label style="height: 36px; padding: 0 12px; border-radius: 999px; border: 1px solid #cbd5e1; display: flex; align-items: center; gap: 6px; font-size: 13px"><input type="checkbox" style="accent-color: #0000ff">Шинэ</label>
+            <label style="height: 36px; padding: 0 12px; border-radius: 999px; border: 1px solid #cbd5e1; display: flex; align-items: center; gap: 6px; font-size: 13px"><input type="checkbox" style="accent-color: #0000ff">Хямдрал</label>
+            <label style="height: 36px; padding: 0 12px; border-radius: 999px; border: 1px solid #cbd5e1; display: flex; align-items: center; gap: 6px; font-size: 13px"><input type="checkbox" style="accent-color: #0000ff">Нүүрэнд онцлох</label>
+          </div>
+        </section>
+        <section style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; display: flex; flex-direction: column; gap: 14px">
+          <h2 style="margin: 0; font-size: 16px; font-weight: 700">Хүргэлт, баталгаа</h2>
+          <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px">
+            <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600">Жин (кг)<input type="text" value="0.4" style="height: 44px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0 12px; font: 400 15px Inter, sans-serif"></label>
+            <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600">Баталгаа (сар)<input type="text" value="12" style="height: 44px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0 12px; font: 400 15px Inter, sans-serif"></label>
+          </div>
+          <label style="display: flex; gap: 10px; align-items: center; font-size: 14px"><input type="checkbox" style="accent-color: #0000ff; width: 18px; height: 18px">Том оврын бараа (нэмэлт хүргэлтийн төлбөр)</label>
+        </section>
+      </aside>
+    </main>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1400}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

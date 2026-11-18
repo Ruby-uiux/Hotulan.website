@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="mn">
+<head>
+<meta charset="utf-8">
+<title>Админ — Захиалга</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#0f172a;text-decoration:none}a:hover{color:#0000ff}
+</style>
+</helmet>
+<div style="width: 100%; min-height: 1150px; background: #f8fafc; font-family: Inter, ui-sans-serif, system-ui, sans-serif; color: #0f172a; display: flex; flex-wrap: wrap; align-items: stretch">
+  <div style="flex: 1 1 248px; min-width: 248px; display: flex">
+    <dc-import name="AdminSidebar" active="orders" hint-size="100%,100%"></dc-import>
+  </div>
+  <div style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column">
+    <dc-import name="AdminTopbar" heading="Захиалга" crumb="Админ · Борлуулалт" hint-size="100%,72px"></dc-import>
+    <main style="padding: 28px 32px 40px; display: flex; flex-direction: column; gap: 16px">
+      <div role="tablist" aria-label="Захиалгын төлөв" style="display: flex; gap: 4px; border-bottom: 1px solid #e2e8f0; overflow-x: auto">
+        <sc-for list="{{tabs}}" as="t" hint-placeholder-count="7">
+          <button type="button" role="tab" aria-selected="{{t.sel}}" style="height: 46px; padding: 0 14px; border: 0; border-bottom: 2px solid {{t.line}}; background: none; color: {{t.fg}}; font: {{t.font}}; display: flex; align-items: center; gap: 8px; white-space: nowrap">{{t.t}}<span style="padding: 2px 8px; border-radius: 999px; background: {{t.cBg}}; color: {{t.cFg}}; font-size: 12px; font-weight: 700">{{t.n}}</span></button>
+        </sc-for>
+      </div>
+
+      <section style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden">
+        <div style="padding: 14px 16px; display: flex; flex-wrap: wrap; gap: 10px; border-bottom: 1px solid #e2e8f0; align-items: center">
+          <label style="flex: 1 1 240px; height: 40px; border: 1px solid #cbd5e1; border-radius: 8px; display: flex; align-items: center; gap: 8px; padding: 0 12px; color: #64748b">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14zM21 21l-4.3-4.3"></path></svg>
+            <span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Захиалга хайх</span>
+            <input type="search" placeholder="Дугаар, нэр, утас" style="flex: 1; min-width: 0; border: 0; font: 400 14px Inter, sans-serif; outline: none">
+          </label>
+          <select aria-label="Огноо" style="height: 40px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0 10px; font: 500 14px Inter, sans-serif; background: #ffffff; color: #0f172a"><option>11.10 – 11.17</option></select>
+          <select aria-label="Дүүрэг" style="height: 40px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0 10px; font: 500 14px Inter, sans-serif; background: #ffffff; color: #0f172a"><option>Бүх дүүрэг</option></select>
+          <select aria-label="Төлбөр" style="height: 40px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0 10px; font: 500 14px Inter, sans-serif; background: #ffffff; color: #0f172a"><option>Төлбөр: бүгд</option></select>
+          <span style="flex: 1"></span>
+          <button type="button" style="height: 40px; padding: 0 14px; border: 1px solid #cbd5e1; border-radius: 8px; background: #ffffff; color: #0f172a; font: 600 13px Inter, sans-serif">Жолооч оноох</button>
+          <button type="button" style="height: 40px; padding: 0 14px; border: 1px solid #cbd5e1; border-radius: 8px; background: #ffffff; color: #0f172a; font: 600 13px Inter, sans-serif">Хэвлэх</button>
+          <button type="button" style="height: 40px; padding: 0 14px; border: 1px solid #cbd5e1; border-radius: 8px; background: #ffffff; color: #0f172a; font: 600 13px Inter, sans-serif">Excel</button>
+        </div>
+        <div style="overflow-x: auto">
+          <table style="width: 100%; border-collapse: collapse; font-size: 14px; min-width: 980px">
+            <thead><tr style="background: #f8fafc; color: #64748b; font-size: 12px; text-align: left">
+              <th scope="col" style="padding: 10px 16px; width: 20px"><input type="checkbox" aria-label="Бүгдийг сонгох" style="width: 18px; height: 18px; accent-color: #0000ff"></th>
+              <th scope="col" style="padding: 10px 8px; font-weight: 600">Дугаар</th>
+              <th scope="col" style="padding: 10px 8px; font-weight: 600">Огноо</th>
+              <th scope="col" style="padding: 10px 8px; font-weight: 600">Хэрэглэгч</th>
+              <th scope="col" style="padding: 10px 8px; font-weight: 600">Дүүрэг</th>
+              <th scope="col" style="padding: 10px 8px; font-weight: 600">Дүн</th>
+              <th scope="col" style="padding: 10px 8px; font-weight: 600">Төлбөр</th>
+              <th scope="col" style="padding: 10px 8px; font-weight: 600">Төлөв</th>
+              <th scope="col" style="padding: 10px 16px; font-weight: 600">Жолооч</th>
+            </tr></thead>
+            <tbody>
+              <sc-for list="{{rows}}" as="o" hint-placeholder-count="10">
+                <tr style="border-top: 1px solid #f1f5f9">
+                  <td style="padding: 12px 16px"><input type="checkbox" aria-label="Сонгох" style="width: 18px; height: 18px; accent-color: #0000ff"></td>
+                  <td style="padding: 12px 8px"><a href="AdminOrderDetail.dc.html" style="font-weight: 700; color: #0000ff">{{o.id}}</a></td>
+                  <td style="padding: 12px 8px; color: #475569; white-space: nowrap">{{o.dt}}</td>
+                  <td style="padding: 12px 8px"><span style="display: flex; flex-direction: column"><span style="font-weight: 600">{{o.c}}</span><span style="font-size: 12px; color: #64748b">{{o.ph}}</span></span></td>
+                  <td style="padding: 12px 8px; color: #475569">{{o.d}}</td>
+                  <td style="padding: 12px 8px; font-weight: 600; font-variant-numeric: tabular-nums; white-space: nowrap">{{o.a}}</td>
+                  <td style="padding: 12px 8px; white-space: nowrap"><span style="font-size: 13px; color: {{o.payC}}; font-weight: 600">{{o.pay}}</span></td>
+                  <td style="padding: 12px 8px"><span style="padding: 4px 10px; border-radius: 999px; background: {{o.bg}}; color: {{o.fg}}; font-size: 12px; font-weight: 600; white-space: nowrap">{{o.s}}</span></td>
+                  <td style="padding: 12px 16px; color: {{o.drC}}; font-size: 13px; white-space: nowrap">{{o.dr}}</td>
+                </tr>
+              </sc-for>
+            </tbody>
+          </table>
+        </div>
+        <div style="padding: 12px 16px; border-top: 1px solid #e2e8f0; display: flex; justify-content: space-between; font-size: 13px; color: #64748b"><span>1–10 / 83 захиалга</span><span>Нийт дүн: <b style="color: #0f172a">20,384,000₮</b></span></div>
+      </section>
+    </main>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1150}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var S = {
+      new: ['Шинэ', '#eef0ff', '#0000c2'], paid: ['Төлөгдсөн', '#e0f2fe', '#075985'], packing: ['Савлаж байна', '#fef3c7', '#92400e'],
+      shipping: ['Хүргэлтэнд', '#ede9fe', '#5b21b6'], done: ['Хүргэгдсэн', '#dcfce7', '#166534'], cancel: ['Цуцалсан', '#fee2e2', '#991b1b']
+    };
+    var P = { qpay: ['QPay ✓', '#15803d'], bank: ['Данс ✓', '#15803d'], wait: ['Хүлээгдэж буй', '#b45309'], cod: ['Хүргэлтээр', '#475569'] };
+    var raw = [
+      ['HTL-482913', '11.17 14:32', 'Б. Сарангэрэл', '9911-2345', 'Хан-Уул', '537,000₮', 'wait', 'new', ''],
+      ['HTL-482912', '11.17 13:05', 'Ц. Мөнхжин', '8800-1122', 'Баянгол', '89,000₮', 'cod', 'new', ''],
+      ['HTL-482910', '11.17 11:48', 'Д. Тэмүүлэн', '9595-7788', 'Баянзүрх', '1,290,000₮', 'qpay', 'paid', ''],
+      ['HTL-482905', '11.17 09:20', 'Г. Номин', '9119-4455', 'Сүхбаатар', '189,000₮', 'bank', 'packing', 'Батбаяр'],
+      ['HTL-482901', '11.16 20:11', 'Н. Энхжаргал', '8611-2030', 'Налайх', '245,000₮', 'qpay', 'packing', 'Батбаяр'],
+      ['HTL-482899', '11.16 18:42', 'Э. Билгүүн', '9900-6644', 'Баянгол', '2,190,000₮', 'qpay', 'shipping', 'Ганзориг'],
+      ['HTL-482897', '11.16 16:03', 'С. Уянга', '9933-1212', 'Сонгинохайрхан', '159,000₮', 'cod', 'shipping', 'Ганзориг'],
+      ['HTL-482894', '11.16 12:30', 'О. Ариунаа', '8899-0011', 'Чингэлтэй', '129,000₮', 'qpay', 'done', 'Батбаяр'],
+      ['HTL-482890', '11.15 21:15', 'Т. Анударь', '9191-3434', 'Хан-Уул', '690,000₮', 'bank', 'done', 'Ганзориг'],
+      ['HTL-482886', '11.15 17:40', 'Ж. Төгөлдөр', '9988-5656', 'Баянзүрх', '59,000₮', 'wait', 'cancel', '']
+    ];
+    var tabs = [['Бүгд', 83], ['Шинэ', 18], ['Төлөгдсөн', 12], ['Савлаж байна', 9], ['Хүргэлтэнд', 14], ['Хүргэгдсэн', 26], ['Цуцалсан', 4]];
+    return {
+      tabs: tabs.map(function (t, i) {
+        var on = i === 0;
+        return { t: t[0], n: t[1], sel: on ? 'true' : 'false', line: on ? '#0000ff' : 'transparent', fg: on ? '#0000ff' : '#475569',
+          font: (on ? '700' : '500') + ' 14px Inter, sans-serif', cBg: on ? '#0000ff' : '#f1f5f9', cFg: on ? '#ffffff' : '#475569' };
+      }),
+      rows: raw.map(function (r) {
+        return { id: r[0], dt: r[1], c: r[2], ph: r[3], d: r[4], a: r[5], pay: P[r[6]][0], payC: P[r[6]][1],
+          s: S[r[7]][0], bg: S[r[7]][1], fg: S[r[7]][2], dr: r[8] || 'Оноогоогүй', drC: r[8] ? '#0f172a' : '#64748b' };
+      })
+    };
+  }
+}
+</script>
+</body>
+</html>

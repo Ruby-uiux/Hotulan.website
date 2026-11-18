@@ -1,0 +1,90 @@
+<!doctype html>
+<html lang="mn">
+<head>
+<meta charset="utf-8">
+<title>Админ — Хүргэлтийн бүс</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#0000ff;text-decoration:none}a:hover{color:#0000c2}
+</style>
+</helmet>
+<div style="width: 100%; min-height: 1150px; background: #f8fafc; font-family: Inter, ui-sans-serif, system-ui, sans-serif; color: #0f172a; display: flex; flex-wrap: wrap; align-items: stretch">
+  <div style="flex: 1 1 248px; min-width: 248px; display: flex">
+    <dc-import name="AdminSidebar" active="delivery" hint-size="100%,100%"></dc-import>
+  </div>
+  <div style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column">
+    <dc-import name="AdminTopbar" heading="Хүргэлтийн бүс" crumb="Админ · Систем" hint-size="100%,72px"></dc-import>
+    <main style="padding: 28px 32px 40px; display: flex; flex-direction: column; gap: 20px">
+      <div style="padding: 14px 18px; border-radius: 12px; background: #eef0ff; color: #0000c2; font-size: 14px; display: flex; gap: 10px; align-items: center">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s7-6.1 7-12a7 7 0 1 0-14 0c0 5.9 7 12 7 12zM12 12a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path></svg>
+        <span>Хүргэлт зөвхөн <b>Улаанбаатар хот</b>-ын 9 дүүрэгт. Идэвхгүй дүүргийг захиалгын хуудсанд сонгох боломжгүй.</span>
+      </div>
+      <div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start">
+        <section style="flex: 999 1 560px; min-width: 0; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden">
+          <div style="padding: 16px 20px; border-bottom: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center"><h2 style="margin: 0; font-size: 16px; font-weight: 700">Дүүрэг, үнэ</h2><button type="button" style="height: 40px; padding: 0 14px; border: 0; border-radius: 8px; background: #0000ff; color: #ffffff; font: 600 13px Inter, sans-serif">Хадгалах</button></div>
+          <div style="overflow-x: auto">
+            <table style="width: 100%; border-collapse: collapse; font-size: 14px; min-width: 640px">
+              <thead><tr style="background: #f8fafc; color: #64748b; font-size: 12px; text-align: left">
+                <th scope="col" style="padding: 10px 20px; font-weight: 600">Дүүрэг</th><th scope="col" style="padding: 10px; font-weight: 600">Бүс</th><th scope="col" style="padding: 10px; font-weight: 600">Хүргэлтийн үнэ</th><th scope="col" style="padding: 10px; font-weight: 600">Хугацаа</th><th scope="col" style="padding: 10px 20px; font-weight: 600">Идэвхтэй</th>
+              </tr></thead>
+              <tbody>
+                <sc-for list="{{zones}}" as="z" hint-placeholder-count="9">
+                  <tr style="border-top: 1px solid #f1f5f9">
+                    <td style="padding: 10px 20px; font-weight: 600">{{z.t}}</td>
+                    <td style="padding: 10px"><span style="padding: 3px 8px; border-radius: 999px; font-size: 12px; font-weight: 600; background: {{z.zBg}}; color: {{z.zFg}}">{{z.zone}}</span></td>
+                    <td style="padding: 10px"><input type="text" value="{{z.fee}}" aria-label="Хүргэлтийн үнэ" style="width: 110px; height: 38px; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0 10px; font: 400 14px Inter, sans-serif"></td>
+                    <td style="padding: 10px; color: #475569">{{z.eta}}</td>
+                    <td style="padding: 10px 20px"><button type="button" role="switch" aria-checked="true" aria-label="Идэвхтэй" style="border: 0; width: 40px; height: 22px; border-radius: 999px; background: #0000ff; display: flex; align-items: center; justify-content: flex-end; padding: 2px; box-sizing: border-box"><span style="width: 18px; height: 18px; border-radius: 999px; background: #ffffff"></span></button></td>
+                  </tr>
+                </sc-for>
+              </tbody>
+            </table>
+          </div>
+        </section>
+        <div style="flex: 1 1 300px; max-width: 380px; display: flex; flex-direction: column; gap: 20px">
+          <section style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; display: flex; flex-direction: column; gap: 14px">
+            <h2 style="margin: 0; font-size: 16px; font-weight: 700">Ерөнхий дүрэм</h2>
+            <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600">Үнэгүй хүргэлтийн босго (төв бүс)<input type="text" value="200,000 ₮" style="height: 44px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0 12px; font: 400 15px Inter, sans-serif"></label>
+            <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600">Маргааш хүргэх захиалгын хаалт<input type="text" value="18:00" style="height: 44px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0 12px; font: 400 15px Inter, sans-serif"></label>
+            <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600">Том оврын нэмэлт төлбөр<input type="text" value="15,000 ₮" style="height: 44px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0 12px; font: 400 15px Inter, sans-serif"></label>
+          </section>
+          <section style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; display: flex; flex-direction: column; gap: 10px">
+            <div style="display: flex; justify-content: space-between; align-items: center"><h2 style="margin: 0; font-size: 16px; font-weight: 700">Хүргэлтийн цаг</h2><button type="button" style="border: 0; background: none; color: #0000ff; font: 600 13px Inter, sans-serif; padding: 8px 0">+ Нэмэх</button></div>
+            <div style="display: flex; justify-content: space-between; font-size: 14px; padding: 8px 0; border-top: 1px solid #f1f5f9"><span>10:00 – 14:00</span><span style="color: #64748b">25 захиалга / цаг</span></div>
+            <div style="display: flex; justify-content: space-between; font-size: 14px; padding: 8px 0; border-top: 1px solid #f1f5f9"><span>14:00 – 19:00</span><span style="color: #64748b">30 захиалга / цаг</span></div>
+          </section>
+          <section style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; display: flex; flex-direction: column; gap: 10px">
+            <div style="display: flex; justify-content: space-between; align-items: center"><h2 style="margin: 0; font-size: 16px; font-weight: 700">Жолооч</h2><button type="button" style="border: 0; background: none; color: #0000ff; font: 600 13px Inter, sans-serif; padding: 8px 0">+ Нэмэх</button></div>
+            <div style="display: flex; justify-content: space-between; font-size: 14px; padding: 8px 0; border-top: 1px solid #f1f5f9"><span><b>Батбаяр</b> · 9900-1111</span><span style="color: #64748b">ХУД, БГД</span></div>
+            <div style="display: flex; justify-content: space-between; font-size: 14px; padding: 8px 0; border-top: 1px solid #f1f5f9"><span><b>Ганзориг</b> · 9900-2222</span><span style="color: #64748b">БЗД, СБД</span></div>
+          </section>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1150}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var raw = [
+      ['Баянгол', 1, '5,000', '24 цаг'], ['Баянзүрх', 1, '5,000', '24 цаг'], ['Сонгинохайрхан', 1, '6,000', '24 цаг'],
+      ['Сүхбаатар', 1, '5,000', '24 цаг'], ['Хан-Уул', 1, '5,000', '24 цаг'], ['Чингэлтэй', 1, '5,000', '24 цаг'],
+      ['Налайх', 0, '15,000', '48 цаг'], ['Багануур', 0, '25,000', '72 цаг'], ['Багахангай', 0, '25,000', '72 цаг']
+    ];
+    return {
+      zones: raw.map(function (r) {
+        return { t: r[0], zone: r[1] ? 'Төв' : 'Алслагдсан', zBg: r[1] ? '#eef0ff' : '#fef3c7', zFg: r[1] ? '#0000c2' : '#92400e', fee: r[2] + ' ₮', eta: r[3] };
+      })
+    };
+  }
+}
+</script>
+</body>
+</html>

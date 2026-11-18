@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="mn">
+<head>
+<meta charset="utf-8">
+<title>Барааны дэлгэрэнгүй — Утасгүй чихэвч</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#0f172a;text-decoration:none}a:hover{color:#0000ff}
+</style>
+</helmet>
+<div style="width: 100%; background: #f8fafc; font-family: Inter, ui-sans-serif, system-ui, sans-serif; color: #0f172a">
+  <dc-import name="StoreHeader" hint-size="100%,180px"></dc-import>
+
+  <main style="max-width: 1280px; margin: 0 auto; padding: 20px 24px 64px; display: flex; flex-direction: column; gap: 24px">
+    <nav aria-label="Байршил" style="font-size: 13px; color: #64748b; display: flex; gap: 8px; flex-wrap: wrap">
+      <a href="Home.dc.html" style="color: #64748b">Нүүр</a><span aria-hidden="true">/</span>
+      <a href="Category.dc.html" style="color: #64748b">Цахилгаан бараа</a><span aria-hidden="true">/</span>
+      <a href="Category.dc.html" style="color: #64748b">Чихэвч</a><span aria-hidden="true">/</span>
+      <span style="color: #0f172a; font-weight: 600">Утасгүй чихэвч, идэвхтэй дуу тусгаарлалттай</span>
+    </nav>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 32px; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 28px">
+      <div style="flex: 1 1 480px; min-width: 0; display: flex; gap: 14px">
+        <div style="display: flex; flex-direction: column; gap: 10px">
+          <sc-for list="{{thumbs}}" as="t" hint-placeholder-count="5">
+            <button type="button" aria-label="Зураг {{t.n}}" style="width: 72px; height: 72px; border-radius: 10px; border: 2px solid {{t.border}}; background: #f1f5f9; display: grid; place-items: center; color: #94a3b8; padding: 0">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7a9 9 0 0 1 18 0v7a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3"></path></svg>
+            </button>
+          </sc-for>
+        </div>
+        <div style="flex: 1; aspect-ratio: 1 / 1; border-radius: 14px; background: #eef0ff; display: grid; place-items: center; color: #8b8bff; position: relative">
+          <svg width="160" height="160" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="0.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7a9 9 0 0 1 18 0v7a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3"></path></svg>
+          <span style="position: absolute; top: 16px; left: 16px; padding: 5px 10px; border-radius: 6px; background: #0f172a; color: #ffffff; font-size: 12px; font-weight: 700">Эрэлттэй</span>
+          <span style="position: absolute; bottom: 16px; right: 16px; font-size: 12px; color: #475569; background: #ffffff; padding: 4px 10px; border-radius: 999px">1 / 5</span>
+        </div>
+      </div>
+
+      <div style="flex: 1 1 420px; min-width: 0; display: flex; flex-direction: column; gap: 18px">
+        <div style="display: flex; flex-direction: column; gap: 8px">
+          <a href="#" style="font-size: 14px; font-weight: 600; color: #0000ff">Sony</a>
+          <h1 style="margin: 0; font-size: 28px; line-height: 1.25; font-weight: 800; letter-spacing: -0.02em">Утасгүй чихэвч, идэвхтэй дуу тусгаарлалттай</h1>
+          <div style="display: flex; flex-wrap: wrap; gap: 16px; font-size: 14px; color: #64748b">
+            <span><span style="color: #f59e0b">★★★★★</span> <span style="color: #0f172a; font-weight: 600">4.8</span> · 214 үнэлгээ</span>
+            <span>Код: ELEC-ANC-01</span>
+            <span style="color: #15803d; font-weight: 600">● Бэлэн байгаа (23)</span>
+          </div>
+        </div>
+        <div style="display: flex; align-items: baseline; gap: 12px; padding: 16px 0; border-top: 1px solid #e2e8f0; border-bottom: 1px solid #e2e8f0">
+          <span style="font-size: 32px; font-weight: 800; letter-spacing: -0.02em">459,000₮</span>
+          <span style="font-size: 17px; color: #64748b; text-decoration: line-through">529,000₮</span>
+          <span style="padding: 4px 8px; border-radius: 6px; background: #fee2e2; color: #b91c1c; font-size: 13px; font-weight: 700">70,000₮ хэмнэнэ</span>
+        </div>
+        <fieldset style="border: 0; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px">
+          <legend style="font-size: 14px; font-weight: 600; margin-bottom: 10px">Өнгө: <span style="font-weight: 400; color: #475569">Хар</span></legend>
+          <div style="display: flex; gap: 10px">
+            <button type="button" aria-label="Хар" aria-pressed="true" style="width: 44px; height: 44px; border-radius: 999px; background: #0f172a; border: 3px solid #ffffff; box-shadow: 0 0 0 2px #0000ff"></button>
+            <button type="button" aria-label="Мөнгөлөг" aria-pressed="false" style="width: 44px; height: 44px; border-radius: 999px; background: #cbd5e1; border: 3px solid #ffffff; box-shadow: 0 0 0 1px #cbd5e1"></button>
+            <button type="button" aria-label="Цэнхэр" aria-pressed="false" style="width: 44px; height: 44px; border-radius: 999px; background: #1e3a8a; border: 3px solid #ffffff; box-shadow: 0 0 0 1px #cbd5e1"></button>
+          </div>
+        </fieldset>
+        <div style="display: flex; flex-wrap: wrap; gap: 12px; align-items: center">
+          <div style="display: flex; align-items: center; border: 1px solid #cbd5e1; border-radius: 8px; height: 50px">
+            <button type="button" aria-label="Хасах" style="width: 46px; height: 48px; border: 0; background: none; font-size: 20px; color: #0f172a">−</button>
+            <span style="width: 40px; text-align: center; font-weight: 700">1</span>
+            <button type="button" aria-label="Нэмэх" style="width: 46px; height: 48px; border: 0; background: none; font-size: 20px; color: #0f172a">+</button>
+          </div>
+          <button type="button" style="flex: 1 1 160px; height: 50px; border: 1.5px solid #0000ff; border-radius: 8px; background: #ffffff; color: #0000ff; font: 700 15px Inter, sans-serif">Сагсанд нэмэх</button>
+          <a href="Checkout.dc.html" style="flex: 1 1 160px; height: 50px; border-radius: 8px; background: #0000ff; color: #ffffff; font: 700 15px Inter, sans-serif; display: grid; place-items: center">Шууд авах</a>
+          <button type="button" aria-label="Хадгалах" style="width: 50px; height: 50px; border: 1px solid #cbd5e1; border-radius: 8px; background: #ffffff; color: #0f172a; display: grid; place-items: center">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 14c1.5-1.5 3-3.2 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.8 0-3 .5-4.5 2-1.5-1.5-2.7-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4 3 5.5l7 7z"></path></svg>
+          </button>
+        </div>
+        <div style="border: 1px solid #e2e8f0; border-radius: 12px; display: flex; flex-direction: column">
+          <div style="padding: 14px 16px; display: flex; gap: 12px; align-items: flex-start; border-bottom: 1px solid #e2e8f0">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0000ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true" style="flex: none"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2M15 18H9M19 18h2a1 1 0 0 0 1-1v-3.6a1 1 0 0 0-.2-.6l-3.5-4.4A1 1 0 0 0 17.5 8H14M7 20a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM17 20a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path></svg>
+            <div style="flex: 1; display: flex; flex-direction: column; gap: 8px">
+              <span style="font-size: 14px; font-weight: 700">Хүргэлт — зөвхөн Улаанбаатар</span>
+              <label style="display: flex; align-items: center; gap: 8px; font-size: 13px; color: #475569">Дүүрэг
+                <select style="height: 36px; border: 1px solid #cbd5e1; border-radius: 6px; padding: 0 8px; font: 500 13px Inter, sans-serif; color: #0f172a; background: #ffffff"><option>Сүхбаатар</option><option>Баянгол</option><option>Хан-Уул</option></select>
+              </label>
+              <span style="font-size: 13px; color: #475569">Маргааш (11.18) хүргэнэ · <span style="color: #15803d; font-weight: 600">Үнэгүй</span></span>
+            </div>
+          </div>
+          <div style="padding: 14px 16px; display: flex; gap: 12px; align-items: center; font-size: 14px">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#0000ff" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 22s8-3 8-10V5l-8-3-8 3v7c0 7 8 10 8 10zM9 12l2 2 4-4"></path></svg>
+            <span><b>12 сарын</b> албан ёсны баталгаа · 14 хоногт буцаах боломжтой</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-start">
+      <section style="flex: 999 1 560px; min-width: 0; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; overflow: hidden">
+        <div role="tablist" aria-label="Барааны мэдээлэл" style="display: flex; border-bottom: 1px solid #e2e8f0; padding: 0 12px">
+          <button type="button" role="tab" aria-selected="true" style="height: 52px; padding: 0 16px; border: 0; border-bottom: 2px solid #0000ff; background: none; color: #0000ff; font: 700 14px Inter, sans-serif">Тайлбар</button>
+          <button type="button" role="tab" aria-selected="false" style="height: 52px; padding: 0 16px; border: 0; background: none; color: #475569; font: 600 14px Inter, sans-serif">Үзүүлэлт</button>
+          <button type="button" role="tab" aria-selected="false" style="height: 52px; padding: 0 16px; border: 0; background: none; color: #475569; font: 600 14px Inter, sans-serif">Сэтгэгдэл (214)</button>
+        </div>
+        <div style="padding: 24px; display: flex; flex-direction: column; gap: 18px">
+          <p style="margin: 0; font-size: 15px; line-height: 1.7; color: #334155">Идэвхтэй дуу тусгаарлалт нь автобус, оффисын чимээг 95% хүртэл бууруулна. Нэг цэнэглэлтээр 30 цаг ажиллах ба 10 минутын хурдан цэнэглэлтээр 5 цаг сонсоно.</p>
+          <table style="width: 100%; border-collapse: collapse; font-size: 14px">
+            <tbody>
+              <sc-for list="{{specs}}" as="s" hint-placeholder-count="5">
+                <tr style="border-top: 1px solid #f1f5f9"><th scope="row" style="text-align: left; padding: 12px 0; width: 40%; color: #64748b; font-weight: 500">{{s.k}}</th><td style="padding: 12px 0; font-weight: 600">{{s.v}}</td></tr>
+              </sc-for>
+            </tbody>
+          </table>
+        </div>
+      </section>
+      <aside style="flex: 1 1 300px; max-width: 360px; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 20px; display: flex; flex-direction: column; gap: 14px">
+        <span style="font-size: 16px; font-weight: 700">Хамт авдаг</span>
+        <sc-for list="{{combo}}" as="c" hint-placeholder-count="3">
+          <a href="Product.dc.html" style="display: flex; gap: 12px; align-items: center">
+            <span style="width: 64px; height: 64px; flex: none; border-radius: 10px; background: #f1f5f9"></span>
+            <span style="display: flex; flex-direction: column; gap: 4px; font-size: 14px"><span style="font-weight: 600; line-height: 1.35">{{c.t}}</span><span style="font-weight: 800">{{c.p}}</span></span>
+          </a>
+        </sc-for>
+      </aside>
+    </div>
+  </main>
+
+  <dc-import name="StoreFooter" hint-size="100%,400px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1750}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      thumbs: [1, 2, 3, 4, 5].map(function (n) { return { n: n, border: n === 1 ? '#0000ff' : '#e2e8f0' }; }),
+      specs: [
+        { k: 'Холболт', v: 'Bluetooth 5.3, 3.5 мм AUX' },
+        { k: 'Батарей', v: '30 цаг (ANC асаалттай)' },
+        { k: 'Жин', v: '250 г' },
+        { k: 'Микрофон', v: '4 микрофон, дуудлагын шүүлтүүр' },
+        { k: 'Баталгаа', v: '12 сар' }
+      ],
+      combo: [
+        { t: 'Чихэвчний хатуу хайрцаг', p: '39,000₮' },
+        { t: 'USB-C хурдан цэнэглэгч 30W', p: '49,000₮' },
+        { t: 'Bluetooth чанга яригч, IP67', p: '189,000₮' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

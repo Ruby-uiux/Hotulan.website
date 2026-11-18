@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="mn">
+<head>
+<meta charset="utf-8">
+<title>Mobile — Ангилал</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#0f172a;text-decoration:none}a:hover{color:#0000ff}
+</style>
+</helmet>
+<div style="width: 390px; min-height: 1500px; background: #f8fafc; font-family: Inter, ui-sans-serif, system-ui, sans-serif; color: #0f172a; display: flex; flex-direction: column">
+  <header style="background: #ffffff; padding: 8px 8px 8px 4px; display: flex; align-items: center; gap: 4px; border-bottom: 1px solid #e2e8f0">
+    <a href="MHome.dc.html" aria-label="Буцах" style="width: 44px; height: 44px; display: grid; place-items: center; font-size: 20px">←</a>
+    <h1 style="flex: 1; margin: 0; font-size: 17px; font-weight: 700">Цахилгаан бараа</h1>
+    <a href="Search.dc.html" aria-label="Хайх" style="width: 44px; height: 44px; display: grid; place-items: center"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14zM21 21l-4.3-4.3"></path></svg></a>
+  </header>
+  <div style="background: #ffffff; display: flex; gap: 8px; overflow-x: auto; padding: 10px 16px; border-bottom: 1px solid #e2e8f0">
+    <span style="flex: none; height: 34px; padding: 0 14px; border-radius: 999px; background: #0f172a; color: #ffffff; display: flex; align-items: center; font-size: 13px; font-weight: 600">Бүгд</span>
+    <span style="flex: none; height: 34px; padding: 0 14px; border-radius: 999px; border: 1px solid #cbd5e1; display: flex; align-items: center; font-size: 13px">ТВ</span>
+    <span style="flex: none; height: 34px; padding: 0 14px; border-radius: 999px; border: 1px solid #cbd5e1; display: flex; align-items: center; font-size: 13px">Гар утас</span>
+    <span style="flex: none; height: 34px; padding: 0 14px; border-radius: 999px; border: 1px solid #cbd5e1; display: flex; align-items: center; font-size: 13px">Ноутбук</span>
+    <span style="flex: none; height: 34px; padding: 0 14px; border-radius: 999px; border: 1px solid #cbd5e1; display: flex; align-items: center; font-size: 13px">Чихэвч</span>
+  </div>
+  <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0; background: #ffffff; border-bottom: 1px solid #e2e8f0">
+    <a href="MFilter.dc.html" style="height: 48px; display: flex; align-items: center; justify-content: center; gap: 8px; font-size: 14px; font-weight: 600; border-right: 1px solid #e2e8f0">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 5h18M6 12h12M10 19h4"></path></svg>Шүүлтүүр <span style="min-width: 20px; height: 20px; border-radius: 999px; background: #0000ff; color: #ffffff; font-size: 11px; display: grid; place-items: center">2</span>
+    </a>
+    <button type="button" style="height: 48px; border: 0; background: none; display: flex; align-items: center; justify-content: center; gap: 8px; font: 600 14px Inter, sans-serif; color: #0f172a">Эрэлттэй ▾</button>
+  </div>
+  <p style="margin: 0; padding: 12px 16px 0; font-size: 13px; color: #64748b">248 бараа</p>
+  <main style="padding: 12px 16px 32px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px">
+    <sc-for list="{{items}}" as="p" hint-placeholder-count="10">
+      <article style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column">
+        <a href="MProduct.dc.html" aria-label="{{p.t}}" style="aspect-ratio: 1 / 1; background: {{p.tint}}; display: block; position: relative">
+          <sc-if value="{{p.hasBadge}}" hint-placeholder-val="{{ false }}"><span style="position: absolute; top: 8px; left: 8px; padding: 3px 6px; border-radius: 6px; background: {{p.bBg}}; color: #ffffff; font-size: 11px; font-weight: 700">{{p.badge}}</span></sc-if>
+        </a>
+        <div style="padding: 10px; display: flex; flex-direction: column; gap: 4px">
+          <span style="font-size: 11px; color: #64748b">{{p.b}}</span>
+          <a href="MProduct.dc.html" style="font-size: 13px; font-weight: 600; line-height: 1.35; height: 35px; overflow: hidden">{{p.t}}</a>
+          <span style="display: flex; justify-content: space-between; align-items: center"><span style="font-size: 15px; font-weight: 800">{{p.p}}</span><button type="button" aria-label="Сагсанд нэмэх" style="width: 36px; height: 36px; border: 0; border-radius: 8px; background: #0000ff; color: #ffffff; font-size: 20px">+</button></span>
+        </div>
+      </article>
+    </sc-for>
+    <button type="button" style="grid-column: span 2; height: 48px; border: 1px solid #cbd5e1; border-radius: 8px; background: #ffffff; color: #0f172a; font: 600 14px Inter, sans-serif">Цааш үзэх</button>
+  </main>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1500}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var tints = ['#eef0ff', '#f1f5f9', '#fef3c7', '#dcfce7'];
+    var raw = [['55" 4K Smart ТВ', 'Samsung', '2,190,000₮', '−15%'], ['Утасгүй чихэвч, ANC', 'Sony', '459,000₮', 'Эрэлттэй'], ['14" ноутбук 16GB', 'Lenovo', '3,490,000₮', 'Шинэ'], ['Bluetooth чанга яригч', 'JBL', '189,000₮', ''],
+      ['Ухаалаг утас 256GB', 'Samsung', '2,890,000₮', '−9%'], ['Тоглоомын удирдлага', 'Xbox', '129,000₮', ''], ['65" QLED ТВ', 'Samsung', '3,990,000₮', 'Шинэ'], ['Чихэнд суудаг чихэвч', 'Xiaomi', '89,000₮', '−25%']];
+    return {
+      items: raw.map(function (r, i) {
+        var b = r[3];
+        return { t: r[0], b: r[1], p: r[2], badge: b, hasBadge: !!b, bBg: b.charAt(0) === '−' ? '#dc2626' : (b === 'Шинэ' ? '#0000ff' : '#0f172a'), tint: tints[i % 4] };
+      })
+    };
+  }
+}
+</script>
+</body>
+</html>

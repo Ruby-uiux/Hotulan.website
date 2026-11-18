@@ -19,7 +19,7 @@ export default function Footer({ supportPhone, supportEmail }: { supportPhone: s
       <div className="mx-auto grid max-w-7xl gap-10 px-4 py-14 sm:px-6 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1.3fr] lg:px-8">
         <div>
           <a href="#top" className="inline-flex items-center gap-2.5 text-white">
-            <span className="grid h-10 w-10 place-items-center rounded-xl bg-brand">
+            <span className="grid h-10 w-10 place-items-center rounded-lg bg-brand">
               <Store className="h-5 w-5" aria-hidden="true" />
             </span>
             <span className="text-lg font-extrabold tracking-tight">hotulan<span className="text-blue-400">.mn</span></span>
@@ -77,7 +77,7 @@ export default function Footer({ supportPhone, supportEmail }: { supportPhone: s
           <p>© {new Date().getFullYear()} hotulan.mn. Бүх эрх хуулиар хамгаалагдсан.</p>
           <ul className="flex flex-wrap gap-2" aria-label="Төлбөрийн хэрэгсэл">
             {PAYMENT_METHODS.map((m) => (
-              <li key={m} className="rounded-md border border-white/15 bg-white/5 px-2.5 py-1 font-semibold text-slate-300">
+              <li key={m} className="rounded-sm border border-white/15 bg-white/5 px-2.5 py-1 font-semibold text-slate-300">
                 {m}
               </li>
             ))}

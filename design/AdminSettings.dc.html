@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="mn">
+<head>
+<meta charset="utf-8">
+<title>Админ — Тохиргоо</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#0000ff;text-decoration:none}a:hover{color:#0000c2}
+</style>
+</helmet>
+<div style="width: 100%; min-height: 1150px; background: #f8fafc; font-family: Inter, ui-sans-serif, system-ui, sans-serif; color: #0f172a; display: flex; flex-wrap: wrap; align-items: stretch">
+  <div style="flex: 1 1 248px; min-width: 248px; display: flex">
+    <dc-import name="AdminSidebar" active="settings" hint-size="100%,100%"></dc-import>
+  </div>
+  <div style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column">
+    <dc-import name="AdminTopbar" heading="Тохиргоо" crumb="Админ · Систем" hint-size="100%,72px"></dc-import>
+    <main style="padding: 28px 32px 40px; display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start">
+      <nav aria-label="Тохиргооны цэс" style="flex: 1 1 200px; max-width: 220px; display: flex; flex-direction: column; gap: 2px">
+        <a href="#store" aria-current="true" style="height: 42px; padding: 0 12px; border-radius: 8px; background: #eef0ff; color: #0000c2; display: flex; align-items: center; font-size: 14px; font-weight: 700">Дэлгүүрийн мэдээлэл</a>
+        <a href="#pay" style="height: 42px; padding: 0 12px; border-radius: 8px; color: #334155; display: flex; align-items: center; font-size: 14px">Төлбөр</a>
+        <a href="#notify" style="height: 42px; padding: 0 12px; border-radius: 8px; color: #334155; display: flex; align-items: center; font-size: 14px">Мэдэгдэл, SMS</a>
+        <a href="#" style="height: 42px; padding: 0 12px; border-radius: 8px; color: #334155; display: flex; align-items: center; font-size: 14px">И-баримт, татвар</a>
+        <a href="#" style="height: 42px; padding: 0 12px; border-radius: 8px; color: #334155; display: flex; align-items: center; font-size: 14px">SEO, аналитик</a>
+        <a href="#" style="height: 42px; padding: 0 12px; border-radius: 8px; color: #334155; display: flex; align-items: center; font-size: 14px">Нөөцлөлт, аюулгүй байдал</a>
+      </nav>
+      <div style="flex: 999 1 520px; min-width: 0; display: flex; flex-direction: column; gap: 20px">
+        <section id="store" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 22px; display: flex; flex-direction: column; gap: 14px">
+          <h2 style="margin: 0; font-size: 16px; font-weight: 700">Дэлгүүрийн мэдээлэл</h2>
+          <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px">
+            <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600">Дэлгүүрийн нэр<input type="text" value="hotulan.mn" style="height: 44px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0 12px; font: 400 15px Inter, sans-serif"></label>
+            <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600">Лавлах утас<input type="text" value="7700-0000" style="height: 44px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0 12px; font: 400 15px Inter, sans-serif"></label>
+            <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600">И-мэйл<input type="text" value="info@hotulan.mn" style="height: 44px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0 12px; font: 400 15px Inter, sans-serif"></label>
+            <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600">Ажлын цаг<input type="text" value="Даваа–Ням 09:00–21:00" style="height: 44px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0 12px; font: 400 15px Inter, sans-serif"></label>
+            <label style="grid-column: span 2; display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600">Хаяг<input type="text" placeholder="[ДЭЛГҮҮРИЙН ХАЯГ]" style="height: 44px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0 12px; font: 400 15px Inter, sans-serif"></label>
+            <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600">Нөөц анхааруулах доод хэмжээ<input type="text" value="10" style="height: 44px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0 12px; font: 400 15px Inter, sans-serif"></label>
+            <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600">Буцаалтын хугацаа (хоног)<input type="text" value="14" style="height: 44px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0 12px; font: 400 15px Inter, sans-serif"></label>
+          </div>
+        </section>
+        <section id="pay" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden">
+          <div style="padding: 16px 22px; border-bottom: 1px solid #e2e8f0"><h2 style="margin: 0; font-size: 16px; font-weight: 700">Төлбөрийн хэрэгсэл</h2></div>
+          <sc-for list="{{pays}}" as="p" hint-placeholder-count="4">
+            <div style="display: flex; align-items: center; gap: 14px; padding: 14px 22px; border-top: 1px solid #f1f5f9">
+              <span style="flex: 1; display: flex; flex-direction: column; gap: 2px"><span style="font-size: 14px; font-weight: 600">{{p.t}}</span><span style="font-size: 12px; color: #64748b">{{p.d}}</span></span>
+              <a href="#" style="font-size: 13px; font-weight: 600; padding: 8px">Тохируулах</a>
+              <button type="button" role="switch" aria-checked="{{p.on}}" aria-label="Идэвхжүүлэх" style="border: 0; width: 40px; height: 22px; border-radius: 999px; background: {{p.swBg}}; display: flex; align-items: center; padding: 2px; box-sizing: border-box; justify-content: {{p.swJ}}"><span style="width: 18px; height: 18px; border-radius: 999px; background: #ffffff"></span></button>
+            </div>
+          </sc-for>
+        </section>
+        <section id="notify" style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden">
+          <div style="padding: 16px 22px; border-bottom: 1px solid #e2e8f0"><h2 style="margin: 0; font-size: 16px; font-weight: 700">Мэдэгдэл</h2></div>
+          <sc-for list="{{notifs}}" as="n" hint-placeholder-count="4">
+            <label style="display: flex; align-items: center; gap: 12px; padding: 12px 22px; border-top: 1px solid #f1f5f9; font-size: 14px"><input type="checkbox" checked="{{n.on}}" style="accent-color: #0000ff; width: 18px; height: 18px"><span style="flex: 1">{{n.t}}</span><span style="font-size: 12px; color: #64748b">{{n.ch}}</span></label>
+          </sc-for>
+        </section>
+        <div style="display: flex; justify-content: flex-end; gap: 8px">
+          <button type="button" style="height: 44px; padding: 0 16px; border: 1px solid #cbd5e1; border-radius: 8px; background: #ffffff; color: #0f172a; font: 600 14px Inter, sans-serif">Болих</button>
+          <button type="button" style="height: 44px; padding: 0 20px; border: 0; border-radius: 8px; background: #0000ff; color: #ffffff; font: 600 14px Inter, sans-serif">Хадгалах</button>
+        </div>
+      </div>
+    </main>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1150}}'>
+class Component extends DCLogic {
+  renderVals() {
+    function sw(on) { return { on: on ? 'true' : 'false', swBg: on ? '#0000ff' : '#cbd5e1', swJ: on ? 'flex-end' : 'flex-start' }; }
+    function P(t, d, on) { var s = sw(on); s.t = t; s.d = d; return s; }
+    return {
+      pays: [
+        P('QPay', 'Merchant ID, нэхэмжлэл автоматаар баталгаажна', true),
+        P('Дансаар шилжүүлэх', 'Хаан банк · данс, хүлээн авагчийн нэр', true),
+        P('Хүргэлтээр бэлэн / карт', 'Жолооч POS-оор хүлээн авна', true),
+        P('SocialPay', 'Голомт банк', false)
+      ],
+      notifs: [
+        { t: 'Шинэ захиалга ирэхэд', ch: 'И-мэйл · Админ самбар', on: true },
+        { t: 'Нөөц доод хэмжээнд хүрэхэд', ch: 'И-мэйл', on: true },
+        { t: 'Хэрэглэгчид захиалгын SMS', ch: 'SMS', on: true },
+        { t: 'Хүргэлтэнд гарахад хэрэглэгчид SMS', ch: 'SMS', on: false }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

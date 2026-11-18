@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="mn">
+<head>
+<meta charset="utf-8">
+<title>Mobile — Нүүр</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#0f172a;text-decoration:none}a:hover{color:#0000ff}
+</style>
+</helmet>
+<div style="width: 390px; min-height: 1800px; background: #f8fafc; font-family: Inter, ui-sans-serif, system-ui, sans-serif; color: #0f172a; display: flex; flex-direction: column; position: relative">
+  <div style="background: #020617; color: #e2e8f0; font-size: 12px; padding: 8px 16px; text-align: center">Зөвхөн Улаанбаатарт · 200,000₮-өөс дээш үнэгүй</div>
+  <header style="background: #ffffff; padding: 12px 16px; display: flex; flex-direction: column; gap: 12px; border-bottom: 1px solid #e2e8f0">
+    <div style="display: flex; align-items: center; gap: 10px">
+      <button type="button" aria-label="Цэс" style="width: 44px; height: 44px; border: 0; background: none; color: #0f172a; display: grid; place-items: center; margin-left: -10px"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h16"></path></svg></button>
+      <span style="flex: 1; font-size: 19px; font-weight: 800; letter-spacing: -0.02em">hotulan<span style="color: #0000ff">.mn</span></span>
+      <a href="MCart.dc.html" aria-label="Сагс, 3 бараа" style="width: 44px; height: 44px; display: grid; place-items: center; position: relative"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 22a1 1 0 1 0 0-2 1 1 0 0 0 0 2zM19 22a1 1 0 1 0 0-2 1 1 0 0 0 0 2zM2 2h3l2.7 12.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"></path></svg><span style="position: absolute; top: 4px; right: 2px; min-width: 18px; height: 18px; border-radius: 999px; background: #dc2626; color: #ffffff; font-size: 11px; font-weight: 700; display: grid; place-items: center">3</span></a>
+    </div>
+    <label style="height: 44px; border-radius: 8px; background: #f1f5f9; display: flex; align-items: center; gap: 8px; padding: 0 12px; color: #64748b">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14zM21 21l-4.3-4.3"></path></svg>
+      <span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Хайх</span>
+      <input type="search" placeholder="Бараа хайх…" style="flex: 1; min-width: 0; border: 0; background: transparent; font: 400 15px Inter, sans-serif; outline: none">
+    </label>
+  </header>
+
+  <main style="flex: 1; display: flex; flex-direction: column; gap: 24px; padding: 16px 0 96px">
+    <div style="display: flex; gap: 14px; overflow-x: auto; padding: 0 16px">
+      <sc-for list="{{cats}}" as="c" hint-placeholder-count="8">
+        <a href="MCategory.dc.html" style="flex: none; width: 64px; display: flex; flex-direction: column; align-items: center; gap: 6px; text-align: center; font-size: 11px; font-weight: 600; line-height: 1.25">
+          <span style="width: 56px; height: 56px; border-radius: 999px; background: #eef0ff; color: #0000ff; display: grid; place-items: center"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{c.icon}}"></path></svg></span>{{c.t}}
+        </a>
+      </sc-for>
+    </div>
+
+    <div style="padding: 0 16px">
+      <div style="border-radius: 14px; background: #0000ff; color: #ffffff; padding: 22px; display: flex; flex-direction: column; gap: 10px; min-height: 200px; box-sizing: border-box; justify-content: flex-end">
+        <span style="align-self: flex-start; padding: 4px 10px; border-radius: 999px; background: rgba(255,255,255,0.16); font-size: 12px; font-weight: 600">11.20 – 12.05</span>
+        <span style="font-size: 26px; font-weight: 800; line-height: 1.1; letter-spacing: -0.02em">Өвлийн их хямдрал — 40% хүртэл</span>
+        <a href="MCategory.dc.html" style="align-self: flex-start; height: 44px; padding: 0 18px; border-radius: 8px; background: #ffffff; color: #0000ff; display: flex; align-items: center; font-weight: 700; font-size: 14px">Үзэх</a>
+      </div>
+      <div style="display: flex; justify-content: center; gap: 6px; margin-top: 10px"><span style="width: 18px; height: 6px; border-radius: 3px; background: #0000ff"></span><span style="width: 6px; height: 6px; border-radius: 3px; background: #cbd5e1"></span><span style="width: 6px; height: 6px; border-radius: 3px; background: #cbd5e1"></span></div>
+    </div>
+
+    <div style="padding: 0 16px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px">
+      <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 12px; font-size: 12px; display: flex; flex-direction: column; gap: 2px"><b style="font-size: 13px">УБ-д 24–48 цаг</b><span style="color: #64748b">Хурдан хүргэлт</span></div>
+      <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 10px; padding: 12px; font-size: 12px; display: flex; flex-direction: column; gap: 2px"><b style="font-size: 13px">Албан баталгаа</b><span style="color: #64748b">6–24 сар</span></div>
+    </div>
+
+    <section style="display: flex; flex-direction: column; gap: 12px">
+      <div style="padding: 0 16px; display: flex; justify-content: space-between; align-items: center"><h2 style="margin: 0; font-size: 19px; font-weight: 800; color: #dc2626">Өдрийн хямдрал</h2><span style="font-size: 13px; font-weight: 700; font-variant-numeric: tabular-nums; background: #0f172a; color: #ffffff; padding: 4px 8px; border-radius: 6px">08:42:17</span></div>
+      <div style="display: flex; gap: 12px; overflow-x: auto; padding: 0 16px">
+        <sc-for list="{{sale}}" as="p" hint-placeholder-count="4">
+          <a href="MProduct.dc.html" style="flex: none; width: 150px; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column">
+            <span style="aspect-ratio: 1 / 1; background: {{p.tint}}; position: relative; display: block"><span style="position: absolute; top: 8px; left: 8px; padding: 3px 6px; border-radius: 6px; background: #dc2626; color: #ffffff; font-size: 11px; font-weight: 700">{{p.off}}</span></span>
+            <span style="padding: 10px; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 13px; font-weight: 600; line-height: 1.35; height: 35px; overflow: hidden">{{p.t}}</span><span style="font-size: 15px; font-weight: 800; color: #dc2626">{{p.p}}</span><span style="font-size: 12px; color: #64748b; text-decoration: line-through">{{p.was}}</span></span>
+          </a>
+        </sc-for>
+      </div>
+    </section>
+
+    <section style="padding: 0 16px; display: flex; flex-direction: column; gap: 12px">
+      <h2 style="margin: 0; font-size: 19px; font-weight: 800">Шинэ ирсэн</h2>
+      <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px">
+        <sc-for list="{{fresh}}" as="p" hint-placeholder-count="6">
+          <article style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column">
+            <a href="MProduct.dc.html" aria-label="{{p.t}}" style="aspect-ratio: 1 / 1; background: {{p.tint}}; display: block"></a>
+            <div style="padding: 10px; display: flex; flex-direction: column; gap: 4px">
+              <a href="MProduct.dc.html" style="font-size: 13px; font-weight: 600; line-height: 1.35; height: 35px; overflow: hidden">{{p.t}}</a>
+              <span style="font-size: 12px; color: #64748b"><span style="color: #f59e0b">★</span> {{p.r}}</span>
+              <span style="display: flex; justify-content: space-between; align-items: center"><span style="font-size: 15px; font-weight: 800">{{p.p}}</span><button type="button" aria-label="Сагсанд нэмэх" style="width: 36px; height: 36px; border: 0; border-radius: 8px; background: #0000ff; color: #ffffff; font-size: 20px; line-height: 1">+</button></span>
+            </div>
+          </article>
+        </sc-for>
+      </div>
+    </section>
+  </main>
+
+  <nav aria-label="Үндсэн" style="position: absolute; left: 0; right: 0; bottom: 0; height: 68px; background: #ffffff; border-top: 1px solid #e2e8f0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr))">
+    <sc-for list="{{tabs}}" as="t" hint-placeholder-count="4">
+      <a href="{{t.href}}" aria-current="{{t.cur}}" style="display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; font-size: 11px; font-weight: {{t.w}}; color: {{t.c}}">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{t.icon}}"></path></svg>{{t.t}}
+      </a>
+    </sc-for>
+  </nav>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":1800}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var I = {
+      toys: 'M4 4h7v7H4zM13 4h7v7h-7zM8.5 13h7v7h-7z', home: 'M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z',
+      tv: 'M3 6h18v11H3zM8 21h8M12 17v4', sport: 'M6 7v10M3 9v6M18 7v10M21 9v6M6 12h12',
+      pot: 'M3 11h18M5 11v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7M8 7c0-1 1-2 2-2M14 7c0-1 1-2 2-2',
+      beauty: 'M12 3l1.8 4.7 4.7 1.8-4.7 1.8L12 16l-1.8-4.7-4.7-1.8 4.7-1.8z', baby: 'M9 3h6M10 3v3L8 8v12a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V8l-2-2V3M8 12h8',
+      grid: 'M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z',
+      cart: 'M8 22a1 1 0 1 0 0-2 1 1 0 0 0 0 2zM19 22a1 1 0 1 0 0-2 1 1 0 0 0 0 2zM2 2h3l2.7 12.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6',
+      user: 'M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2M12 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8z'
+    };
+    var tints = ['#eef0ff', '#f1f5f9', '#fef3c7', '#dcfce7', '#fce7f3'];
+    var tabs = [['Нүүр', 'home', 'MHome.dc.html'], ['Ангилал', 'grid', 'MCategory.dc.html'], ['Сагс', 'cart', 'MCart.dc.html'], ['Миний', 'user', 'MyOrders.dc.html']];
+    return {
+      cats: [['Тоглоом', 'toys'], ['Гэр ахуй', 'home'], ['Цахилгаан', 'tv'], ['Спорт', 'sport'], ['Гал тогоо', 'pot'], ['Гоо сайхан', 'beauty'], ['Нялх', 'baby'], ['Бүгд', 'grid']].map(function (c) { return { t: c[0], icon: I[c[1]] }; }),
+      sale: [['Барилгын блок 1000ш', '129,000₮', '159,000₮', '−19%'], ['55" 4K Smart ТВ', '2,190,000₮', '2,590,000₮', '−15%'], ['LED ширээний гэрэл', '79,000₮', '99,000₮', '−20%'], ['Мини дрон, HD', '249,000₮', '299,000₮', '−17%']].map(function (p, i) { return { t: p[0], p: p[1], was: p[2], off: p[3], tint: tints[i % 5] }; }),
+      fresh: [['Эспрессо кофе машин', '890,000₮', '4.9'], ['14" хөнгөн ноутбук', '3,490,000₮', '4.8'], ['Модон пазл', '45,000₮', '4.9'], ['Ухаалаг цаг, GPS', '599,000₮', '4.6'], ['Агаар цэвэршүүлэгч', '690,000₮', '4.7'], ['Хүүхдийн тэрэг', '820,000₮', '4.8']].map(function (p, i) { return { t: p[0], p: p[1], r: p[2], tint: tints[(i + 1) % 5] }; }),
+      tabs: tabs.map(function (t, i) { return { t: t[0], icon: I[t[1]], href: t[2], cur: i === 0 ? 'page' : 'false', c: i === 0 ? '#0000ff' : '#475569', w: i === 0 ? 700 : 500 }; })
+    };
+  }
+}
+</script>
+</body>
+</html>

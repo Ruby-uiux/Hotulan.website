@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="mn">
+<head>
+<meta charset="utf-8">
+<title>Админ — Хяналтын самбар</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#0000ff;text-decoration:none}a:hover{color:#0000c2}
+</style>
+</helmet>
+<div style="width: 100%; min-height: 1150px; background: #f8fafc; font-family: Inter, ui-sans-serif, system-ui, sans-serif; color: #0f172a; display: flex; flex-wrap: wrap; align-items: stretch">
+  <div style="flex: 1 1 248px; min-width: 248px; display: flex">
+    <dc-import name="AdminSidebar" active="dashboard" hint-size="100%,100%"></dc-import>
+  </div>
+  <div style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column">
+    <dc-import name="AdminTopbar" heading="Хяналтын самбар" crumb="Админ · Өнөөдөр 2026.11.17" hint-size="100%,72px"></dc-import>
+    <main style="padding: 28px 32px 40px; display: flex; flex-direction: column; gap: 24px">
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px">
+        <div role="tablist" aria-label="Хугацаа" style="display: flex; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 8px; padding: 4px">
+          <button type="button" role="tab" aria-selected="false" style="height: 36px; padding: 0 14px; border: 0; border-radius: 6px; background: none; font: 500 13px Inter, sans-serif; color: #475569">Өнөөдөр</button>
+          <button type="button" role="tab" aria-selected="true" style="height: 36px; padding: 0 14px; border: 0; border-radius: 6px; background: #0f172a; font: 600 13px Inter, sans-serif; color: #ffffff">14 хоног</button>
+          <button type="button" role="tab" aria-selected="false" style="height: 36px; padding: 0 14px; border: 0; border-radius: 6px; background: none; font: 500 13px Inter, sans-serif; color: #475569">Сар</button>
+          <button type="button" role="tab" aria-selected="false" style="height: 36px; padding: 0 14px; border: 0; border-radius: 6px; background: none; font: 500 13px Inter, sans-serif; color: #475569">Жил</button>
+        </div>
+        <div style="display: flex; gap: 8px; flex-wrap: wrap">
+          <a href="AdminCategories.dc.html" style="height: 44px; padding: 0 16px; border: 1px solid #cbd5e1; border-radius: 8px; background: #ffffff; color: #0f172a; display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600">+ Ангилал</a>
+          <a href="AdminAppearance.dc.html" style="height: 44px; padding: 0 16px; border: 1px solid #cbd5e1; border-radius: 8px; background: #ffffff; color: #0f172a; display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600">Баннер солих</a>
+          <a href="AdminProductForm.dc.html" style="height: 44px; padding: 0 16px; border-radius: 8px; background: #0000ff; color: #ffffff; display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600">+ Шинэ бараа</a>
+        </div>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px">
+        <sc-for list="{{kpis}}" as="k" hint-placeholder-count="4">
+          <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; display: flex; flex-direction: column; gap: 10px">
+            <span style="font-size: 13px; color: #64748b; font-weight: 500">{{k.t}}</span>
+            <span style="font-size: 28px; font-weight: 800; letter-spacing: -0.02em; font-variant-numeric: tabular-nums">{{k.v}}</span>
+            <span style="font-size: 13px; font-weight: 600; color: {{k.c}}">{{k.d}}</span>
+          </div>
+        </sc-for>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px">
+        <section style="grid-column: span 2; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; display: flex; flex-direction: column; gap: 16px">
+          <div style="display: flex; justify-content: space-between; align-items: baseline">
+            <h2 style="margin: 0; font-size: 16px; font-weight: 700">Борлуулалт — сүүлийн 14 хоног</h2>
+            <span style="font-size: 13px; color: #64748b">Нийт <b style="color: #0f172a">48.6 сая₮</b></span>
+          </div>
+          <div role="img" aria-label="Өдөр тутмын борлуулалтын багана график, 11.04–11.17" style="height: 240px; display: flex; align-items: flex-end; gap: 10px; border-bottom: 1px solid #e2e8f0; padding-top: 8px">
+            <sc-for list="{{bars}}" as="b" hint-placeholder-count="14">
+              <div style="flex: 1; display: flex; flex-direction: column; align-items: center; gap: 6px; height: 100%; justify-content: flex-end">
+                <div style="width: 100%; max-width: 32px; height: {{b.h}}; border-radius: 4px 4px 0 0; background: {{b.c}}"></div>
+              </div>
+            </sc-for>
+          </div>
+          <div style="display: flex; gap: 10px; font-size: 11px; color: #64748b">
+            <sc-for list="{{bars}}" as="b" hint-placeholder-count="14"><span style="flex: 1; text-align: center">{{b.l}}</span></sc-for>
+          </div>
+        </section>
+        <section style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; display: flex; flex-direction: column; gap: 14px">
+          <h2 style="margin: 0; font-size: 16px; font-weight: 700">Захиалгын төлөв</h2>
+          <sc-for list="{{statuses}}" as="s" hint-placeholder-count="5">
+            <div style="display: flex; flex-direction: column; gap: 6px">
+              <div style="display: flex; justify-content: space-between; font-size: 13px"><span>{{s.t}}</span><b>{{s.n}}</b></div>
+              <div style="height: 8px; border-radius: 4px; background: #f1f5f9"><div style="height: 100%; width: {{s.w}}; border-radius: 4px; background: {{s.c}}"></div></div>
+            </div>
+          </sc-for>
+        </section>
+      </div>
+
+      <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px">
+        <section style="grid-column: span 2; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden">
+          <div style="padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e2e8f0">
+            <h2 style="margin: 0; font-size: 16px; font-weight: 700">Сүүлийн захиалгууд</h2>
+            <a href="AdminOrders.dc.html" style="font-size: 13px; font-weight: 600">Бүгдийг харах →</a>
+          </div>
+          <div style="overflow-x: auto">
+            <table style="width: 100%; border-collapse: collapse; font-size: 14px">
+              <thead><tr style="background: #f8fafc; color: #64748b; font-size: 12px; text-align: left">
+                <th scope="col" style="padding: 10px 20px; font-weight: 600">Дугаар</th><th scope="col" style="padding: 10px 12px; font-weight: 600">Хэрэглэгч</th><th scope="col" style="padding: 10px 12px; font-weight: 600">Дүүрэг</th><th scope="col" style="padding: 10px 12px; font-weight: 600">Дүн</th><th scope="col" style="padding: 10px 20px; font-weight: 600">Төлөв</th>
+              </tr></thead>
+              <tbody>
+                <sc-for list="{{recent}}" as="o" hint-placeholder-count="5">
+                  <tr style="border-top: 1px solid #f1f5f9">
+                    <td style="padding: 12px 20px"><a href="AdminOrderDetail.dc.html" style="font-weight: 600">{{o.id}}</a></td>
+                    <td style="padding: 12px">{{o.c}}</td><td style="padding: 12px; color: #475569">{{o.d}}</td>
+                    <td style="padding: 12px; font-weight: 600; font-variant-numeric: tabular-nums">{{o.a}}</td>
+                    <td style="padding: 12px 20px"><span style="padding: 4px 10px; border-radius: 999px; background: {{o.bg}}; color: {{o.fg}}; font-size: 12px; font-weight: 600; white-space: nowrap">{{o.s}}</span></td>
+                  </tr>
+                </sc-for>
+              </tbody>
+            </table>
+          </div>
+        </section>
+        <section style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; display: flex; flex-direction: column; gap: 12px">
+          <div style="display: flex; justify-content: space-between; align-items: center">
+            <h2 style="margin: 0; font-size: 16px; font-weight: 700">Дуусаж буй бараа</h2>
+            <span style="padding: 3px 8px; border-radius: 999px; background: #fee2e2; color: #b91c1c; font-size: 12px; font-weight: 700">3</span>
+          </div>
+          <sc-for list="{{low}}" as="l" hint-placeholder-count="3">
+            <div style="display: flex; gap: 12px; align-items: center; padding: 8px 0; border-top: 1px solid #f1f5f9">
+              <span style="width: 44px; height: 44px; border-radius: 8px; background: #f1f5f9; flex: none"></span>
+              <span style="flex: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0"><span style="font-size: 14px; font-weight: 600; line-height: 1.3">{{l.t}}</span><span style="font-size: 12px; color: #b91c1c; font-weight: 600">Үлдэгдэл: {{l.n}}</span></span>
+              <a href="AdminProductForm.dc.html" style="font-size: 13px; font-weight: 600; padding: 10px 0">Нөхөх</a>
+            </div>
+          </sc-for>
+          <div style="margin-top: 8px; padding-top: 14px; border-top: 1px solid #e2e8f0; display: flex; flex-direction: column; gap: 10px">
+            <h2 style="margin: 0; font-size: 16px; font-weight: 700">Шилдэг ангилал</h2>
+            <sc-for list="{{topCats}}" as="c" hint-placeholder-count="4">
+              <div style="display: flex; justify-content: space-between; font-size: 14px"><span>{{c.t}}</span><span style="font-weight: 600; font-variant-numeric: tabular-nums">{{c.v}}</span></div>
+            </sc-for>
+          </div>
+        </section>
+      </div>
+    </main>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1150}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var vals = [2.1, 2.8, 2.4, 3.6, 4.2, 3.1, 2.7, 3.3, 3.9, 4.8, 3.5, 2.9, 3.8, 4.4];
+    var max = 5;
+    var S = {
+      new: ['Шинэ', '#eef0ff', '#0000c2'], paid: ['Төлөгдсөн', '#e0f2fe', '#075985'], packing: ['Савлаж байна', '#fef3c7', '#92400e'],
+      shipping: ['Хүргэлтэнд', '#ede9fe', '#5b21b6'], done: ['Хүргэгдсэн', '#dcfce7', '#166534']
+    };
+    function O(id, c, d, a, s) { return { id: id, c: c, d: d, a: a, s: S[s][0], bg: S[s][1], fg: S[s][2] }; }
+    return {
+      kpis: [
+        { t: 'Өнөөдрийн борлуулалт', v: '4,420,000₮', d: '▲ 12% өчигдрөөс', c: '#15803d' },
+        { t: 'Шинэ захиалга', v: '18', d: '5 нь төлбөр хүлээж буй', c: '#475569' },
+        { t: 'Дундаж захиалга', v: '245,600₮', d: '▲ 4% өнгөрсөн 7 хоногоос', c: '#15803d' },
+        { t: 'Буцаалт / цуцлалт', v: '2', d: '▼ 1 өчигдрөөс', c: '#b91c1c' }
+      ],
+      bars: vals.map(function (v, i) {
+        return { h: Math.round(v / max * 100) + '%', c: i === vals.length - 1 ? '#0000ff' : '#a5b4fc', l: (4 + i) + '' };
+      }),
+      statuses: [
+        { t: 'Шинэ', n: 18, w: '60%', c: '#0000ff' }, { t: 'Төлөгдсөн', n: 12, w: '40%', c: '#0284c7' },
+        { t: 'Савлаж байна', n: 9, w: '30%', c: '#d97706' }, { t: 'Хүргэлтэнд', n: 14, w: '47%', c: '#7c3aed' },
+        { t: 'Хүргэгдсэн', n: 30, w: '100%', c: '#15803d' }
+      ],
+      recent: [
+        O('HTL-482913', 'Б. Сарангэрэл', 'Хан-Уул', '537,000₮', 'new'),
+        O('HTL-482910', 'Д. Тэмүүлэн', 'Баянзүрх', '1,290,000₮', 'paid'),
+        O('HTL-482905', 'Г. Номин', 'Сүхбаатар', '189,000₮', 'packing'),
+        O('HTL-482899', 'Э. Билгүүн', 'Баянгол', '2,190,000₮', 'shipping'),
+        O('HTL-482894', 'О. Ариунаа', 'Чингэлтэй', '129,000₮', 'done')
+      ],
+      low: [
+        { t: 'Робот тоос сорогч', n: 3 }, { t: 'Эспрессо кофе машин', n: 5 }, { t: 'Мини дрон, HD камертай', n: 7 }
+      ],
+      topCats: [
+        { t: 'Цахилгаан бараа', v: '18.2 сая₮' }, { t: 'Гэр ахуй', v: '11.4 сая₮' },
+        { t: 'Хүүхдийн тоглоом', v: '7.9 сая₮' }, { t: 'Спорт, фитнес', v: '4.1 сая₮' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

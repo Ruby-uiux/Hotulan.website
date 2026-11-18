@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="mn">
+<head>
+<meta charset="utf-8">
+<title>Mobile — Шүүлтүүр</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#0f172a;text-decoration:none}a:hover{color:#0000ff}
+</style>
+</helmet>
+<div style="width: 390px; height: 844px; background: rgba(15,23,42,0.5); font-family: Inter, ui-sans-serif, system-ui, sans-serif; color: #0f172a; display: flex; flex-direction: column; justify-content: flex-end">
+  <div role="dialog" aria-modal="true" aria-labelledby="ft" style="height: 760px; background: #ffffff; border-radius: 18px 18px 0 0; display: flex; flex-direction: column">
+    <div style="display: flex; justify-content: center; padding-top: 8px"><span style="width: 40px; height: 4px; border-radius: 2px; background: #cbd5e1"></span></div>
+    <div style="display: flex; align-items: center; padding: 8px 8px 8px 16px; border-bottom: 1px solid #e2e8f0">
+      <h2 id="ft" style="flex: 1; margin: 0; font-size: 18px; font-weight: 700">Шүүлтүүр</h2>
+      <button type="button" style="height: 44px; padding: 0 12px; border: 0; background: none; color: #0000ff; font: 600 14px Inter, sans-serif">Цэвэрлэх</button>
+      <a href="MCategory.dc.html" aria-label="Хаах" style="width: 44px; height: 44px; display: grid; place-items: center; font-size: 18px">✕</a>
+    </div>
+    <div style="flex: 1; overflow-y: auto; padding: 16px; display: flex; flex-direction: column; gap: 22px">
+      <fieldset style="border: 0; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 10px">
+        <legend style="font-size: 15px; font-weight: 700; margin-bottom: 10px">Үнэ</legend>
+        <div style="display: flex; gap: 8px">
+          <sc-for list="{{prices}}" as="p" hint-placeholder-count="4">
+            <button type="button" aria-pressed="{{p.on}}" style="flex: 1; height: 40px; border-radius: 8px; border: {{p.bd}}; background: {{p.bg}}; color: {{p.fg}}; font: 600 12px Inter, sans-serif">{{p.t}}</button>
+          </sc-for>
+        </div>
+        <div style="display: flex; gap: 8px; align-items: center"><input type="text" aria-label="Доод үнэ" value="50,000" style="flex: 1; min-width: 0; height: 44px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0 12px; font: 400 15px Inter, sans-serif"><span>—</span><input type="text" aria-label="Дээд үнэ" value="500,000" style="flex: 1; min-width: 0; height: 44px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0 12px; font: 400 15px Inter, sans-serif"></div>
+      </fieldset>
+      <fieldset style="border: 0; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 2px">
+        <legend style="font-size: 15px; font-weight: 700; margin-bottom: 8px">Брэнд</legend>
+        <sc-for list="{{brands}}" as="b" hint-placeholder-count="5">
+          <label style="min-height: 44px; display: flex; align-items: center; gap: 12px; font-size: 15px; border-bottom: 1px solid #f1f5f9"><input type="checkbox" checked="{{b.on}}" style="width: 20px; height: 20px; accent-color: #0000ff"><span style="flex: 1">{{b.t}}</span><span style="color: #64748b; font-size: 13px">{{b.n}}</span></label>
+        </sc-for>
+      </fieldset>
+      <fieldset style="border: 0; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 2px">
+        <legend style="font-size: 15px; font-weight: 700; margin-bottom: 8px">Бусад</legend>
+        <label style="min-height: 44px; display: flex; align-items: center; justify-content: space-between; font-size: 15px">Зөвхөн бэлэн байгаа<button type="button" role="switch" aria-checked="true" aria-label="Зөвхөн бэлэн байгаа" style="border: 0; width: 44px; height: 24px; border-radius: 999px; background: #0000ff; display: flex; justify-content: flex-end; align-items: center; padding: 2px; box-sizing: border-box"><span style="width: 20px; height: 20px; border-radius: 999px; background: #ffffff"></span></button></label>
+        <label style="min-height: 44px; display: flex; align-items: center; justify-content: space-between; font-size: 15px">Хямдралтай<button type="button" role="switch" aria-checked="false" aria-label="Хямдралтай" style="border: 0; width: 44px; height: 24px; border-radius: 999px; background: #cbd5e1; display: flex; justify-content: flex-start; align-items: center; padding: 2px; box-sizing: border-box"><span style="width: 20px; height: 20px; border-radius: 999px; background: #ffffff"></span></button></label>
+      </fieldset>
+    </div>
+    <div style="padding: 12px 16px 20px; border-top: 1px solid #e2e8f0">
+      <a href="MCategory.dc.html" style="height: 52px; border-radius: 10px; background: #0000ff; color: #ffffff; display: grid; place-items: center; font-weight: 700; font-size: 15px">42 бараа харах</a>
+    </div>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":390,"height":844}}'>
+class Component extends DCLogic {
+  renderVals() {
+    return {
+      prices: ['&lt;100к', '100–500к', '500к–1с', '1с+'].map(function (t, i) { var on = i === 1; return { t: t.replace('&lt;', '<'), on: on ? 'true' : 'false', bd: on ? '2px solid #0000ff' : '1px solid #cbd5e1', bg: on ? '#eef0ff' : '#ffffff', fg: on ? '#0000c2' : '#0f172a' }; }),
+      brands: [['Samsung', 42, true], ['LG', 31, false], ['Sony', 24, true], ['Xiaomi', 38, false], ['JBL', 12, false]].map(function (b) { return { t: b[0], n: b[1], on: b[2] }; })
+    };
+  }
+}
+</script>
+</body>
+</html>

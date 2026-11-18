@@ -154,7 +154,7 @@ export default function CartDrawer({
             <button
               type="button"
               onClick={() => setStage("cart")}
-              className="-ml-2 grid h-9 w-9 place-items-center rounded-lg text-slate-500 transition hover:bg-slate-100 hover:text-slate-900"
+              className="-ml-2 grid h-9 w-9 place-items-center rounded-md text-slate-500 transition hover:bg-slate-100 hover:text-slate-900"
               aria-label="Сагс руу буцах"
             >
               <ArrowLeft className="h-5 w-5" />
@@ -170,7 +170,7 @@ export default function CartDrawer({
             ref={closeButtonRef}
             type="button"
             onClick={onClose}
-            className="grid h-9 w-9 place-items-center rounded-lg text-slate-500 transition hover:bg-slate-100 hover:text-slate-900"
+            className="grid h-9 w-9 place-items-center rounded-md text-slate-500 transition hover:bg-slate-100 hover:text-slate-900"
             aria-label="Сагсыг хаах"
           >
             <X className="h-5 w-5" />
@@ -233,7 +233,7 @@ export default function CartDrawer({
                   {(Object.keys(PAYMENT_LABEL) as PaymentMethod[]).map((method) => (
                     <label
                       key={method}
-                      className={`flex cursor-pointer items-center gap-2 rounded-xl border px-3 py-2.5 text-sm font-medium transition ${
+                      className={`flex cursor-pointer items-center gap-2 rounded-lg border px-3 py-2.5 text-sm font-medium transition ${
                         details.payment === method
                           ? "border-brand bg-brand-soft text-brand"
                           : "border-slate-200 text-slate-700 hover:border-slate-300"
@@ -254,7 +254,7 @@ export default function CartDrawer({
               </fieldset>
 
               {submitError && (
-                <p role="alert" className="flex gap-2 rounded-xl border border-rose-200 bg-rose-50 p-3 text-sm text-rose-700">
+                <p role="alert" className="flex gap-2 rounded-lg border border-rose-200 bg-rose-50 p-3 text-sm text-rose-700">
                   <AlertCircle className="mt-0.5 h-4 w-4 shrink-0" aria-hidden="true" />
                   {submitError}
                 </p>
@@ -269,7 +269,7 @@ export default function CartDrawer({
               <button
                 type="submit"
                 disabled={submitting}
-                className="mt-4 inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-brand text-sm font-bold text-white shadow-lg shadow-brand/25 transition hover:bg-brand-dark disabled:cursor-wait disabled:opacity-80"
+                className="mt-4 inline-flex h-12 w-full items-center justify-center gap-2 rounded-lg bg-brand text-sm font-bold text-white shadow-lg shadow-brand/25 transition hover:bg-brand-dark disabled:cursor-wait disabled:opacity-80"
               >
                 {submitting ? (
                   <>
@@ -318,7 +318,7 @@ export default function CartDrawer({
                     <SafeImage
                       src={product.image}
                       alt={product.title}
-                      className="h-20 w-20 shrink-0 rounded-xl border border-slate-200 object-cover"
+                      className="h-20 w-20 shrink-0 rounded-lg border border-slate-200 object-cover"
                     />
                     <div className="flex min-w-0 flex-1 flex-col">
                       <div className="flex items-start justify-between gap-2">
@@ -326,7 +326,7 @@ export default function CartDrawer({
                         <button
                           type="button"
                           onClick={() => onRemove(product.id)}
-                          className="-mr-1 grid h-7 w-7 shrink-0 place-items-center rounded-lg text-slate-400 transition hover:bg-rose-50 hover:text-rose-600"
+                          className="-mr-1 grid h-7 w-7 shrink-0 place-items-center rounded-md text-slate-400 transition hover:bg-rose-50 hover:text-rose-600"
                           aria-label={`${product.title} — сагснаас хасах`}
                         >
                           <Trash2 className="h-4 w-4" />
@@ -336,7 +336,7 @@ export default function CartDrawer({
 
                       <div className="mt-auto flex items-end justify-between pt-2">
                         <div>
-                          <div className="inline-flex items-center rounded-lg border border-slate-200">
+                          <div className="inline-flex items-center rounded-md border border-slate-200">
                             <button
                               type="button"
                               onClick={() => (quantity === 1 ? onRemove(product.id) : onDecrement(product.id))}
@@ -395,7 +395,7 @@ export default function CartDrawer({
                   setSubmitError(null);
                   setStage("details");
                 }}
-                className="mt-4 inline-flex h-12 w-full items-center justify-center gap-2 rounded-xl bg-brand text-sm font-bold text-white shadow-lg shadow-brand/25 transition hover:bg-brand-dark"
+                className="mt-4 inline-flex h-12 w-full items-center justify-center gap-2 rounded-lg bg-brand text-sm font-bold text-white shadow-lg shadow-brand/25 transition hover:bg-brand-dark"
               >
                 Захиалга баталгаажуулах
               </button>
@@ -412,7 +412,7 @@ export default function CartDrawer({
 }
 
 const fieldClass =
-  "h-11 w-full rounded-xl border border-slate-200 bg-white px-3 text-sm text-slate-900 placeholder:text-slate-400 transition focus:border-brand focus:outline-none focus:ring-4 focus:ring-brand/10 aria-[invalid=true]:border-rose-400";
+  "h-11 w-full rounded-lg border border-slate-200 bg-white px-3 text-sm text-slate-900 placeholder:text-slate-400 transition focus:border-brand focus:outline-none focus:ring-4 focus:ring-brand/10 aria-[invalid=true]:border-rose-400";
 
 function CheckoutField({
   label,
@@ -450,7 +450,7 @@ function EmptyCart({ onClose, freeDeliveryThreshold }: { onClose: () => void; fr
       <button
         type="button"
         onClick={onClose}
-        className="mt-6 rounded-xl bg-brand px-5 py-2.5 text-sm font-bold text-white transition hover:bg-brand-dark"
+        className="mt-6 rounded-lg bg-brand px-5 py-2.5 text-sm font-bold text-white transition hover:bg-brand-dark"
       >
         Дэлгүүр хэсэх
       </button>
@@ -483,7 +483,7 @@ function OrderConfirmation({ order, onClose }: { order: PlacedOrder; onClose: ()
       <button
         type="button"
         onClick={onClose}
-        className="mt-6 h-11 w-full rounded-xl bg-brand text-sm font-bold text-white transition hover:bg-brand-dark"
+        className="mt-6 h-11 w-full rounded-lg bg-brand text-sm font-bold text-white transition hover:bg-brand-dark"
       >
         Үргэлжлүүлэн дэлгүүр хэсэх
       </button>

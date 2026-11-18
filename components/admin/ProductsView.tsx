@@ -75,7 +75,7 @@ export default function ProductsView({
   };
 
   return (
-    <section className="rounded-xl border border-slate-200 bg-white shadow-sm" aria-labelledby="products-heading">
+    <section className="rounded-lg border border-slate-200 bg-white shadow-sm" aria-labelledby="products-heading">
       <header className="flex flex-col gap-4 border-b border-slate-200 p-4 sm:p-5">
         <div className="flex flex-wrap items-center justify-between gap-3">
           <div>
@@ -187,7 +187,7 @@ export default function ProductsView({
                 <tr key={p.id} className="transition hover:bg-slate-50/70">
                   <td className="px-5 py-3">
                     <div className="flex items-center gap-3">
-                      <SafeImage src={p.image} alt="" className="h-11 w-11 shrink-0 rounded-lg border border-slate-200 object-cover" />
+                      <SafeImage src={p.image} alt="" className="h-11 w-11 shrink-0 rounded-md border border-slate-200 object-cover" />
                       <div className="min-w-0">
                         <p className="max-w-[18rem] truncate font-semibold text-slate-900">{p.title}</p>
                         <p className="font-mono text-[11px] text-slate-400">{p.id}</p>
@@ -210,7 +210,7 @@ export default function ProductsView({
                       <button
                         type="button"
                         onClick={() => openEdit(p)}
-                        className="inline-flex h-8 items-center gap-1.5 rounded-lg border border-slate-200 px-2.5 text-xs font-semibold text-slate-700 transition hover:border-brand hover:text-brand"
+                        className="inline-flex h-8 items-center gap-1.5 rounded-md border border-slate-200 px-2.5 text-xs font-semibold text-slate-700 transition hover:border-brand hover:text-brand"
                       >
                         <Pencil className="h-3.5 w-3.5" aria-hidden="true" />
                         Засах
@@ -218,7 +218,7 @@ export default function ProductsView({
                       <button
                         type="button"
                         onClick={() => setPendingDelete(p)}
-                        className="inline-flex h-8 items-center gap-1.5 rounded-lg border border-slate-200 px-2.5 text-xs font-semibold text-slate-700 transition hover:border-rose-300 hover:bg-rose-50 hover:text-rose-700"
+                        className="inline-flex h-8 items-center gap-1.5 rounded-md border border-slate-200 px-2.5 text-xs font-semibold text-slate-700 transition hover:border-rose-300 hover:bg-rose-50 hover:text-rose-700"
                       >
                         <Trash2 className="h-3.5 w-3.5" aria-hidden="true" />
                         Устгах
@@ -268,7 +268,7 @@ export default function ProductsView({
       >
         {pendingDelete && (
           <div className="flex gap-3">
-            <SafeImage src={pendingDelete.image} alt="" className="h-14 w-14 shrink-0 rounded-lg border border-slate-200 object-cover" />
+            <SafeImage src={pendingDelete.image} alt="" className="h-14 w-14 shrink-0 rounded-md border border-slate-200 object-cover" />
             <div className="text-sm">
               <p className="font-semibold text-slate-900">{pendingDelete.title}</p>
               <p className="mt-1 text-slate-500">
@@ -305,7 +305,7 @@ function StockStepper({ product, onCommit }: { product: Product; onCommit: (stoc
   };
 
   return (
-    <div className="inline-flex h-8 items-center rounded-lg border border-slate-200 bg-white">
+    <div className="inline-flex h-8 items-center rounded-md border border-slate-200 bg-white">
       <button
         type="button"
         onClick={() => commit(String(product.stock - 1))}

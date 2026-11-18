@@ -51,7 +51,7 @@ export default function OrdersView({ orders, onStatusChange }: OrdersViewProps) 
   ];
 
   return (
-    <section className="rounded-xl border border-slate-200 bg-white shadow-sm" aria-labelledby="orders-heading">
+    <section className="rounded-lg border border-slate-200 bg-white shadow-sm" aria-labelledby="orders-heading">
       <header className="space-y-4 border-b border-slate-200 p-4 sm:p-5">
         <div className="flex flex-wrap items-end justify-between gap-3">
           <div>
@@ -93,7 +93,7 @@ export default function OrdersView({ orders, onStatusChange }: OrdersViewProps) 
                 role="tab"
                 aria-selected={active}
                 onClick={() => setStatusFilter(t.id)}
-                className={`flex shrink-0 items-center gap-2 rounded-lg px-3 py-1.5 text-sm font-medium transition ${
+                className={`flex shrink-0 items-center gap-2 rounded-md px-3 py-1.5 text-sm font-medium transition ${
                   active ? "bg-slate-900 text-white" : "text-slate-600 hover:bg-slate-100"
                 }`}
               >
@@ -152,7 +152,7 @@ export default function OrdersView({ orders, onStatusChange }: OrdersViewProps) 
                           onClick={() => setExpanded(isOpen ? null : o.id)}
                           aria-expanded={isOpen}
                           aria-label={`${o.id} — бараа харах`}
-                          className="grid h-7 w-7 place-items-center rounded-md text-slate-400 transition hover:bg-slate-200 hover:text-slate-700"
+                          className="grid h-7 w-7 place-items-center rounded-sm text-slate-400 transition hover:bg-slate-200 hover:text-slate-700"
                         >
                           {isOpen ? <ChevronDown className="h-4 w-4" /> : <ChevronRight className="h-4 w-4" />}
                         </button>
@@ -173,7 +173,7 @@ export default function OrdersView({ orders, onStatusChange }: OrdersViewProps) 
                       <tr className="border-b border-slate-200 bg-slate-50">
                         <td />
                         <td colSpan={6} className="px-3 pb-5 pt-1">
-                          <div className="grid gap-4 rounded-lg border border-slate-200 bg-white p-4 md:grid-cols-[1fr_16rem]">
+                          <div className="grid gap-4 rounded-md border border-slate-200 bg-white p-4 md:grid-cols-[1fr_16rem]">
                             <ul className="divide-y divide-slate-100">
                               {o.lines.map((l) => (
                                 <li key={l.productId} className="flex items-center justify-between gap-4 py-2 first:pt-0">

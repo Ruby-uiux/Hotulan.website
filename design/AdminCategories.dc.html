@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="mn">
+<head>
+<meta charset="utf-8">
+<title>Админ — Ангилал</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#0000ff;text-decoration:none}a:hover{color:#0000c2}
+</style>
+</helmet>
+<div style="width: 100%; min-height: 1150px; background: #f8fafc; font-family: Inter, ui-sans-serif, system-ui, sans-serif; color: #0f172a; display: flex; flex-wrap: wrap; align-items: stretch">
+  <div style="flex: 1 1 248px; min-width: 248px; display: flex">
+    <dc-import name="AdminSidebar" active="categories" hint-size="100%,100%"></dc-import>
+  </div>
+  <div style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column">
+    <dc-import name="AdminTopbar" heading="Ангилал" crumb="Админ · Каталог" hint-size="100%,72px"></dc-import>
+    <main style="padding: 28px 32px 40px; display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start">
+      <section style="flex: 999 1 520px; min-width: 0; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden">
+        <div style="padding: 16px 20px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px; border-bottom: 1px solid #e2e8f0">
+          <div style="display: flex; flex-direction: column; gap: 2px">
+            <h2 style="margin: 0; font-size: 16px; font-weight: 700">20 ангилал · 86 дэд ангилал</h2>
+            <span style="font-size: 13px; color: #64748b">⋮⋮ бариад чирж дэлгүүрийн цэсний дарааллыг солино</span>
+          </div>
+          <button type="button" style="height: 44px; padding: 0 16px; border: 0; border-radius: 8px; background: #0000ff; color: #ffffff; font: 600 14px Inter, sans-serif">+ Шинэ ангилал</button>
+        </div>
+        <ul style="list-style: none; margin: 0; padding: 0">
+          <sc-for list="{{cats}}" as="c" hint-placeholder-count="12">
+            <li style="display: flex; align-items: center; gap: 12px; padding: 10px 20px; border-top: 1px solid #f1f5f9; background: {{c.bg}}">
+              <span aria-hidden="true" style="color: #94a3b8; font-size: 14px; letter-spacing: -2px; cursor: grab">⋮⋮</span>
+              <span style="width: 38px; height: 38px; flex: none; border-radius: 8px; background: #eef0ff; color: #0000ff; display: grid; place-items: center">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{c.icon}}"></path></svg>
+              </span>
+              <span style="flex: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0">
+                <span style="font-size: 14px; font-weight: 600">{{c.t}}</span>
+                <span style="font-size: 12px; color: #64748b">{{c.subs}} дэд ангилал · {{c.n}} бараа</span>
+              </span>
+              <span style="font-size: 12px; font-weight: 600; padding: 3px 8px; border-radius: 999px; background: {{c.visBg}}; color: {{c.visFg}}">{{c.vis}}</span>
+              <button type="button" style="height: 36px; padding: 0 12px; border: 1px solid #cbd5e1; border-radius: 6px; background: #ffffff; color: #0f172a; font: 600 13px Inter, sans-serif">Засах</button>
+            </li>
+          </sc-for>
+        </ul>
+        <div style="padding: 12px 20px; border-top: 1px solid #e2e8f0; font-size: 13px; color: #64748b">… дараагийн 8 ангилал</div>
+      </section>
+
+      <aside aria-label="Ангилал засах" style="flex: 1 1 340px; max-width: 420px; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 22px; display: flex; flex-direction: column; gap: 16px">
+        <div style="display: flex; justify-content: space-between; align-items: center">
+          <h2 style="margin: 0; font-size: 16px; font-weight: 700">Ангилал засах</h2>
+          <button type="button" aria-label="Хаах" style="width: 36px; height: 36px; border: 0; border-radius: 6px; background: #f1f5f9; color: #0f172a; font-size: 16px">✕</button>
+        </div>
+        <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600">Нэр *<input type="text" value="Цахилгаан бараа" style="height: 44px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0 12px; font: 400 15px Inter, sans-serif"></label>
+        <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600">URL холбоос<span style="display: flex; height: 44px; border: 1px solid #cbd5e1; border-radius: 8px; overflow: hidden; font-weight: 400"><span style="padding: 0 10px; display: flex; align-items: center; background: #f8fafc; color: #64748b; font-size: 13px; border-right: 1px solid #e2e8f0">hotulan.mn/c/</span><input type="text" value="electronics" style="flex: 1; min-width: 0; border: 0; padding: 0 10px; font: 400 15px Inter, sans-serif"></span></label>
+        <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600">Эх ангилал<select style="height: 44px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0 10px; font: 400 15px Inter, sans-serif; background: #ffffff; color: #0f172a"><option>— Үндсэн ангилал —</option></select></label>
+        <fieldset style="border: 0; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 8px">
+          <legend style="font-size: 13px; font-weight: 600; margin-bottom: 8px">Икон</legend>
+          <div style="display: grid; grid-template-columns: repeat(8, minmax(0, 1fr)); gap: 6px">
+            <sc-for list="{{iconPick}}" as="ic" hint-placeholder-count="16">
+              <button type="button" aria-label="Икон" aria-pressed="{{ic.on}}" style="aspect-ratio: 1 / 1; border-radius: 8px; border: {{ic.border}}; background: {{ic.bg}}; color: #0000ff; display: grid; place-items: center; padding: 0">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{ic.d}}"></path></svg>
+              </button>
+            </sc-for>
+          </div>
+        </fieldset>
+        <div style="display: flex; flex-direction: column; gap: 6px">
+          <span style="font-size: 13px; font-weight: 600">Нүүр зураг / баннер</span>
+          <button type="button" style="height: 110px; border: 2px dashed #cbd5e1; border-radius: 10px; background: #f8fafc; color: #475569; font: 500 13px Inter, sans-serif">Зураг оруулах · 1200×400</button>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 10px; padding-top: 4px">
+          <label style="display: flex; gap: 10px; align-items: center; font-size: 14px"><input type="checkbox" checked style="accent-color: #0000ff; width: 18px; height: 18px">Сайтад харуулах</label>
+          <label style="display: flex; gap: 10px; align-items: center; font-size: 14px"><input type="checkbox" checked style="accent-color: #0000ff; width: 18px; height: 18px">Нүүр хуудасны ангилалд гаргах</label>
+          <label style="display: flex; gap: 10px; align-items: center; font-size: 14px"><input type="checkbox" checked style="accent-color: #0000ff; width: 18px; height: 18px">Дээд цэсэнд гаргах</label>
+        </div>
+        <div style="display: flex; flex-direction: column; gap: 8px; border-top: 1px solid #e2e8f0; padding-top: 14px">
+          <span style="font-size: 13px; font-weight: 600">Дэд ангилал (6)</span>
+          <div style="display: flex; flex-wrap: wrap; gap: 6px">
+            <span style="padding: 6px 10px; border-radius: 6px; background: #f1f5f9; font-size: 13px">ТВ</span><span style="padding: 6px 10px; border-radius: 6px; background: #f1f5f9; font-size: 13px">Гар утас</span><span style="padding: 6px 10px; border-radius: 6px; background: #f1f5f9; font-size: 13px">Ноутбук</span><span style="padding: 6px 10px; border-radius: 6px; background: #f1f5f9; font-size: 13px">Чихэвч</span><span style="padding: 6px 10px; border-radius: 6px; background: #f1f5f9; font-size: 13px">Чанга яригч</span><span style="padding: 6px 10px; border-radius: 6px; background: #f1f5f9; font-size: 13px">Тоглоомын хэрэгсэл</span>
+            <button type="button" style="padding: 6px 10px; border-radius: 6px; border: 1px dashed #0000ff; background: #ffffff; color: #0000ff; font: 600 13px Inter, sans-serif">+ Нэмэх</button>
+          </div>
+        </div>
+        <div style="display: flex; gap: 8px; padding-top: 4px">
+          <button type="button" style="height: 44px; padding: 0 14px; border: 1px solid #fecaca; border-radius: 8px; background: #ffffff; color: #b91c1c; font: 600 14px Inter, sans-serif">Устгах</button>
+          <button type="button" style="flex: 1; height: 44px; border: 0; border-radius: 8px; background: #0000ff; color: #ffffff; font: 600 14px Inter, sans-serif">Хадгалах</button>
+        </div>
+      </aside>
+    </main>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1150}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var I = {
+      toys: 'M4 4h7v7H4zM13 4h7v7h-7zM8.5 13h7v7h-7z',
+      home: 'M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z',
+      tv: 'M3 6h18v11H3zM8 21h8M12 17v4',
+      sport: 'M6 7v10M3 9v6M18 7v10M21 9v6M6 12h12',
+      pot: 'M3 11h18M5 11v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7M8 7c0-1 1-2 2-2M14 7c0-1 1-2 2-2',
+      beauty: 'M12 3l1.8 4.7 4.7 1.8-4.7 1.8L12 16l-1.8-4.7-4.7-1.8 4.7-1.8zM19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z',
+      shirt: 'M8 3 4 5 2 9l4 2v10h12V11l4-2-2-4-4-2c0 2-2 3-4 3S8 5 8 3z',
+      shoe: 'M3 16v-5l4-1 3-5 2 1-1 4 9 3a2 2 0 0 1 1 2v1zM3 19h18',
+      bag: 'M5 8h14l-1 13H6zM9 8V6a3 3 0 0 1 6 0v2',
+      book: 'M4 4h6a2 2 0 0 1 2 2v14a2 2 0 0 0-2-2H4zM20 4h-6a2 2 0 0 0-2 2v14a2 2 0 0 1 2-2h6z',
+      phone: 'M7 2h10a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1zM11 18h2',
+      laptop: 'M4 5h16v10H4zM2 19h20',
+      sofa: 'M4 11V8a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3M2 12a2 2 0 0 1 4 0v2h12v-2a2 2 0 0 1 4 0v5H2zM5 17v3M19 17v3',
+      health: 'M20.8 8.6a5 5 0 0 0-8.8-3.2 5 5 0 0 0-8.8 3.2C3.2 14 12 20 12 20s8.8-6 8.8-11.4zM3.5 12h4l2-3 3 5 2-2h5',
+      baby: 'M9 3h6M10 3v3L8 8v12a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V8l-2-2V3M8 12h8',
+      car: 'M5 17h14M3 17v-4l2-5a2 2 0 0 1 2-1h10a2 2 0 0 1 2 1l2 5v4h-2M3 13h18M7 17v2M17 17v2'
+    };
+    var raw = [
+      ['Хүүхдийн тоглоом', 'toys', 8, 184, 1], ['Гэр ахуй', 'home', 7, 212, 1], ['Цахилгаан бараа', 'tv', 6, 248, 1],
+      ['Спорт, фитнес', 'sport', 5, 96, 1], ['Гал тогоо', 'pot', 6, 131, 1], ['Гоо сайхан', 'beauty', 4, 77, 1],
+      ['Хувцас', 'shirt', 6, 54, 1], ['Гутал', 'shoe', 3, 0, 0], ['Цүнх, аксессуар', 'bag', 4, 38, 1],
+      ['Ном, бичиг хэрэг', 'book', 3, 62, 1], ['Гар утас', 'phone', 4, 71, 1], ['Компьютер', 'laptop', 5, 49, 1]
+    ];
+    var keys = Object.keys(I);
+    return {
+      cats: raw.map(function (r, i) {
+        var sel = i === 2;
+        return { t: r[0], icon: I[r[1]], subs: r[2], n: r[3], vis: r[4] ? 'Харагдана' : 'Нуусан',
+          visBg: r[4] ? '#dcfce7' : '#f1f5f9', visFg: r[4] ? '#166534' : '#475569', bg: sel ? '#eef0ff' : '#ffffff' };
+      }),
+      iconPick: keys.map(function (k) {
+        var on = k === 'tv';
+        return { d: I[k], on: on ? 'true' : 'false', border: on ? '2px solid #0000ff' : '1px solid #e2e8f0', bg: on ? '#eef0ff' : '#ffffff' };
+      })
+    };
+  }
+}
+</script>
+</body>
+</html>

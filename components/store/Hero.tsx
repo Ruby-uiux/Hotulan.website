@@ -108,14 +108,14 @@ export default function Hero({ categories, freeDeliveryThreshold, supportPhone }
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <a
               href="#category-all"
-              className="group inline-flex h-12 items-center justify-center gap-2 rounded-xl bg-brand px-6 text-sm font-bold text-white shadow-lg shadow-brand/25 transition hover:bg-brand-dark"
+              className="group inline-flex h-12 items-center justify-center gap-2 rounded-lg bg-brand px-6 text-sm font-bold text-white shadow-lg shadow-brand/25 transition hover:bg-brand-dark"
             >
               Бүх бараа үзэх
               <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
             </a>
             <a
               href="#category-toys"
-              className="inline-flex h-12 items-center justify-center rounded-xl border border-slate-300 bg-white px-6 text-sm font-semibold text-slate-800 transition hover:border-brand hover:text-brand"
+              className="inline-flex h-12 items-center justify-center rounded-lg border border-slate-300 bg-white px-6 text-sm font-semibold text-slate-800 transition hover:border-brand hover:text-brand"
             >
               Тоглоомын ангилал
             </a>
@@ -176,7 +176,7 @@ export default function Hero({ categories, freeDeliveryThreshold, supportPhone }
                   <span className="mt-1 block text-xl font-extrabold sm:text-2xl">30% хүртэл хөнгөлөлт</span>
                   <span className="mt-1 block text-sm text-white/80">Спорт ба фитнесийн бараа</span>
                 </span>
-                <span className="relative inline-flex shrink-0 items-center gap-1.5 rounded-xl bg-white px-4 py-2.5 text-sm font-bold text-brand transition group-hover:bg-blue-50">
+                <span className="relative inline-flex shrink-0 items-center gap-1.5 rounded-lg bg-white px-4 py-2.5 text-sm font-bold text-brand transition group-hover:bg-blue-50">
                   Үзэх
                   <ArrowRight className="h-4 w-4 transition-transform group-hover:translate-x-0.5" aria-hidden="true" />
                 </span>
@@ -195,7 +195,7 @@ export default function Hero({ categories, freeDeliveryThreshold, supportPhone }
                 i > 0 ? "lg:border-l lg:border-slate-200" : ""
               } ${i < 2 ? "border-b border-slate-200 lg:border-b-0" : ""}`}
             >
-              <span className="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-white text-brand ring-1 ring-slate-200">
+              <span className="grid h-10 w-10 shrink-0 place-items-center rounded-lg bg-white text-brand ring-1 ring-slate-200">
                 <Icon className="h-5 w-5" aria-hidden="true" />
               </span>
               <span className="min-w-0">

@@ -390,7 +390,7 @@ export default function StoreFront({ products, freeDeliveryThreshold, supportPho
                 setToast(null);
                 setCartOpen(true);
               }}
-              className="rounded-lg bg-white/10 px-3 py-1.5 text-xs font-bold transition hover:bg-white/20"
+              className="rounded-md bg-white/10 px-3 py-1.5 text-xs font-bold transition hover:bg-white/20"
             >
               Сагс харах
             </button>

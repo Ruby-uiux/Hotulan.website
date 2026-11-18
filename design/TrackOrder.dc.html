@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="mn">
+<head>
+<meta charset="utf-8">
+<title>Захиалга хянах</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#0000ff;text-decoration:none}a:hover{color:#0000c2}
+</style>
+</helmet>
+<div style="width: 100%; background: #f8fafc; font-family: Inter, ui-sans-serif, system-ui, sans-serif; color: #0f172a">
+  <dc-import name="StoreHeader" hint-size="100%,180px"></dc-import>
+  <main style="max-width: 960px; margin: 0 auto; padding: 36px 24px 72px; display: flex; flex-direction: column; gap: 20px">
+    <h1 style="margin: 0; font-size: 28px; font-weight: 800; letter-spacing: -0.02em">Захиалга хянах</h1>
+    <form style="display: flex; flex-wrap: wrap; gap: 10px; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px">
+      <label style="flex: 1 1 200px; display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600">Захиалгын дугаар<input type="text" value="HTL-481204" style="height: 46px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0 12px; font: 400 15px Inter, sans-serif"></label>
+      <label style="flex: 1 1 200px; display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600">Утасны дугаар<input type="tel" value="9911-2345" style="height: 46px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0 12px; font: 400 15px Inter, sans-serif"></label>
+      <button type="submit" style="align-self: flex-end; height: 46px; padding: 0 22px; border: 0; border-radius: 8px; background: #0000ff; color: #ffffff; font: 600 14px Inter, sans-serif">Хайх</button>
+    </form>
+    <section style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 28px; display: flex; flex-direction: column; gap: 24px">
+      <div style="display: flex; flex-wrap: wrap; justify-content: space-between; gap: 12px; align-items: flex-start">
+        <div style="display: flex; flex-direction: column; gap: 4px"><span style="font-size: 13px; color: #64748b">HTL-481204 · 1 бараа · 189,000₮</span><span style="font-size: 22px; font-weight: 800">Өнөөдөр 14:00–19:00 хооронд хүргэнэ</span></div>
+        <span style="padding: 6px 12px; border-radius: 999px; background: #ede9fe; color: #5b21b6; font-size: 13px; font-weight: 600">Хүргэлтэнд гарсан</span>
+      </div>
+      <ol aria-label="Захиалгын явц" style="list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0">
+        <sc-for list="{{steps}}" as="s" hint-placeholder-count="5">
+          <li style="display: flex; flex-direction: column; gap: 10px; align-items: flex-start">
+            <span style="display: flex; align-items: center; width: 100%"><span style="width: 28px; height: 28px; flex: none; border-radius: 999px; background: {{s.dot}}; color: {{s.mk}}; display: grid; place-items: center; font-size: 13px; font-weight: 800; border: 2px solid {{s.ring}}; box-sizing: border-box">{{s.mark}}</span><span style="flex: 1; height: 3px; background: {{s.line}}"></span></span>
+            <span style="font-size: 14px; font-weight: 700; color: {{s.fg}}">{{s.t}}</span>
+            <span style="font-size: 12px; color: #64748b">{{s.d}}</span>
+          </li>
+        </sc-for>
+      </ol>
+      <div style="display: flex; flex-wrap: wrap; gap: 16px; padding: 16px; border-radius: 12px; background: #f8fafc; align-items: center">
+        <span style="width: 44px; height: 44px; border-radius: 999px; background: #0f172a; color: #ffffff; display: grid; place-items: center; font-weight: 700">Г</span>
+        <span style="flex: 1; display: flex; flex-direction: column; font-size: 14px"><b>Жолооч Ганзориг</b><span style="color: #64748b">Таны өмнө 2 хүргэлт байна</span></span>
+        <a href="tel:99002222" style="height: 44px; padding: 0 16px; border-radius: 8px; background: #0000ff; color: #ffffff; display: flex; align-items: center; font-weight: 600; font-size: 14px">Залгах</a>
+      </div>
+      <div style="font-size: 14px; color: #475569; line-height: 1.6">Хаяг: Улаанбаатар, Сүхбаатар дүүрэг, 1-р хороо, 8-р байр, 12 тоот</div>
+    </section>
+  </main>
+  <dc-import name="StoreFooter" hint-size="100%,400px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1000}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var raw = [['Захиалсан', '11.02 10:14', 2], ['Төлөгдсөн', '11.02 10:16', 2], ['Савласан', '11.02 16:40', 2], ['Хүргэлтэнд', 'Өнөөдөр 13:05', 1], ['Хүргэгдсэн', '—', 0]];
+    return {
+      steps: raw.map(function (r, i) {
+        var done = r[2] === 2, cur = r[2] === 1;
+        return { t: r[0], d: r[1], mark: done ? '✓' : (i + 1) + '',
+          dot: done ? '#15803d' : (cur ? '#0000ff' : '#ffffff'), ring: done ? '#15803d' : (cur ? '#0000ff' : '#cbd5e1'),
+          line: i === raw.length - 1 ? 'transparent' : (done ? '#15803d' : '#e2e8f0'), fg: r[2] ? '#0f172a' : '#64748b', mk: r[2] ? '#ffffff' : '#64748b' };
+      })
+    };
+  }
+}
+</script>
+</body>
+</html>

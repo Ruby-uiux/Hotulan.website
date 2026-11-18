@@ -33,7 +33,7 @@ export default function TrustStrip() {
         <ul className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
           {TRUST_POINTS.map(({ icon: Icon, title, body }) => (
             <li key={title} className="rounded-2xl border border-slate-200 bg-white p-6 shadow-sm">
-              <span className="grid h-12 w-12 place-items-center rounded-xl bg-brand-soft text-brand">
+              <span className="grid h-12 w-12 place-items-center rounded-lg bg-brand-soft text-brand">
                 <Icon className="h-6 w-6" aria-hidden="true" />
               </span>
               <h3 className="mt-4 font-bold text-slate-900">{title}</h3>

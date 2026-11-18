@@ -26,7 +26,7 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
         <div aria-hidden="true" className="absolute -right-24 -top-24 h-96 w-96 rounded-full border-[48px] border-white/10" />
         <div aria-hidden="true" className="absolute -bottom-32 -left-16 h-80 w-80 rounded-full bg-white/5" />
         <div className="relative flex items-center gap-3">
-          <span className="grid h-10 w-10 place-items-center rounded-xl bg-white text-brand">
+          <span className="grid h-10 w-10 place-items-center rounded-lg bg-white text-brand">
             <Store className="h-5 w-5" aria-hidden="true" />
           </span>
           <span className="text-lg font-extrabold tracking-tight">hotulan.mn</span>
@@ -46,7 +46,7 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
       <section className="flex items-center justify-center px-4 py-12 sm:px-6">
         <div className="w-full max-w-sm">
           <div className="mb-8 flex items-center gap-2.5 lg:hidden">
-            <span className="grid h-9 w-9 place-items-center rounded-lg bg-brand text-white">
+            <span className="grid h-9 w-9 place-items-center rounded-md bg-brand text-white">
               <Store className="h-4.5 w-4.5" aria-hidden="true" />
             </span>
             <span className="font-extrabold tracking-tight text-slate-900">
@@ -60,7 +60,7 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
           {configured ? (
             <LoginForm next={safeNext(params.next)} expired={params.expired === "1"} />
           ) : (
-            <div role="alert" className="mt-8 rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
+            <div role="alert" className="mt-8 rounded-lg border border-amber-200 bg-amber-50 p-4 text-sm text-amber-900">
               <p className="font-semibold">Нэвтрэлт тохируулагдаагүй байна</p>
               <p className="mt-1">
                 Серверийн <code className="rounded bg-amber-100 px-1">.env.local</code> файлд{" "}

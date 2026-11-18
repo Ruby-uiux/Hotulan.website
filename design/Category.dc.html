@@ -1,0 +1,167 @@
+<!doctype html>
+<html lang="mn">
+<head>
+<meta charset="utf-8">
+<title>Ангилал — Цахилгаан бараа</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#0f172a;text-decoration:none}a:hover{color:#0000ff}
+</style>
+</helmet>
+<div style="width: 100%; background: #f8fafc; font-family: Inter, ui-sans-serif, system-ui, sans-serif; color: #0f172a">
+  <dc-import name="StoreHeader" hint-size="100%,180px"></dc-import>
+
+  <main style="max-width: 1280px; margin: 0 auto; padding: 20px 24px 64px; display: flex; flex-direction: column; gap: 20px">
+    <nav aria-label="Байршил" style="font-size: 13px; color: #64748b; display: flex; gap: 8px">
+      <a href="Home.dc.html" style="color: #64748b">Нүүр</a><span aria-hidden="true">/</span><span style="color: #0f172a; font-weight: 600">Цахилгаан бараа</span>
+    </nav>
+    <div style="display: flex; flex-wrap: wrap; align-items: baseline; gap: 12px">
+      <h1 style="margin: 0; font-size: 32px; font-weight: 800; letter-spacing: -0.02em">Цахилгаан бараа</h1>
+      <span style="font-size: 15px; color: #64748b">248 бараа</span>
+    </div>
+    <div style="display: flex; gap: 8px; flex-wrap: wrap">
+      <sc-for list="{{subs}}" as="s" hint-placeholder-count="7">
+        <a href="#" style="height: 38px; padding: 0 16px; border-radius: 999px; border: 1px solid {{s.border}}; background: {{s.bg}}; color: {{s.fg}}; display: flex; align-items: center; font-size: 14px; font-weight: 500">{{s.t}}</a>
+      </sc-for>
+    </div>
+
+    <div style="display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-start">
+      <aside aria-label="Шүүлтүүр" style="flex: 1 1 260px; max-width: 280px; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; display: flex; flex-direction: column; gap: 22px">
+        <div style="display: flex; justify-content: space-between; align-items: center">
+          <span style="font-size: 16px; font-weight: 700">Шүүлтүүр</span>
+          <button type="button" style="border: 0; background: none; color: #0000ff; font: 600 13px Inter, sans-serif; padding: 8px 0">Цэвэрлэх</button>
+        </div>
+        <fieldset style="border: 0; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 10px">
+          <legend style="font-size: 14px; font-weight: 700; margin-bottom: 10px">Үнэ</legend>
+          <div style="display: flex; gap: 8px; align-items: center">
+            <label style="flex: 1; display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: #64748b">Доод<input type="text" value="50,000" style="height: 40px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0 10px; font: 400 14px Inter, sans-serif; width: 100%; box-sizing: border-box"></label>
+            <label style="flex: 1; display: flex; flex-direction: column; gap: 4px; font-size: 12px; color: #64748b">Дээд<input type="text" value="3,000,000" style="height: 40px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0 10px; font: 400 14px Inter, sans-serif; width: 100%; box-sizing: border-box"></label>
+          </div>
+          <div style="height: 4px; border-radius: 2px; background: #e2e8f0; position: relative; margin: 8px 6px"><div style="position: absolute; left: 10%; right: 25%; top: 0; bottom: 0; background: #0000ff; border-radius: 2px"></div></div>
+        </fieldset>
+        <fieldset style="border: 0; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px">
+          <legend style="font-size: 14px; font-weight: 700; margin-bottom: 10px">Брэнд</legend>
+          <sc-for list="{{brands}}" as="b" hint-placeholder-count="6">
+            <label style="display: flex; align-items: center; gap: 10px; font-size: 14px; min-height: 32px">
+              <input type="checkbox" checked="{{b.on}}" style="width: 18px; height: 18px; accent-color: #0000ff">
+              <span style="flex: 1">{{b.t}}</span><span style="color: #64748b; font-size: 13px">{{b.n}}</span>
+            </label>
+          </sc-for>
+        </fieldset>
+        <fieldset style="border: 0; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px">
+          <legend style="font-size: 14px; font-weight: 700; margin-bottom: 10px">Үнэлгээ</legend>
+          <label style="display: flex; align-items: center; gap: 10px; font-size: 14px; min-height: 32px"><input type="radio" name="r" style="width: 18px; height: 18px; accent-color: #0000ff"><span style="color: #f59e0b">★★★★</span> ба түүнээс дээш</label>
+          <label style="display: flex; align-items: center; gap: 10px; font-size: 14px; min-height: 32px"><input type="radio" name="r" style="width: 18px; height: 18px; accent-color: #0000ff"><span style="color: #f59e0b">★★★</span> ба түүнээс дээш</label>
+        </fieldset>
+        <fieldset style="border: 0; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 6px">
+          <legend style="font-size: 14px; font-weight: 700; margin-bottom: 10px">Бусад</legend>
+          <label style="display: flex; align-items: center; gap: 10px; font-size: 14px; min-height: 32px"><input type="checkbox" checked style="width: 18px; height: 18px; accent-color: #0000ff">Зөвхөн бэлэн байгаа</label>
+          <label style="display: flex; align-items: center; gap: 10px; font-size: 14px; min-height: 32px"><input type="checkbox" style="width: 18px; height: 18px; accent-color: #0000ff">Хямдралтай</label>
+          <label style="display: flex; align-items: center; gap: 10px; font-size: 14px; min-height: 32px"><input type="checkbox" style="width: 18px; height: 18px; accent-color: #0000ff">Үнэгүй хүргэлттэй</label>
+        </fieldset>
+      </aside>
+
+      <section aria-label="Бараанууд" style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column; gap: 16px">
+        <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 10px 14px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 10px">
+          <div style="display: flex; gap: 6px; flex-wrap: wrap">
+            <span style="height: 32px; padding: 0 10px; border-radius: 6px; background: #eef0ff; color: #0000c2; display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600">Samsung ✕</span>
+            <span style="height: 32px; padding: 0 10px; border-radius: 6px; background: #eef0ff; color: #0000c2; display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600">Бэлэн байгаа ✕</span>
+          </div>
+          <label style="display: flex; align-items: center; gap: 8px; font-size: 14px; color: #475569">Эрэмбэлэх
+            <select style="height: 40px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0 12px; font: 500 14px Inter, sans-serif; color: #0f172a; background: #ffffff">
+              <option>Эрэлттэй нь эхэнд</option><option>Үнэ: багаас их</option><option>Үнэ: ихээс бага</option><option>Шинэ нь эхэнд</option>
+            </select>
+          </label>
+        </div>
+        <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px">
+          <sc-for list="{{items}}" as="p" hint-placeholder-count="12">
+            <article style="border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; background: #ffffff">
+              <a href="Product.dc.html" style="aspect-ratio: 1 / 1; background: {{p.tint}}; display: grid; place-items: center; color: #94a3b8; position: relative">
+                <svg width="52" height="52" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="{{p.icon}}"></path></svg>
+                <sc-if value="{{p.hasBadge}}" hint-placeholder-val="{{ true }}">
+                  <span style="position: absolute; top: 10px; left: 10px; padding: 4px 8px; border-radius: 6px; background: {{p.badgeBg}}; color: #ffffff; font-size: 12px; font-weight: 700">{{p.badge}}</span>
+                </sc-if>
+              </a>
+              <div style="padding: 14px; display: flex; flex-direction: column; gap: 6px; flex: 1">
+                <span style="font-size: 12px; color: #64748b; font-weight: 500">{{p.brand}}</span>
+                <a href="Product.dc.html" style="font-size: 14px; font-weight: 600; line-height: 1.4; min-height: 39px">{{p.title}}</a>
+                <span style="font-size: 12px; color: #64748b"><span style="color: #f59e0b">★</span> {{p.rating}} ({{p.reviews}})</span>
+                <span style="display: flex; align-items: baseline; gap: 8px; margin-top: auto">
+                  <span style="font-size: 17px; font-weight: 800">{{p.price}}</span>
+                  <span style="font-size: 13px; color: #64748b; text-decoration: line-through">{{p.was}}</span>
+                </span>
+                <button type="button" style="height: 40px; border: 0; border-radius: 8px; background: #0000ff; color: #ffffff; font: 600 14px Inter, sans-serif">Сагсанд нэмэх</button>
+              </div>
+            </article>
+          </sc-for>
+        </div>
+        <nav aria-label="Хуудаслалт" style="display: flex; justify-content: center; gap: 6px; padding-top: 12px">
+          <a href="#" aria-label="Өмнөх" style="width: 44px; height: 44px; border-radius: 8px; border: 1px solid #cbd5e1; display: grid; place-items: center; background: #ffffff">‹</a>
+          <a href="#" aria-current="page" style="width: 44px; height: 44px; border-radius: 8px; background: #0000ff; color: #ffffff; display: grid; place-items: center; font-weight: 700">1</a>
+          <a href="#" style="width: 44px; height: 44px; border-radius: 8px; border: 1px solid #cbd5e1; display: grid; place-items: center; background: #ffffff">2</a>
+          <a href="#" style="width: 44px; height: 44px; border-radius: 8px; border: 1px solid #cbd5e1; display: grid; place-items: center; background: #ffffff">3</a>
+          <span style="width: 44px; height: 44px; display: grid; place-items: center; color: #64748b">…</span>
+          <a href="#" style="width: 44px; height: 44px; border-radius: 8px; border: 1px solid #cbd5e1; display: grid; place-items: center; background: #ffffff">21</a>
+          <a href="#" aria-label="Дараах" style="width: 44px; height: 44px; border-radius: 8px; border: 1px solid #cbd5e1; display: grid; place-items: center; background: #ffffff">›</a>
+        </nav>
+      </section>
+    </div>
+  </main>
+
+  <dc-import name="StoreFooter" hint-size="100%,400px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1900}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var I = {
+      tv: 'M3 6h18v11H3zM8 21h8M12 17v4',
+      phone: 'M7 2h10a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1zM11 18h2',
+      laptop: 'M4 5h16v10H4zM2 19h20',
+      head: 'M3 14h3a2 2 0 0 1 2 2v3a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-7a9 9 0 0 1 18 0v7a2 2 0 0 1-2 2h-1a2 2 0 0 1-2-2v-3a2 2 0 0 1 2-2h3',
+      speaker: 'M6 2h12a2 2 0 0 1 2 2v16a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2zM12 18a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM12 6h.01',
+      game: 'M6 11h4M8 9v4M15 12h.01M18 10h.01M17.3 5H6.7a4 4 0 0 0-4 3.6L2 15a3 3 0 0 0 5.2 2l1.4-1.6h6.8l1.4 1.6A3 3 0 0 0 22 15l-.7-6.4A4 4 0 0 0 17.3 5z'
+    };
+    var tints = ['#eef0ff', '#f1f5f9', '#fef3c7', '#dcfce7'];
+    var raw = [
+      ['55" 4K UHD Smart ТВ', 'Samsung', 'tv', '2,190,000₮', '2,590,000₮', '−15%'],
+      ['Утасгүй чихэвч, ANC', 'Sony', 'head', '459,000₮', '', 'Эрэлттэй'],
+      ['14" хөнгөн ноутбук, 16GB', 'Lenovo', 'laptop', '3,490,000₮', '', 'Шинэ'],
+      ['Bluetooth чанга яригч, IP67', 'JBL', 'speaker', '189,000₮', '', ''],
+      ['Ухаалаг утас 256GB', 'Samsung', 'phone', '2,890,000₮', '3,190,000₮', '−9%'],
+      ['Тоглоомын удирдлага', 'Xbox', 'game', '129,000₮', '', ''],
+      ['65" QLED ТВ', 'Samsung', 'tv', '3,990,000₮', '', 'Шинэ'],
+      ['Чихэнд суудаг чихэвч', 'Xiaomi', 'head', '89,000₮', '119,000₮', '−25%'],
+      ['Таблет 11", 128GB', 'Xiaomi', 'phone', '1,190,000₮', '', ''],
+      ['Gaming ноутбук RTX', 'ASUS', 'laptop', '5,490,000₮', '', 'Эрэлттэй'],
+      ['Soundbar 2.1', 'LG', 'speaker', '690,000₮', '790,000₮', '−13%'],
+      ['43" Full HD ТВ', 'LG', 'tv', '1,090,000₮', '', '']
+    ];
+    var items = raw.map(function (r, i) {
+      var b = r[5];
+      return { title: r[0], brand: r[1], icon: I[r[2]], price: r[3], was: r[4], badge: b, hasBadge: !!b,
+        badgeBg: b.charAt(0) === '−' ? '#dc2626' : (b === 'Шинэ' ? '#0000ff' : '#0f172a'),
+        rating: (4.9 - (i % 5) * 0.1).toFixed(1), reviews: 30 + i * 17, tint: tints[i % 4] };
+    });
+    var subs = ['Бүгд', 'ТВ', 'Гар утас', 'Ноутбук', 'Чихэвч', 'Чанга яригч', 'Тоглоомын хэрэгсэл'].map(function (t, i) {
+      return { t: t, bg: i === 0 ? '#0f172a' : '#ffffff', fg: i === 0 ? '#ffffff' : '#0f172a', border: i === 0 ? '#0f172a' : '#cbd5e1' };
+    });
+    return {
+      items: items,
+      subs: subs,
+      brands: [
+        { t: 'Samsung', n: 42, on: true }, { t: 'LG', n: 31, on: false }, { t: 'Sony', n: 24, on: false },
+        { t: 'Xiaomi', n: 38, on: false }, { t: 'Lenovo', n: 19, on: false }, { t: 'JBL', n: 12, on: false }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>

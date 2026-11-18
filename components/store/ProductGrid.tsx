@@ -45,7 +45,7 @@ export default function ProductGrid({
             <button
               type="button"
               onClick={onSearchAllCategories}
-              className="rounded-xl bg-brand px-5 py-2.5 text-sm font-bold text-white transition hover:bg-brand-dark"
+              className="rounded-lg bg-brand px-5 py-2.5 text-sm font-bold text-white transition hover:bg-brand-dark"
             >
               Бүх ангилалд хайх ({matchesInOtherCategories})
             </button>
@@ -55,8 +55,8 @@ export default function ProductGrid({
             onClick={onReset}
             className={
               matchesInOtherCategories > 0
-                ? "rounded-xl border border-slate-300 bg-white px-5 py-2.5 text-sm font-semibold text-slate-700 transition hover:border-brand hover:text-brand"
-                : "rounded-xl bg-brand px-5 py-2.5 text-sm font-bold text-white transition hover:bg-brand-dark"
+                ? "rounded-lg border border-slate-300 bg-white px-5 py-2.5 text-sm font-semibold text-slate-700 transition hover:border-brand hover:text-brand"
+                : "rounded-lg bg-brand px-5 py-2.5 text-sm font-bold text-white transition hover:bg-brand-dark"
             }
           >
             Бүх барааг харах

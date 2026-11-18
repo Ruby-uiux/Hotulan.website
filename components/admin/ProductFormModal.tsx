@@ -269,7 +269,7 @@ function ProductForm({
 
       <div className="order-first sm:order-none">
         <p className="mb-1.5 text-sm font-medium text-slate-700">Урьдчилан харах</p>
-        <div className="aspect-square overflow-hidden rounded-xl border border-slate-200 bg-slate-50">
+        <div className="aspect-square overflow-hidden rounded-lg border border-slate-200 bg-slate-50">
           {form.image.trim() && !errors.image ? (
             <SafeImage key={form.image.trim()} src={form.image.trim()} alt="Барааны зураг" className="h-full w-full object-cover" />
           ) : (

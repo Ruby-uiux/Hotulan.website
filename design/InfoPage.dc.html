@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="mn">
+<head>
+<meta charset="utf-8">
+<title>Хүргэлт ба буцаалтын нөхцөл</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#0000ff;text-decoration:none}a:hover{color:#0000c2}
+</style>
+</helmet>
+<div style="width: 100%; background: #f8fafc; font-family: Inter, ui-sans-serif, system-ui, sans-serif; color: #0f172a">
+  <dc-import name="StoreHeader" hint-size="100%,180px"></dc-import>
+  <main style="max-width: 1280px; margin: 0 auto; padding: 28px 24px 64px; display: flex; flex-wrap: wrap; gap: 32px; align-items: flex-start">
+    <nav aria-label="Мэдээллийн хуудас" style="flex: 1 1 220px; max-width: 260px; display: flex; flex-direction: column; gap: 2px">
+      <a href="#" style="height: 42px; padding: 0 12px; border-radius: 8px; color: #334155; display: flex; align-items: center; font-size: 14px">Бидний тухай</a>
+      <a href="#" aria-current="page" style="height: 42px; padding: 0 12px; border-radius: 8px; background: #eef0ff; color: #0000c2; display: flex; align-items: center; font-size: 14px; font-weight: 700">Хүргэлт, буцаалт</a>
+      <a href="#" style="height: 42px; padding: 0 12px; border-radius: 8px; color: #334155; display: flex; align-items: center; font-size: 14px">Баталгаат засвар</a>
+      <a href="#" style="height: 42px; padding: 0 12px; border-radius: 8px; color: #334155; display: flex; align-items: center; font-size: 14px">Төлбөрийн нөхцөл</a>
+      <a href="#" style="height: 42px; padding: 0 12px; border-radius: 8px; color: #334155; display: flex; align-items: center; font-size: 14px">Нууцлалын бодлого</a>
+      <a href="#" style="height: 42px; padding: 0 12px; border-radius: 8px; color: #334155; display: flex; align-items: center; font-size: 14px">Холбоо барих</a>
+    </nav>
+    <article style="flex: 999 1 560px; min-width: 0; max-width: 760px; display: flex; flex-direction: column; gap: 24px">
+      <div style="display: flex; flex-direction: column; gap: 8px"><h1 style="margin: 0; font-size: 34px; font-weight: 800; letter-spacing: -0.02em">Хүргэлт, буцаалт</h1><span style="font-size: 13px; color: #64748b">Шинэчилсэн: [ОГНОО] · Админ → Харагдах байдал → Мэдээллийн хуудаснаас засна</span></div>
+      <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px">
+        <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 13px; color: #64748b">Хүргэлтийн бүс</span><b style="font-size: 17px">Зөвхөн Улаанбаатар</b></div>
+        <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 13px; color: #64748b">Хугацаа</span><b style="font-size: 17px">24–72 цаг</b></div>
+        <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px; display: flex; flex-direction: column; gap: 4px"><span style="font-size: 13px; color: #64748b">Буцаалт</span><b style="font-size: 17px">14 хоног</b></div>
+      </div>
+      <section style="display: flex; flex-direction: column; gap: 10px; font-size: 16px; line-height: 1.75; color: #334155">
+        <h2 style="margin: 0; font-size: 22px; font-weight: 800; color: #0f172a">Хүргэлтийн үнэ</h2>
+        <table style="width: 100%; border-collapse: collapse; font-size: 15px; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden">
+          <thead><tr style="background: #f8fafc; text-align: left; color: #475569; font-size: 13px"><th scope="col" style="padding: 12px 16px; font-weight: 600">Бүс</th><th scope="col" style="padding: 12px; font-weight: 600">Дүүрэг</th><th scope="col" style="padding: 12px 16px; font-weight: 600">Үнэ</th></tr></thead>
+          <tbody>
+            <tr style="border-top: 1px solid #f1f5f9"><td style="padding: 12px 16px; font-weight: 600">Төв</td><td style="padding: 12px">БГД, БЗД, СХД, СБД, ХУД, ЧД</td><td style="padding: 12px 16px">5,000–6,000₮ · 200,000₮-өөс дээш үнэгүй</td></tr>
+            <tr style="border-top: 1px solid #f1f5f9"><td style="padding: 12px 16px; font-weight: 600">Алслагдсан</td><td style="padding: 12px">Налайх, Багануур, Багахангай</td><td style="padding: 12px 16px">15,000–25,000₮</td></tr>
+          </tbody>
+        </table>
+        <h2 style="margin: 16px 0 0; font-size: 22px; font-weight: 800; color: #0f172a">Буцаалт, солилт</h2>
+        <p style="margin: 0">Бараа хүлээн авснаас хойш 14 хоногийн дотор савлагаа, шошгыг гэмтээгээгүй нөхцөлд буцаана. [ТАНЫ ДЭЛГЭРЭНГҮЙ НӨХЦӨЛ]</p>
+      </section>
+      <section style="display: flex; flex-direction: column; gap: 10px">
+        <h2 style="margin: 0; font-size: 22px; font-weight: 800">Түгээмэл асуулт</h2>
+        <details open style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 0 18px">
+          <summary style="min-height: 52px; display: flex; align-items: center; font-weight: 600; font-size: 15px; cursor: pointer">Хөдөө орон нутаг руу илгээх боломжтой юу?</summary>
+          <p style="margin: 0 0 16px; font-size: 15px; line-height: 1.7; color: #475569">Үгүй. Бид зөвхөн Улаанбаатар хотын хилийн дотор хүргэнэ. Хотын доторх хаягаа (унааны зогсоол гэх мэт) зааж болно.</p>
+        </details>
+        <details style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 0 18px"><summary style="min-height: 52px; display: flex; align-items: center; font-weight: 600; font-size: 15px; cursor: pointer">Хүргэлтийн цагаа өөрчилж болох уу?</summary></details>
+        <details style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 0 18px"><summary style="min-height: 52px; display: flex; align-items: center; font-weight: 600; font-size: 15px; cursor: pointer">Гэмтэлтэй бараа ирвэл яах вэ?</summary></details>
+      </section>
+    </article>
+  </main>
+  <dc-import name="StoreFooter" hint-size="100%,400px"></dc-import>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1300}}'>
+class Component extends DCLogic {
+  renderVals() { return {}; }
+}
+</script>
+</body>
+</html>

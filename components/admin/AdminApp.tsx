@@ -260,7 +260,7 @@ export default function AdminApp({ initialProducts, initialOrders, initialSettin
           <button
             type="button"
             onClick={() => setMobileNavOpen(true)}
-            className="grid h-9 w-9 place-items-center rounded-lg text-slate-600 hover:bg-slate-100 lg:hidden"
+            className="grid h-9 w-9 place-items-center rounded-md text-slate-600 hover:bg-slate-100 lg:hidden"
             aria-label="Цэс нээх"
           >
             <Menu className="h-5 w-5" />
@@ -278,14 +278,14 @@ export default function AdminApp({ initialProducts, initialOrders, initialSettin
             <button
               type="button"
               onClick={() => navigate("orders")}
-              className="relative grid h-9 w-9 place-items-center rounded-lg text-slate-500 transition hover:bg-slate-100 hover:text-slate-900"
+              className="relative grid h-9 w-9 place-items-center rounded-md text-slate-500 transition hover:bg-slate-100 hover:text-slate-900"
               aria-label={badges.orders > 0 ? `${badges.orders} шинэ захиалга` : "Шинэ захиалга алга"}
             >
               <Bell className="h-5 w-5" />
               {badges.orders > 0 && <span className="absolute right-2 top-2 h-2 w-2 rounded-full bg-brand ring-2 ring-white" />}
             </button>
-            <div className="flex items-center gap-2.5 rounded-lg py-1 pl-1 pr-2 sm:border sm:border-slate-200">
-              <span className="grid h-7 w-7 place-items-center rounded-md bg-slate-900 text-xs font-bold text-white">{initials}</span>
+            <div className="flex items-center gap-2.5 rounded-md py-1 pl-1 pr-2 sm:border sm:border-slate-200">
+              <span className="grid h-7 w-7 place-items-center rounded-sm bg-slate-900 text-xs font-bold text-white">{initials}</span>
               <span className="hidden text-left leading-tight sm:block">
                 <span className="block max-w-[10rem] truncate text-xs font-semibold text-slate-900">{adminName}</span>
                 <span className="block text-[11px] text-slate-500">Админ</span>
@@ -296,7 +296,7 @@ export default function AdminApp({ initialProducts, initialOrders, initialSettin
               onClick={signOut}
               disabled={signingOut}
               title="Гарах"
-              className="grid h-9 w-9 place-items-center rounded-lg text-slate-500 transition hover:bg-rose-50 hover:text-rose-700 disabled:opacity-50"
+              className="grid h-9 w-9 place-items-center rounded-md text-slate-500 transition hover:bg-rose-50 hover:text-rose-700 disabled:opacity-50"
               aria-label="Системээс гарах"
             >
               <LogOut className="h-4.5 w-4.5" />
@@ -342,7 +342,7 @@ export default function AdminApp({ initialProducts, initialOrders, initialSettin
           <div
             key={toast.id}
             role={toast.tone === "error" ? "alert" : undefined}
-            className={`flex animate-pop-in items-start gap-2.5 rounded-xl px-4 py-3 text-sm font-medium text-white shadow-2xl ${
+            className={`flex animate-pop-in items-start gap-2.5 rounded-lg px-4 py-3 text-sm font-medium text-white shadow-2xl ${
               toast.tone === "error" ? "bg-rose-700" : "bg-slate-900"
             }`}
           >

@@ -47,16 +47,16 @@ export default function ProductCard({ product, quantityInCart, onAddToCart, onQu
 
         <div className="pointer-events-none absolute left-3 top-3 flex flex-col items-start gap-1.5">
           {soldOut ? (
-            <span className="rounded-md bg-slate-700 px-2 py-1 text-[11px] font-bold text-white">Дууссан</span>
+            <span className="rounded-sm bg-slate-700 px-2 py-1 text-[11px] font-bold text-white">Дууссан</span>
           ) : (
             product.badge && (
-              <span className={`rounded-md px-2 py-1 text-[11px] font-bold ${BADGE_STYLES[product.badge]}`}>
+              <span className={`rounded-sm px-2 py-1 text-[11px] font-bold ${BADGE_STYLES[product.badge]}`}>
                 {product.badge}
               </span>
             )
           )}
           {discountPct > 0 && !soldOut && (
-            <span className="rounded-md bg-white px-2 py-1 text-[11px] font-bold text-rose-600 shadow-sm">
+            <span className="rounded-sm bg-white px-2 py-1 text-[11px] font-bold text-rose-600 shadow-sm">
               −{discountPct}%
             </span>
           )}
@@ -104,7 +104,7 @@ export default function ProductCard({ product, quantityInCart, onAddToCart, onQu
             type="button"
             onClick={() => onAddToCart(product.id)}
             disabled={soldOut || reachedLimit}
-            className="inline-flex h-10 items-center justify-center gap-2 rounded-xl bg-brand text-sm font-bold text-white shadow-sm shadow-brand/20 transition hover:bg-brand-dark active:scale-[0.98] disabled:cursor-not-allowed disabled:bg-slate-200 disabled:text-slate-500 disabled:shadow-none"
+            className="inline-flex h-10 items-center justify-center gap-2 rounded-lg bg-brand text-sm font-bold text-white shadow-sm shadow-brand/20 transition hover:bg-brand-dark active:scale-[0.98] disabled:cursor-not-allowed disabled:bg-slate-200 disabled:text-slate-500 disabled:shadow-none"
           >
             <ShoppingCart className="h-4 w-4" aria-hidden="true" />
             {soldOut ? "Дууссан" : reachedLimit ? "Үлдэгдэл хүрлээ" : "Сагсанд хийх"}
@@ -112,7 +112,7 @@ export default function ProductCard({ product, quantityInCart, onAddToCart, onQu
           <button
             type="button"
             onClick={() => onQuickView(product.id)}
-            className="inline-flex h-10 items-center justify-center gap-2 rounded-xl border border-slate-200 text-sm font-semibold text-slate-700 transition hover:border-brand hover:text-brand"
+            className="inline-flex h-10 items-center justify-center gap-2 rounded-lg border border-slate-200 text-sm font-semibold text-slate-700 transition hover:border-brand hover:text-brand"
           >
             <Eye className="h-4 w-4" aria-hidden="true" />
             Дэлгэрэнгүй харах

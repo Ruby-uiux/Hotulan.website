@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="mn">
+<head>
+<meta charset="utf-8">
+<title>Админ — Сайтын харагдах байдал</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#0000ff;text-decoration:none}a:hover{color:#0000c2}
+</style>
+</helmet>
+<div style="width: 100%; min-height: 1150px; background: #f8fafc; font-family: Inter, ui-sans-serif, system-ui, sans-serif; color: #0f172a; display: flex; flex-wrap: wrap; align-items: stretch">
+  <div style="flex: 1 1 248px; min-width: 248px; display: flex">
+    <dc-import name="AdminSidebar" active="appearance" hint-size="100%,100%"></dc-import>
+  </div>
+  <div style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column">
+    <div style="min-height: 72px; box-sizing: border-box; padding: 12px 32px; background: #ffffff; border-bottom: 1px solid #e2e8f0; display: flex; flex-wrap: wrap; align-items: center; gap: 12px">
+      <div style="flex: 1; display: flex; flex-direction: column; gap: 2px">
+        <span style="font-size: 12px; color: #64748b">Админ · Маркетинг</span>
+        <h1 style="margin: 0; font-size: 18px; font-weight: 700">Сайтын харагдах байдал</h1>
+      </div>
+      <a href="Home.dc.html" style="height: 44px; padding: 0 14px; border: 1px solid #cbd5e1; border-radius: 8px; color: #0f172a; display: flex; align-items: center; font-size: 14px; font-weight: 600">Урьдчилж харах</a>
+      <button type="button" style="height: 44px; padding: 0 20px; border: 0; border-radius: 8px; background: #0000ff; color: #ffffff; font: 600 14px Inter, sans-serif">Сайтад нийтлэх</button>
+    </div>
+    <div role="tablist" aria-label="Тохиргооны хэсэг" style="background: #ffffff; border-bottom: 1px solid #e2e8f0; padding: 0 32px; display: flex; gap: 4px; overflow-x: auto">
+      <button type="button" role="tab" aria-selected="true" style="height: 46px; padding: 0 14px; border: 0; border-bottom: 2px solid #0000ff; background: none; color: #0000ff; font: 700 14px Inter, sans-serif; white-space: nowrap">Баннер, слайд</button>
+      <button type="button" role="tab" aria-selected="false" style="height: 46px; padding: 0 14px; border: 0; background: none; color: #475569; font: 500 14px Inter, sans-serif; white-space: nowrap">Нүүр хуудасны хэсгүүд</button>
+      <button type="button" role="tab" aria-selected="false" style="height: 46px; padding: 0 14px; border: 0; background: none; color: #475569; font: 500 14px Inter, sans-serif; white-space: nowrap">Лого, өнгө, фонт</button>
+      <button type="button" role="tab" aria-selected="false" style="height: 46px; padding: 0 14px; border: 0; background: none; color: #475569; font: 500 14px Inter, sans-serif; white-space: nowrap">Цэс, хөл хэсэг</button>
+      <button type="button" role="tab" aria-selected="false" style="height: 46px; padding: 0 14px; border: 0; background: none; color: #475569; font: 500 14px Inter, sans-serif; white-space: nowrap">Мэдээллийн хуудас</button>
+    </div>
+
+    <main style="padding: 24px 32px 40px; display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start">
+      <div style="flex: 999 1 520px; min-width: 0; display: flex; flex-direction: column; gap: 20px">
+        <section style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden">
+          <div style="padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #e2e8f0">
+            <div style="display: flex; flex-direction: column; gap: 2px"><h2 style="margin: 0; font-size: 16px; font-weight: 700">Нүүрний гол баннер</h2><span style="font-size: 13px; color: #64748b">5 секунд тутам солигдоно · чирж дараалал солино</span></div>
+            <button type="button" style="height: 40px; padding: 0 14px; border: 0; border-radius: 8px; background: #0000ff; color: #ffffff; font: 600 13px Inter, sans-serif">+ Баннер нэмэх</button>
+          </div>
+          <ul style="list-style: none; margin: 0; padding: 0">
+            <sc-for list="{{slides}}" as="s" hint-placeholder-count="3">
+              <li style="display: flex; align-items: center; gap: 14px; padding: 12px 20px; border-top: 1px solid #f1f5f9; background: {{s.rowBg}}">
+                <span aria-hidden="true" style="color: #94a3b8; letter-spacing: -2px">⋮⋮</span>
+                <span style="width: 132px; height: 52px; flex: none; border-radius: 8px; background: {{s.bg}}; color: {{s.fg}}; font-size: 11px; font-weight: 700; padding: 8px; box-sizing: border-box; line-height: 1.2; overflow: hidden">{{s.t}}</span>
+                <span style="flex: 1; display: flex; flex-direction: column; gap: 2px; min-width: 0">
+                  <span style="font-size: 14px; font-weight: 600">{{s.t}}</span>
+                  <span style="font-size: 12px; color: #64748b">{{s.when}} · → {{s.link}}</span>
+                </span>
+                <span style="padding: 3px 8px; border-radius: 999px; font-size: 12px; font-weight: 600; background: {{s.stBg}}; color: {{s.stFg}}">{{s.st}}</span>
+                <button type="button" style="height: 36px; padding: 0 12px; border: 1px solid #cbd5e1; border-radius: 6px; background: #ffffff; color: #0f172a; font: 600 13px Inter, sans-serif">Засах</button>
+              </li>
+            </sc-for>
+          </ul>
+        </section>
+
+        <section style="background: #ffffff; border: 2px solid #0000ff; border-radius: 12px; padding: 20px; display: flex; flex-direction: column; gap: 16px">
+          <div style="display: flex; justify-content: space-between; align-items: center"><h2 style="margin: 0; font-size: 16px; font-weight: 700">Баннер засах: Өвлийн их хямдрал</h2><span style="font-size: 12px; color: #64748b">Сонгосон</span></div>
+          <div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px">
+            <div style="grid-column: span 2; display: flex; flex-direction: column; gap: 6px">
+              <span style="font-size: 13px; font-weight: 600">Компьютерын зураг · 1600×640</span>
+              <div style="height: 150px; border-radius: 10px; background: #0000ff; color: #ffffff; padding: 18px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between">
+                <span style="font-size: 18px; font-weight: 800; max-width: 260px; line-height: 1.15">Өвлийн их хямдрал — 40% хүртэл</span>
+                <span style="display: flex; gap: 8px"><button type="button" style="height: 34px; padding: 0 12px; border: 0; border-radius: 6px; background: #ffffff; color: #0000ff; font: 600 13px Inter, sans-serif">Зураг солих</button><button type="button" style="height: 34px; padding: 0 12px; border: 1px solid rgba(255,255,255,0.6); border-radius: 6px; background: transparent; color: #ffffff; font: 600 13px Inter, sans-serif">Тайрах</button></span>
+              </div>
+            </div>
+            <div style="display: flex; flex-direction: column; gap: 6px">
+              <span style="font-size: 13px; font-weight: 600">Утасны зураг · 800×800</span>
+              <button type="button" style="height: 150px; border: 2px dashed #cbd5e1; border-radius: 10px; background: #f8fafc; color: #475569; font: 500 13px Inter, sans-serif">+ Зураг оруулах</button>
+            </div>
+          </div>
+          <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px">
+            <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600">Гарчиг<input type="text" value="Өвлийн их хямдрал — 40% хүртэл" style="height: 44px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0 12px; font: 400 15px Inter, sans-serif"></label>
+            <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600">Дэд текст<input type="text" value="Гэр ахуй, цахилгаан бараа, тоглоомд" style="height: 44px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0 12px; font: 400 15px Inter, sans-serif"></label>
+            <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600">Товчны текст<input type="text" value="Хямдралыг үзэх" style="height: 44px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0 12px; font: 400 15px Inter, sans-serif"></label>
+            <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600">Холбоос<select style="height: 44px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0 10px; font: 400 15px Inter, sans-serif; background: #ffffff; color: #0f172a"><option>Ангилал → Хямдрал</option></select></label>
+            <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600">Эхлэх<input type="text" value="2026.11.20" style="height: 44px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0 12px; font: 400 15px Inter, sans-serif"></label>
+            <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600">Дуусах<input type="text" value="2026.12.05" style="height: 44px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0 12px; font: 400 15px Inter, sans-serif"></label>
+          </div>
+        </section>
+
+        <section style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden">
+          <div style="padding: 16px 20px; border-bottom: 1px solid #e2e8f0"><h2 style="margin: 0; font-size: 16px; font-weight: 700">Нүүр хуудасны хэсгүүд</h2></div>
+          <ul style="list-style: none; margin: 0; padding: 0">
+            <sc-for list="{{sections}}" as="x" hint-placeholder-count="7">
+              <li style="display: flex; align-items: center; gap: 14px; padding: 12px 20px; border-top: 1px solid #f1f5f9; font-size: 14px">
+                <span aria-hidden="true" style="color: #94a3b8; letter-spacing: -2px">⋮⋮</span>
+                <span style="flex: 1; display: flex; flex-direction: column; gap: 2px"><span style="font-weight: 600">{{x.t}}</span><span style="font-size: 12px; color: #64748b">{{x.d}}</span></span>
+                <button type="button" role="switch" aria-checked="{{x.on}}" aria-label="Харуулах" style="border: 0; width: 40px; height: 22px; border-radius: 999px; background: {{x.swBg}}; display: flex; align-items: center; padding: 2px; box-sizing: border-box; justify-content: {{x.swJ}}"><span style="width: 18px; height: 18px; border-radius: 999px; background: #ffffff"></span></button>
+              </li>
+            </sc-for>
+          </ul>
+        </section>
+      </div>
+
+      <aside style="flex: 1 1 300px; max-width: 360px; display: flex; flex-direction: column; gap: 20px">
+        <section style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; display: flex; flex-direction: column; gap: 14px">
+          <h2 style="margin: 0; font-size: 16px; font-weight: 700">Лого</h2>
+          <div style="display: flex; gap: 12px; align-items: center">
+            <span style="width: 56px; height: 56px; border-radius: 12px; background: #0000ff; display: grid; place-items: center; color: #ffffff">
+              <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 9 4.5 4h15L21 9M3 9h18M3 9v11h18V9M9 20v-6h6v6"></path></svg>
+            </span>
+            <span style="flex: 1; display: flex; flex-direction: column; gap: 6px"><button type="button" style="height: 36px; border: 1px solid #cbd5e1; border-radius: 6px; background: #ffffff; color: #0f172a; font: 600 13px Inter, sans-serif">Лого солих</button><button type="button" style="height: 36px; border: 1px solid #cbd5e1; border-radius: 6px; background: #ffffff; color: #0f172a; font: 600 13px Inter, sans-serif">Favicon солих</button></span>
+          </div>
+        </section>
+        <section style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; display: flex; flex-direction: column; gap: 14px">
+          <h2 style="margin: 0; font-size: 16px; font-weight: 700">Үндсэн өнгө</h2>
+          <div style="display: flex; gap: 10px; flex-wrap: wrap">
+            <button type="button" aria-label="Цэнхэр" aria-pressed="true" style="width: 44px; height: 44px; border-radius: 10px; background: #0000ff; border: 3px solid #ffffff; box-shadow: 0 0 0 2px #0f172a"></button>
+            <button type="button" aria-label="Хар" aria-pressed="false" style="width: 44px; height: 44px; border-radius: 10px; background: #0f172a; border: 0"></button>
+            <button type="button" aria-label="Улаан" aria-pressed="false" style="width: 44px; height: 44px; border-radius: 10px; background: #dc2626; border: 0"></button>
+            <button type="button" aria-label="Ногоон" aria-pressed="false" style="width: 44px; height: 44px; border-radius: 10px; background: #15803d; border: 0"></button>
+            <button type="button" aria-label="Улбар шар" aria-pressed="false" style="width: 44px; height: 44px; border-radius: 10px; background: #c2410c; border: 0"></button>
+          </div>
+          <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600">HEX код<input type="text" value="#0000FF" style="height: 44px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0 12px; font: 400 15px Inter, sans-serif"></label>
+          <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600">Фонт<select style="height: 44px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0 10px; font: 400 15px Inter, sans-serif; background: #ffffff; color: #0f172a"><option>Inter (Кирилл)</option><option>Manrope</option><option>Roboto</option></select></label>
+        </section>
+        <section style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; display: flex; flex-direction: column; gap: 12px">
+          <h2 style="margin: 0; font-size: 16px; font-weight: 700">Дээд зурвас</h2>
+          <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600">Текст<input type="text" value="Зөвхөн Улаанбаатар хотод хүргэнэ · 200,000₮-өөс дээш үнэгүй" style="height: 44px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0 12px; font: 400 14px Inter, sans-serif"></label>
+        </section>
+      </aside>
+    </main>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1500}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var slides = [
+      ['Өвлийн их хямдрал — 40% хүртэл', '11.20–12.05', 'Хямдрал', '#0000ff', '#ffffff', 'Товлосон', '#fef3c7', '#92400e', true],
+      ['Шинэ жилийн бэлэг · тоглоом 1+1', '11.01–12.31', 'Хүүхдийн тоглоом', '#eef0ff', '#0000c2', 'Идэвхтэй', '#dcfce7', '#166534', false],
+      ['Ухаалаг гэр ахуйн бараа', 'Хугацаагүй', 'Гэр ахуй', '#0f172a', '#ffffff', 'Идэвхтэй', '#dcfce7', '#166534', false]
+    ];
+    var secs = [
+      ['Гол баннер', 'Слайд 3', 1], ['Давуу талын мөр', 'Хүргэлт, баталгаа, төлбөр, буцаалт', 1], ['Ангиллууд', '20 ангилал икон', 1],
+      ['Өдрийн хямдрал', 'Цаг тоолуур + 5 бараа', 1], ['2 сурталчилгааны баннер', 'Спорт, Нялх хүүхэд', 1], ['Шинэ ирсэн бараа', '10 бараа, ангиллын таб', 1], ['Брэндүүд', 'Лого жагсаалт', 0]
+    ];
+    return {
+      slides: slides.map(function (s) {
+        return { t: s[0], when: s[1], link: s[2], bg: s[3], fg: s[4], st: s[5], stBg: s[6], stFg: s[7], rowBg: s[8] ? '#eef0ff' : '#ffffff' };
+      }),
+      sections: secs.map(function (s) {
+        return { t: s[0], d: s[1], on: s[2] ? 'true' : 'false', swBg: s[2] ? '#0000ff' : '#cbd5e1', swJ: s[2] ? 'flex-end' : 'flex-start' };
+      })
+    };
+  }
+}
+</script>
+</body>
+</html>

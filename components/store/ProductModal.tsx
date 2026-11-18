@@ -86,7 +86,7 @@ function ProductDialog({
               {product.compareAtPrice && (
                 <>
                   <p className="text-base text-slate-400 line-through">{formatMNT(product.compareAtPrice)}</p>
-                  <p className="rounded-md bg-rose-50 px-2 py-0.5 text-xs font-bold text-rose-600">
+                  <p className="rounded-sm bg-rose-50 px-2 py-0.5 text-xs font-bold text-rose-600">
                     {formatMNT(savings)} хэмнэнэ
                   </p>
                 </>
@@ -113,7 +113,7 @@ function ProductDialog({
               <h3 id="specs-heading" className="text-sm font-bold text-slate-900">
                 Техникийн үзүүлэлт
               </h3>
-              <dl className="mt-3 divide-y divide-slate-100 overflow-hidden rounded-xl border border-slate-200 text-sm">
+              <dl className="mt-3 divide-y divide-slate-100 overflow-hidden rounded-lg border border-slate-200 text-sm">
                 {product.specs.map((s) => (
                   <div key={s.label} className="grid grid-cols-[40%_1fr] gap-3 px-4 py-2.5 odd:bg-slate-50/70">
                     <dt className="text-slate-500">{s.label}</dt>
@@ -153,16 +153,16 @@ function ProductDialog({
 
           <div className="sticky bottom-0 mt-auto border-t border-slate-200 bg-white/95 p-4 backdrop-blur sm:px-8">
             {soldOut ? (
-              <p className="rounded-xl bg-slate-100 py-3 text-center text-sm font-semibold text-slate-600">
+              <p className="rounded-lg bg-slate-100 py-3 text-center text-sm font-semibold text-slate-600">
                 Энэ бараа одоогоор дууссан байна
               </p>
             ) : available === 0 ? (
-              <p className="rounded-xl bg-amber-50 py-3 text-center text-sm font-semibold text-amber-700">
+              <p className="rounded-lg bg-amber-50 py-3 text-center text-sm font-semibold text-amber-700">
                 Үлдэгдэл бүхэлдээ таны сагсанд байна ({quantityInCart} ширхэг)
               </p>
             ) : (
               <div className="flex items-center gap-3">
-                <div className="inline-flex h-12 items-center rounded-xl border border-slate-200">
+                <div className="inline-flex h-12 items-center rounded-lg border border-slate-200">
                   <button
                     type="button"
                     onClick={() => setQuantity((q) => Math.max(1, q - 1))}
@@ -188,7 +188,7 @@ function ProductDialog({
                 <button
                   type="button"
                   onClick={() => onAddToCart(product.id, quantity)}
-                  className="inline-flex h-12 flex-1 items-center justify-center gap-2 rounded-xl bg-brand text-sm font-bold text-white shadow-lg shadow-brand/25 transition hover:bg-brand-dark active:scale-[0.99]"
+                  className="inline-flex h-12 flex-1 items-center justify-center gap-2 rounded-lg bg-brand text-sm font-bold text-white shadow-lg shadow-brand/25 transition hover:bg-brand-dark active:scale-[0.99]"
                 >
                   <ShoppingCart className="h-4.5 w-4.5" aria-hidden="true" />
                   Сагсанд хийх · {formatMNT(product.price * quantity)}

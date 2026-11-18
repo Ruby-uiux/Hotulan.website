@@ -60,7 +60,7 @@ export default function Sidebar({
         } ${compact ? "lg:w-[4.5rem]" : "lg:w-64"}`}
       >
         <div className={`flex h-16 items-center gap-2.5 border-b border-slate-200 px-4 ${compact ? "lg:justify-center lg:px-0" : ""}`}>
-          <span className="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-brand text-white">
+          <span className="grid h-9 w-9 shrink-0 place-items-center rounded-md bg-brand text-white">
             <Store className="h-4.5 w-4.5" aria-hidden="true" />
           </span>
           <div className={`min-w-0 leading-tight ${compact ? "lg:hidden" : ""}`}>
@@ -74,7 +74,7 @@ export default function Sidebar({
           <button
             type="button"
             onClick={onCloseMobile}
-            className="ml-auto grid h-8 w-8 place-items-center rounded-lg text-slate-400 hover:bg-slate-100 lg:hidden"
+            className="ml-auto grid h-8 w-8 place-items-center rounded-md text-slate-400 hover:bg-slate-100 lg:hidden"
             aria-label="Цэс хаах"
           >
             <X className="h-4.5 w-4.5" />
@@ -96,7 +96,7 @@ export default function Sidebar({
                     onClick={() => onNavigate(id)}
                     aria-current={active ? "page" : undefined}
                     title={compact ? label : undefined}
-                    className={`group relative flex w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium transition ${
+                    className={`group relative flex w-full items-center gap-3 rounded-md px-3 py-2.5 text-sm font-medium transition ${
                       compact ? "lg:justify-center lg:px-0" : ""
                     } ${active ? "bg-brand-soft text-brand" : "text-slate-600 hover:bg-slate-100 hover:text-slate-900"}`}
                   >
@@ -125,7 +125,7 @@ export default function Sidebar({
             target="_blank"
             rel="noreferrer"
             title={compact ? "Дэлгүүр харах" : undefined}
-            className={`flex items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-slate-600 transition hover:bg-slate-100 hover:text-slate-900 ${
+            className={`flex items-center gap-3 rounded-md px-3 py-2.5 text-sm font-medium text-slate-600 transition hover:bg-slate-100 hover:text-slate-900 ${
               compact ? "lg:justify-center lg:px-0" : ""
             }`}
           >
@@ -135,7 +135,7 @@ export default function Sidebar({
           <button
             type="button"
             onClick={onToggleCollapsed}
-            className={`hidden w-full items-center gap-3 rounded-lg px-3 py-2.5 text-sm font-medium text-slate-500 transition hover:bg-slate-100 hover:text-slate-900 lg:flex ${
+            className={`hidden w-full items-center gap-3 rounded-md px-3 py-2.5 text-sm font-medium text-slate-500 transition hover:bg-slate-100 hover:text-slate-900 lg:flex ${
               compact ? "lg:justify-center lg:px-0" : ""
             }`}
             aria-label={compact ? "Цэсийг дэлгэх" : "Цэсийг хураах"}

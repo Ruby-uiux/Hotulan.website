@@ -71,7 +71,7 @@ export default function Header({
 
       <div className="mx-auto flex max-w-7xl items-center gap-3 px-4 py-3 sm:gap-6 sm:px-6 lg:px-8">
         <a href="#top" className="flex shrink-0 items-center gap-2.5" aria-label="hotulan.mn — нүүр хуудас">
-          <span className="grid h-10 w-10 place-items-center rounded-xl bg-brand text-white shadow-md shadow-brand/25">
+          <span className="grid h-10 w-10 place-items-center rounded-lg bg-brand text-white shadow-md shadow-brand/25">
             <Store className="h-5 w-5" aria-hidden="true" />
           </span>
           <span className="leading-tight">
@@ -95,7 +95,7 @@ export default function Header({
         <button
           type="button"
           onClick={onOpenCart}
-          className="relative ml-auto flex items-center gap-2 rounded-xl border border-slate-200 bg-white px-3 py-2.5 text-sm font-semibold text-slate-800 shadow-sm transition hover:border-brand hover:text-brand md:ml-0"
+          className="relative ml-auto flex items-center gap-2 rounded-lg border border-slate-200 bg-white px-3 py-2.5 text-sm font-semibold text-slate-800 shadow-sm transition hover:border-brand hover:text-brand md:ml-0"
           aria-label={cartCount > 0 ? `Сагс, ${cartCount} бараа` : "Сагс хоосон"}
         >
           <ShoppingCart className="h-5 w-5" aria-hidden="true" />
@@ -189,7 +189,7 @@ function SearchField({ id, query, onQueryChange, onSubmit, className = "" }: Sea
         placeholder="Бараа, брэнд хайх… (жишээ нь: чихэвч)"
         autoComplete="off"
         enterKeyHint="search"
-        className="h-11 w-full rounded-xl border border-slate-200 bg-slate-50 pl-10 pr-10 text-sm text-slate-900 placeholder:text-slate-400 transition focus:border-brand focus:bg-white focus:outline-none focus:ring-4 focus:ring-brand/10 [&::-webkit-search-cancel-button]:hidden"
+        className="h-11 w-full rounded-lg border border-slate-200 bg-slate-50 pl-10 pr-10 text-sm text-slate-900 placeholder:text-slate-400 transition focus:border-brand focus:bg-white focus:outline-none focus:ring-4 focus:ring-brand/10 [&::-webkit-search-cancel-button]:hidden"
       />
       {query && (
         <button
@@ -198,7 +198,7 @@ function SearchField({ id, query, onQueryChange, onSubmit, className = "" }: Sea
             onQueryChange("");
             inputRef.current?.focus();
           }}
-          className="absolute right-2 top-1/2 grid h-7 w-7 -translate-y-1/2 place-items-center rounded-lg text-slate-400 transition hover:bg-slate-200 hover:text-slate-700"
+          className="absolute right-2 top-1/2 grid h-7 w-7 -translate-y-1/2 place-items-center rounded-md text-slate-400 transition hover:bg-slate-200 hover:text-slate-700"
           aria-label="Хайлтыг цэвэрлэх"
         >
           <X className="h-4 w-4" />

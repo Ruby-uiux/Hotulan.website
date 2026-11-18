@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="mn">
+<head>
+<meta charset="utf-8">
+<title>Админ — Хэрэглэгчид</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#0f172a;text-decoration:none}a:hover{color:#0000ff}
+</style>
+</helmet>
+<div style="width: 100%; min-height: 1150px; background: #f8fafc; font-family: Inter, ui-sans-serif, system-ui, sans-serif; color: #0f172a; display: flex; flex-wrap: wrap; align-items: stretch">
+  <div style="flex: 1 1 248px; min-width: 248px; display: flex">
+    <dc-import name="AdminSidebar" active="customers" hint-size="100%,100%"></dc-import>
+  </div>
+  <div style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column">
+    <dc-import name="AdminTopbar" heading="Хэрэглэгчид" crumb="Админ · Борлуулалт" hint-size="100%,72px"></dc-import>
+    <main style="padding: 28px 32px 40px; display: flex; flex-direction: column; gap: 20px">
+      <div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px">
+        <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 18px; display: flex; flex-direction: column; gap: 6px"><span style="font-size: 13px; color: #64748b">Нийт хэрэглэгч</span><span style="font-size: 26px; font-weight: 800">3,412</span></div>
+        <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 18px; display: flex; flex-direction: column; gap: 6px"><span style="font-size: 13px; color: #64748b">Энэ сард шинэ</span><span style="font-size: 26px; font-weight: 800">286</span></div>
+        <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 18px; display: flex; flex-direction: column; gap: 6px"><span style="font-size: 13px; color: #64748b">Дахин худалдан авалт</span><span style="font-size: 26px; font-weight: 800">38%</span></div>
+        <div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 18px; display: flex; flex-direction: column; gap: 6px"><span style="font-size: 13px; color: #64748b">Хамгийн их захиалгатай дүүрэг</span><span style="font-size: 26px; font-weight: 800">Хан-Уул</span></div>
+      </div>
+      <section style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden">
+        <div style="padding: 14px 16px; display: flex; flex-wrap: wrap; gap: 10px; border-bottom: 1px solid #e2e8f0">
+          <label style="flex: 1 1 260px; height: 40px; border: 1px solid #cbd5e1; border-radius: 8px; display: flex; align-items: center; gap: 8px; padding: 0 12px; color: #64748b">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14zM21 21l-4.3-4.3"></path></svg>
+            <span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Хэрэглэгч хайх</span>
+            <input type="search" placeholder="Нэр эсвэл утасны дугаар" style="flex: 1; min-width: 0; border: 0; font: 400 14px Inter, sans-serif; outline: none">
+          </label>
+          <select aria-label="Дүүрэг" style="height: 40px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0 10px; font: 500 14px Inter, sans-serif; background: #ffffff; color: #0f172a"><option>Бүх дүүрэг</option></select>
+          <button type="button" style="height: 40px; padding: 0 14px; border: 1px solid #cbd5e1; border-radius: 8px; background: #ffffff; color: #0f172a; font: 600 13px Inter, sans-serif">SMS илгээх</button>
+          <button type="button" style="height: 40px; padding: 0 14px; border: 1px solid #cbd5e1; border-radius: 8px; background: #ffffff; color: #0f172a; font: 600 13px Inter, sans-serif">Excel</button>
+        </div>
+        <div style="overflow-x: auto">
+          <table style="width: 100%; border-collapse: collapse; font-size: 14px; min-width: 820px">
+            <thead><tr style="background: #f8fafc; color: #64748b; font-size: 12px; text-align: left">
+              <th scope="col" style="padding: 10px 20px; font-weight: 600">Хэрэглэгч</th><th scope="col" style="padding: 10px; font-weight: 600">Утас</th><th scope="col" style="padding: 10px; font-weight: 600">Дүүрэг</th><th scope="col" style="padding: 10px; font-weight: 600">Захиалга</th><th scope="col" style="padding: 10px; font-weight: 600">Нийт зарцуулалт</th><th scope="col" style="padding: 10px; font-weight: 600">Сүүлд</th><th scope="col" style="padding: 10px 20px; font-weight: 600"></th>
+            </tr></thead>
+            <tbody>
+              <sc-for list="{{rows}}" as="c" hint-placeholder-count="10">
+                <tr style="border-top: 1px solid #f1f5f9">
+                  <td style="padding: 12px 20px"><span style="display: flex; align-items: center; gap: 10px"><span style="width: 34px; height: 34px; border-radius: 999px; background: #eef0ff; color: #0000c2; display: grid; place-items: center; font-size: 12px; font-weight: 700">{{c.ini}}</span><span style="font-weight: 600">{{c.n}}</span><sc-if value="{{c.vip}}" hint-placeholder-val="{{ false }}"><span style="padding: 2px 8px; border-radius: 999px; background: #fef3c7; color: #92400e; font-size: 11px; font-weight: 700">VIP</span></sc-if></span></td>
+                  <td style="padding: 12px 10px">{{c.ph}}</td><td style="padding: 12px 10px; color: #475569">{{c.d}}</td>
+                  <td style="padding: 12px 10px">{{c.o}}</td><td style="padding: 12px 10px; font-weight: 600">{{c.s}}</td><td style="padding: 12px 10px; color: #475569">{{c.last}}</td>
+                  <td style="padding: 12px 20px; text-align: right"><a href="#" style="color: #0000ff; font-weight: 600; font-size: 13px; padding: 8px">Дэлгэрэнгүй</a></td>
+                </tr>
+              </sc-for>
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1150}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var raw = [
+      ['Б. Сарангэрэл', '9911-2345', 'Хан-Уул', 4, '1,842,000₮', 'Өнөөдөр', 0],
+      ['Д. Тэмүүлэн', '9595-7788', 'Баянзүрх', 9, '6,410,000₮', 'Өнөөдөр', 1],
+      ['Г. Номин', '9119-4455', 'Сүхбаатар', 2, '378,000₮', 'Өнөөдөр', 0],
+      ['Э. Билгүүн', '9900-6644', 'Баянгол', 12, '9,870,000₮', 'Өчигдөр', 1],
+      ['О. Ариунаа', '8899-0011', 'Чингэлтэй', 1, '129,000₮', 'Өчигдөр', 0],
+      ['Т. Анударь', '9191-3434', 'Хан-Уул', 5, '2,300,000₮', '11.15', 0],
+      ['С. Уянга', '9933-1212', 'Сонгинохайрхан', 3, '540,000₮', '11.16', 0],
+      ['Н. Энхжаргал', '8611-2030', 'Налайх', 2, '412,000₮', '11.16', 0]
+    ];
+    return {
+      rows: raw.map(function (r) {
+        var p = r[0].split(' ');
+        return { n: r[0], ini: p[0].charAt(0) + p[1].charAt(0), ph: r[1], d: r[2], o: r[3], s: r[4], last: r[5], vip: !!r[6] };
+      })
+    };
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,98 @@
+<!doctype html>
+<html lang="mn">
+<head>
+<meta charset="utf-8">
+<title>Админ — Урамшуулал, купон</title>
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet">
+<style>
+body{margin:0}
+a{color:#0000ff;text-decoration:none}a:hover{color:#0000c2}
+</style>
+</helmet>
+<div style="width: 100%; min-height: 1150px; background: #f8fafc; font-family: Inter, ui-sans-serif, system-ui, sans-serif; color: #0f172a; display: flex; flex-wrap: wrap; align-items: stretch">
+  <div style="flex: 1 1 248px; min-width: 248px; display: flex">
+    <dc-import name="AdminSidebar" active="promotions" hint-size="100%,100%"></dc-import>
+  </div>
+  <div style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column">
+    <dc-import name="AdminTopbar" heading="Урамшуулал, купон" crumb="Админ · Маркетинг" hint-size="100%,72px"></dc-import>
+    <main style="padding: 28px 32px 40px; display: flex; flex-wrap: wrap; gap: 20px; align-items: flex-start">
+      <div style="flex: 999 1 520px; min-width: 0; display: flex; flex-direction: column; gap: 20px">
+        <section style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden">
+          <div style="padding: 16px 20px; border-bottom: 1px solid #e2e8f0"><h2 style="margin: 0; font-size: 16px; font-weight: 700">Хямдралын кампанит ажил</h2></div>
+          <sc-for list="{{campaigns}}" as="c" hint-placeholder-count="3">
+            <div style="display: flex; align-items: center; gap: 14px; padding: 14px 20px; border-top: 1px solid #f1f5f9">
+              <span style="width: 48px; height: 48px; border-radius: 10px; background: {{c.bg}}; color: {{c.fg}}; display: grid; place-items: center; font-size: 14px; font-weight: 800; flex: none">{{c.pct}}</span>
+              <span style="flex: 1; display: flex; flex-direction: column; gap: 2px"><span style="font-size: 14px; font-weight: 600">{{c.t}}</span><span style="font-size: 12px; color: #64748b">{{c.d}}</span></span>
+              <span style="padding: 3px 8px; border-radius: 999px; font-size: 12px; font-weight: 600; background: {{c.stBg}}; color: {{c.stFg}}">{{c.st}}</span>
+            </div>
+          </sc-for>
+        </section>
+        <section style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden">
+          <div style="padding: 16px 20px; border-bottom: 1px solid #e2e8f0"><h2 style="margin: 0; font-size: 16px; font-weight: 700">Купон код</h2></div>
+          <div style="overflow-x: auto">
+            <table style="width: 100%; border-collapse: collapse; font-size: 14px; min-width: 600px">
+              <thead><tr style="background: #f8fafc; color: #64748b; font-size: 12px; text-align: left"><th scope="col" style="padding: 10px 20px; font-weight: 600">Код</th><th scope="col" style="padding: 10px; font-weight: 600">Хөнгөлөлт</th><th scope="col" style="padding: 10px; font-weight: 600">Нөхцөл</th><th scope="col" style="padding: 10px; font-weight: 600">Ашигласан</th><th scope="col" style="padding: 10px 20px; font-weight: 600">Хугацаа</th></tr></thead>
+              <tbody>
+                <sc-for list="{{coupons}}" as="k" hint-placeholder-count="4">
+                  <tr style="border-top: 1px solid #f1f5f9">
+                    <td style="padding: 12px 20px"><span style="font-family: ui-monospace, monospace; font-weight: 700; padding: 4px 8px; border: 1px dashed #0000ff; border-radius: 6px; color: #0000c2">{{k.code}}</span></td>
+                    <td style="padding: 12px 10px; font-weight: 600">{{k.v}}</td><td style="padding: 12px 10px; color: #475569">{{k.c}}</td><td style="padding: 12px 10px">{{k.u}}</td><td style="padding: 12px 20px; color: #475569">{{k.exp}}</td>
+                  </tr>
+                </sc-for>
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </div>
+      <aside style="flex: 1 1 300px; max-width: 380px; background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 20px; display: flex; flex-direction: column; gap: 14px">
+        <h2 style="margin: 0; font-size: 16px; font-weight: 700">Шинэ купон үүсгэх</h2>
+        <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600">Код<span style="display: flex; gap: 8px"><input type="text" value="NEWYEAR15" style="flex: 1; min-width: 0; height: 44px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0 12px; font: 600 15px ui-monospace, monospace"><button type="button" style="height: 44px; padding: 0 12px; border: 1px solid #cbd5e1; border-radius: 8px; background: #ffffff; color: #0f172a; font: 600 13px Inter, sans-serif">Санамсаргүй</button></span></label>
+        <fieldset style="border: 0; padding: 0; margin: 0; display: flex; gap: 8px">
+          <legend style="font-size: 13px; font-weight: 600; margin-bottom: 8px">Төрөл</legend>
+          <label style="flex: 1; height: 44px; border: 2px solid #0000ff; background: #eef0ff; border-radius: 8px; display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 14px; font-weight: 600"><input type="radio" name="kt" checked style="accent-color: #0000ff">Хувь %</label>
+          <label style="flex: 1; height: 44px; border: 1px solid #cbd5e1; border-radius: 8px; display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 14px"><input type="radio" name="kt" style="accent-color: #0000ff">Дүн ₮</label>
+          <label style="flex: 1; height: 44px; border: 1px solid #cbd5e1; border-radius: 8px; display: flex; align-items: center; justify-content: center; gap: 6px; font-size: 14px"><input type="radio" name="kt" style="accent-color: #0000ff">Хүргэлт</label>
+        </fieldset>
+        <div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px">
+          <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600">Хэмжээ<input type="text" value="15 %" style="height: 44px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0 12px; font: 400 15px Inter, sans-serif"></label>
+          <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600">Доод дүн<input type="text" value="100,000 ₮" style="height: 44px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0 12px; font: 400 15px Inter, sans-serif"></label>
+          <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600">Эхлэх<input type="text" value="2026.12.20" style="height: 44px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0 12px; font: 400 15px Inter, sans-serif"></label>
+          <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600">Дуусах<input type="text" value="2027.01.05" style="height: 44px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0 12px; font: 400 15px Inter, sans-serif"></label>
+          <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600">Нийт хязгаар<input type="text" value="500" style="height: 44px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0 12px; font: 400 15px Inter, sans-serif"></label>
+          <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600">1 хүн<input type="text" value="1 удаа" style="height: 44px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0 12px; font: 400 15px Inter, sans-serif"></label>
+        </div>
+        <label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600">Хамрах ангилал<select style="height: 44px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0 10px; font: 400 15px Inter, sans-serif; background: #ffffff; color: #0f172a"><option>Бүх ангилал</option></select></label>
+        <button type="button" style="height: 46px; border: 0; border-radius: 8px; background: #0000ff; color: #ffffff; font: 600 14px Inter, sans-serif">Купон үүсгэх</button>
+      </aside>
+    </main>
+  </div>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props='{"$preview":{"width":1440,"height":1150}}'>
+class Component extends DCLogic {
+  renderVals() {
+    var A = ['Идэвхтэй', '#dcfce7', '#166534'], T = ['Товлосон', '#fef3c7', '#92400e'], E = ['Дууссан', '#f1f5f9', '#475569'];
+    function C(t, d, pct, bg, fg, s) { return { t: t, d: d, pct: pct, bg: bg, fg: fg, st: s[0], stBg: s[1], stFg: s[2] }; }
+    return {
+      campaigns: [
+        C('Өвлийн их хямдрал', '11.20–12.05 · Гэр ахуй, Цахилгаан, Тоглоом · 412 бараа', '−40', '#0000ff', '#ffffff', T),
+        C('Шинэ жилийн тоглоом 1+1', '11.01–12.31 · Хүүхдийн тоглоом · 120 бараа', '1+1', '#eef0ff', '#0000c2', A),
+        C('Хар Баасан', '11.28 · Бүх ангилал', '−30', '#0f172a', '#ffffff', E)
+      ],
+      coupons: [
+        { code: 'WINTER20', v: '20,000₮', c: '150,000₮-өөс дээш', u: '84 / 300', exp: '12.31 хүртэл' },
+        { code: 'FIRST10', v: '10%', c: 'Анхны захиалга', u: '212 / ∞', exp: 'Хугацаагүй' },
+        { code: 'FREESHIP', v: 'Үнэгүй хүргэлт', c: 'Алслагдсан бүс', u: '19 / 100', exp: '11.30 хүртэл' },
+        { code: 'BABY5', v: '5%', c: 'Нялх хүүхэд ангилал', u: '41 / 200', exp: '12.15 хүртэл' }
+      ]
+    };
+  }
+}
+</script>
+</body>
+</html>
