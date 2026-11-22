@@ -1,0 +1,424 @@
+<!doctype html>
+<html lang="mn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Админ — Бараа</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<style>
+body{margin:0}
+a{color:#0f172a;text-decoration:none}a:hover{color:#0000ff}
+</style>
+<style>[data-component="AdminSidebar"] a{color:#334155;text-decoration:none}[data-component="AdminSidebar"] a:hover{color:#0000ff}
+</style>
+<style>[data-component="AdminTopbar"] a{color:#0f172a;text-decoration:none}[data-component="AdminTopbar"] a:hover{color:#0000ff}
+</style>
+</head>
+<body>
+
+<div style="width: 100%; min-height: 1150px; background: #f8fafc; font-family: Inter, ui-sans-serif, system-ui, sans-serif; color: #0f172a; display: flex; flex-wrap: wrap; align-items: stretch">
+<div style="flex: 1 1 248px; min-width: 248px; display: flex">
+<div data-component="AdminSidebar" style="display: contents">
+
+<aside aria-label="Админ цэс" style="width: 100%; min-height: 1000px; height: 100%; box-sizing: border-box; background: #ffffff; border-right: 1px solid #e2e8f0; font-family: Inter, ui-sans-serif, system-ui, sans-serif; color: #0f172a; display: flex; flex-direction: column">
+<div style="height: 72px; padding: 0 20px; display: flex; align-items: center; gap: 10px; border-bottom: 1px solid #e2e8f0">
+<span style="width: 36px; height: 36px; border-radius: 9px; background: #0000ff; color: #ffffff; display: grid; place-items: center">
+<svg aria-hidden="true" fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="18"><path d="M3 9 4.5 4h15L21 9M3 9h18M3 9v11h18V9M9 20v-6h6v6"></path></svg>
+</span>
+<span style="display: flex; flex-direction: column; line-height: 1.2">
+<span style="font-size: 15px; font-weight: 800; letter-spacing: -0.01em">hotulan<span style="color: #0000ff">.mn</span></span>
+<span style="font-size: 12px; color: #64748b">Админ самбар</span>
+</span>
+</div>
+<nav style="flex: 1; padding: 16px 12px; display: flex; flex-direction: column; gap: 18px">
+
+<div style="display: flex; flex-direction: column; gap: 2px">
+<span style="padding: 0 12px 6px; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #64748b">Үндсэн</span>
+
+<a aria-current="false" href="AdminDashboard.dc.html" style="height: 42px; padding: 0 12px; border-radius: 8px; display: flex; align-items: center; gap: 12px; font-size: 14px; font-weight: 500; background: transparent; color: #334155">
+<svg aria-hidden="true" fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24" width="18"><path d="M3 3h7v9H3zM14 3h7v5h-7zM14 12h7v9h-7zM3 16h7v5H3z"></path></svg>
+<span style="flex: 1">Хяналтын самбар</span>
+
+</a>
+
+<a aria-current="false" href="AdminOrders.dc.html" style="height: 42px; padding: 0 12px; border-radius: 8px; display: flex; align-items: center; gap: 12px; font-size: 14px; font-weight: 500; background: transparent; color: #334155">
+<svg aria-hidden="true" fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24" width="18"><path d="M6 2 3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4zM3 6h18M16 10a4 4 0 0 1-8 0"></path></svg>
+<span style="flex: 1">Захиалга</span>
+
+<span style="min-width: 22px; height: 20px; padding: 0 6px; box-sizing: border-box; border-radius: 999px; background: #0000ff; color: #ffffff; font-size: 11px; font-weight: 700; display: grid; place-items: center">5</span>
+
+</a>
+
+<a aria-current="page" href="AdminProducts.dc.html" style="height: 42px; padding: 0 12px; border-radius: 8px; display: flex; align-items: center; gap: 12px; font-size: 14px; font-weight: 700; background: #eef0ff; color: #0000c2">
+<svg aria-hidden="true" fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24" width="18"><path d="M16.5 9.4 7.5 4.2M21 16V8a2 2 0 0 0-1-1.7l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.7l7 4a2 2 0 0 0 2 0l7-4a2 2 0 0 0 1-1.7zM3.3 7 12 12l8.7-5M12 22V12"></path></svg>
+<span style="flex: 1">Бараа</span>
+
+<span style="min-width: 22px; height: 20px; padding: 0 6px; box-sizing: border-box; border-radius: 999px; background: #dc2626; color: #ffffff; font-size: 11px; font-weight: 700; display: grid; place-items: center">3</span>
+
+</a>
+
+<a aria-current="false" href="AdminCategories.dc.html" style="height: 42px; padding: 0 12px; border-radius: 8px; display: flex; align-items: center; gap: 12px; font-size: 14px; font-weight: 500; background: transparent; color: #334155">
+<svg aria-hidden="true" fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24" width="18"><path d="M3 3h7v7H3zM14 3h7v7h-7zM14 14h7v7h-7zM3 14h7v7H3z"></path></svg>
+<span style="flex: 1">Ангилал</span>
+
+</a>
+
+<a aria-current="false" href="AdminCustomers.dc.html" style="height: 42px; padding: 0 12px; border-radius: 8px; display: flex; align-items: center; gap: 12px; font-size: 14px; font-weight: 500; background: transparent; color: #334155">
+<svg aria-hidden="true" fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24" width="18"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM22 21v-2a4 4 0 0 0-3-3.9M16 3.1a4 4 0 0 1 0 7.8"></path></svg>
+<span style="flex: 1">Хэрэглэгчид</span>
+
+</a>
+
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 2px">
+<span style="padding: 0 12px 6px; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #64748b">Маркетинг</span>
+
+<a aria-current="false" href="AdminPromotions.dc.html" style="height: 42px; padding: 0 12px; border-radius: 8px; display: flex; align-items: center; gap: 12px; font-size: 14px; font-weight: 500; background: transparent; color: #334155">
+<svg aria-hidden="true" fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24" width="18"><path d="M2 9a3 3 0 0 1 0 6v2a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-2a3 3 0 0 1 0-6V7a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2zM9 9h.01M15 15h.01M15 9l-6 6"></path></svg>
+<span style="flex: 1">Урамшуулал, купон</span>
+
+</a>
+
+<a aria-current="false" href="AdminAppearance.dc.html" style="height: 42px; padding: 0 12px; border-radius: 8px; display: flex; align-items: center; gap: 12px; font-size: 14px; font-weight: 500; background: transparent; color: #334155">
+<svg aria-hidden="true" fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24" width="18"><path d="M5 3h14a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2zM9 11a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM21 15l-5-5L5 21"></path></svg>
+<span style="flex: 1">Харагдах байдал</span>
+
+</a>
+
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 2px">
+<span style="padding: 0 12px 6px; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #64748b">Систем</span>
+
+<a aria-current="false" href="AdminDelivery.dc.html" style="height: 42px; padding: 0 12px; border-radius: 8px; display: flex; align-items: center; gap: 12px; font-size: 14px; font-weight: 500; background: transparent; color: #334155">
+<svg aria-hidden="true" fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24" width="18"><path d="M14 18V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2v11a1 1 0 0 0 1 1h2M15 18H9M19 18h2a1 1 0 0 0 1-1v-3.6a1 1 0 0 0-.2-.6l-3.5-4.4A1 1 0 0 0 17.5 8H14M7 20a2 2 0 1 0 0-4 2 2 0 0 0 0 4zM17 20a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"></path></svg>
+<span style="flex: 1">Хүргэлтийн бүс</span>
+
+</a>
+
+<a aria-current="false" href="AdminStaff.dc.html" style="height: 42px; padding: 0 12px; border-radius: 8px; display: flex; align-items: center; gap: 12px; font-size: 14px; font-weight: 500; background: transparent; color: #334155">
+<svg aria-hidden="true" fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24" width="18"><path d="M12 22s8-3 8-10V5l-8-3-8 3v7c0 7 8 10 8 10zM12 8v4M12 16h.01"></path></svg>
+<span style="flex: 1">Ажилтан, эрх</span>
+
+</a>
+
+<a aria-current="false" href="AdminSettings.dc.html" style="height: 42px; padding: 0 12px; border-radius: 8px; display: flex; align-items: center; gap: 12px; font-size: 14px; font-weight: 500; background: transparent; color: #334155">
+<svg aria-hidden="true" fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24" width="18"><path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"></path></svg>
+<span style="flex: 1">Тохиргоо</span>
+
+</a>
+
+</div>
+
+</nav>
+<div style="padding: 16px; border-top: 1px solid #e2e8f0; display: flex; align-items: center; gap: 10px">
+<span style="width: 36px; height: 36px; border-radius: 999px; background: #0f172a; color: #ffffff; display: grid; place-items: center; font-size: 13px; font-weight: 700">ЗА</span>
+<span style="flex: 1; display: flex; flex-direction: column; line-height: 1.3; min-width: 0">
+<span style="font-size: 14px; font-weight: 600">Загдаа</span>
+<span style="font-size: 12px; color: #64748b">Супер админ</span>
+</span>
+<a aria-label="Гарах" href="#" style="width: 40px; height: 40px; border-radius: 8px; display: grid; place-items: center; color: #64748b">
+<svg aria-hidden="true" fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24" width="18"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4M16 17l5-5-5-5M21 12H9"></path></svg>
+</a>
+</div>
+</aside>
+</div>
+</div>
+<div style="flex: 999 1 560px; min-width: 0; display: flex; flex-direction: column">
+<div data-component="AdminTopbar" style="display: contents">
+
+<div style="width: 100%; min-height: 72px; box-sizing: border-box; padding: 12px 32px; background: #ffffff; border-bottom: 1px solid #e2e8f0; display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px; font-family: Inter, ui-sans-serif, system-ui, sans-serif; color: #0f172a">
+<div style="flex: 1 1 200px; display: flex; flex-direction: column; gap: 2px; min-width: 0">
+<span style="font-size: 12px; color: #64748b">Админ · Каталог</span>
+<span style="font-size: 18px; font-weight: 700">Бараа</span>
+</div>
+<label style="flex: 0 1 320px; height: 40px; border: 1px solid #e2e8f0; border-radius: 8px; background: #f8fafc; display: flex; align-items: center; gap: 8px; padding: 0 12px; color: #64748b">
+<svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-width="2" viewbox="0 0 24 24" width="16"><path d="M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14zM21 21l-4.3-4.3"></path></svg>
+<span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Хайх</span>
+<input placeholder="Захиалга, бараа, хэрэглэгч хайх…" style="flex: 1; min-width: 0; border: 0; background: transparent; font: 400 14px Inter, sans-serif; color: #0f172a; outline: none" type="search"/>
+<span style="font-size: 11px; border: 1px solid #e2e8f0; border-radius: 4px; padding: 1px 5px; background: #ffffff">Ctrl K</span>
+</label>
+<a href="Home.dc.html" style="height: 40px; padding: 0 14px; border: 1px solid #e2e8f0; border-radius: 8px; display: flex; align-items: center; gap: 8px; font-size: 14px; font-weight: 600">
+<svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="16"><path d="M15 3h6v6M10 14 21 3M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path></svg>
+    Сайт үзэх
+  </a>
+<button aria-label="Мэдэгдэл, 4 шинэ" style="width: 44px; height: 44px; border: 1px solid #e2e8f0; border-radius: 8px; background: #ffffff; color: #0f172a; display: grid; place-items: center; position: relative" type="button">
+<svg aria-hidden="true" fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24" width="18"><path d="M6 8a6 6 0 0 1 12 0c0 7 3 9 3 9H3s3-2 3-9M10.3 21a1.9 1.9 0 0 0 3.4 0"></path></svg>
+<span style="position: absolute; top: 8px; right: 9px; width: 8px; height: 8px; border-radius: 999px; background: #dc2626; border: 2px solid #ffffff"></span>
+</button>
+</div>
+</div>
+<main style="padding: 28px 32px 40px; display: flex; flex-direction: column; gap: 16px">
+<div style="display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 12px">
+<div style="display: flex; gap: 8px; flex-wrap: wrap; font-size: 14px">
+<span style="height: 36px; padding: 0 14px; border-radius: 999px; background: #0f172a; color: #ffffff; display: flex; align-items: center; font-weight: 600">Бүгд 1,284</span>
+<span style="height: 36px; padding: 0 14px; border-radius: 999px; border: 1px solid #cbd5e1; background: #ffffff; display: flex; align-items: center">Идэвхтэй 1,206</span>
+<span style="height: 36px; padding: 0 14px; border-radius: 999px; border: 1px solid #cbd5e1; background: #ffffff; display: flex; align-items: center">Ноорог 41</span>
+<span style="height: 36px; padding: 0 14px; border-radius: 999px; border: 1px solid #fecaca; background: #fef2f2; color: #b91c1c; display: flex; align-items: center; font-weight: 600">Дууссан 37</span>
+</div>
+<div style="display: flex; gap: 8px">
+<button style="height: 44px; padding: 0 16px; border: 1px solid #cbd5e1; border-radius: 8px; background: #ffffff; color: #0f172a; font: 600 14px Inter, sans-serif" type="button">Excel импорт</button>
+<button style="height: 44px; padding: 0 16px; border: 1px solid #cbd5e1; border-radius: 8px; background: #ffffff; color: #0f172a; font: 600 14px Inter, sans-serif" type="button">Экспорт</button>
+<a href="AdminProductForm.dc.html" style="height: 44px; padding: 0 16px; border-radius: 8px; background: #0000ff; color: #ffffff; display: flex; align-items: center; font-size: 14px; font-weight: 600">+ Шинэ бараа</a>
+</div>
+</div>
+<section style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden">
+<div style="padding: 14px 16px; display: flex; flex-wrap: wrap; gap: 10px; border-bottom: 1px solid #e2e8f0">
+<label style="flex: 1 1 260px; height: 40px; border: 1px solid #cbd5e1; border-radius: 8px; display: flex; align-items: center; gap: 8px; padding: 0 12px; color: #64748b">
+<svg aria-hidden="true" fill="none" height="16" stroke="currentColor" stroke-linecap="round" stroke-width="2" viewbox="0 0 24 24" width="16"><path d="M11 18a7 7 0 1 0 0-14 7 7 0 0 0 0 14zM21 21l-4.3-4.3"></path></svg>
+<span style="position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0)">Бараа хайх</span>
+<input placeholder="Нэр, код, баркодоор хайх" style="flex: 1; min-width: 0; border: 0; font: 400 14px Inter, sans-serif; outline: none" type="search"/>
+</label>
+<select aria-label="Ангилал" style="height: 40px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0 10px; font: 500 14px Inter, sans-serif; background: #ffffff; color: #0f172a"><option>Бүх ангилал (20)</option></select>
+<select aria-label="Брэнд" style="height: 40px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0 10px; font: 500 14px Inter, sans-serif; background: #ffffff; color: #0f172a"><option>Бүх брэнд</option></select>
+<select aria-label="Нөөц" style="height: 40px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0 10px; font: 500 14px Inter, sans-serif; background: #ffffff; color: #0f172a"><option>Нөөц: бүгд</option></select>
+</div>
+<div style="padding: 10px 16px; background: #eef0ff; display: flex; flex-wrap: wrap; align-items: center; gap: 12px; font-size: 14px">
+<b style="color: #0000c2">2 бараа сонгосон</b>
+<button style="height: 34px; padding: 0 12px; border: 1px solid #c7d2fe; border-radius: 6px; background: #ffffff; color: #0f172a; font: 500 13px Inter, sans-serif" type="button">Үнэ өөрчлөх</button>
+<button style="height: 34px; padding: 0 12px; border: 1px solid #c7d2fe; border-radius: 6px; background: #ffffff; color: #0f172a; font: 500 13px Inter, sans-serif" type="button">Ангилал солих</button>
+<button style="height: 34px; padding: 0 12px; border: 1px solid #c7d2fe; border-radius: 6px; background: #ffffff; color: #0f172a; font: 500 13px Inter, sans-serif" type="button">Нуух</button>
+<button style="height: 34px; padding: 0 12px; border: 1px solid #fecaca; border-radius: 6px; background: #ffffff; color: #b91c1c; font: 600 13px Inter, sans-serif" type="button">Устгах</button>
+</div>
+<div style="overflow-x: auto">
+<table style="width: 100%; border-collapse: collapse; font-size: 14px; min-width: 900px">
+<thead><tr style="background: #f8fafc; color: #64748b; font-size: 12px; text-align: left">
+<th scope="col" style="padding: 10px 16px; width: 20px"><input aria-label="Бүгдийг сонгох" style="width: 18px; height: 18px; accent-color: #0000ff" type="checkbox"/></th>
+<th scope="col" style="padding: 10px 8px; font-weight: 600">Бараа</th>
+<th scope="col" style="padding: 10px 8px; font-weight: 600">Ангилал</th>
+<th scope="col" style="padding: 10px 8px; font-weight: 600">Үнэ</th>
+<th scope="col" style="padding: 10px 8px; font-weight: 600">Нөөц</th>
+<th scope="col" style="padding: 10px 8px; font-weight: 600">Харагдах</th>
+<th scope="col" style="padding: 10px 16px; font-weight: 600; text-align: right">Үйлдэл</th>
+</tr></thead>
+<tbody>
+
+<tr style="border-top: 1px solid #f1f5f9; background: #f8f9ff">
+<td style="padding: 10px 16px"><input aria-label="Сонгох" checked="" style="width: 18px; height: 18px; accent-color: #0000ff" type="checkbox"/></td>
+<td style="padding: 10px 8px">
+<span style="display: flex; align-items: center; gap: 12px">
+<span style="width: 44px; height: 44px; border-radius: 8px; background: #eef0ff; flex: none"></span>
+<span style="display: flex; flex-direction: column; gap: 2px"><a href="AdminProductForm.dc.html" style="font-weight: 600">Утасгүй чихэвч, ANC</a><span style="font-size: 12px; color: #64748b">ELEC-ANC-01</span></span>
+</span>
+</td>
+<td style="padding: 10px 8px; color: #475569">Цахилгаан бараа</td>
+<td style="padding: 10px 8px; font-weight: 600; font-variant-numeric: tabular-nums">459,000₮</td>
+<td style="padding: 10px 8px"><span style="font-weight: 600; color: #0f172a">23 ш</span></td>
+<td style="padding: 10px 8px">
+<button aria-checked="true" aria-label="Сайтад харуулах" role="switch" style="border: 0; width: 40px; height: 22px; border-radius: 999px; background: #0000ff; display: flex; align-items: center; padding: 2px; box-sizing: border-box; justify-content: flex-end" type="button"><span style="width: 18px; height: 18px; border-radius: 999px; background: #ffffff"></span></button>
+</td>
+<td style="padding: 10px 16px; text-align: right; white-space: nowrap">
+<a href="AdminProductForm.dc.html" style="color: #0000ff; font-weight: 600; font-size: 13px; padding: 8px">Засах</a>
+<a href="#" style="color: #475569; font-size: 13px; padding: 8px">Хуулах</a>
+<a href="#" style="color: #b91c1c; font-size: 13px; padding: 8px">Устгах</a>
+</td>
+</tr>
+
+<tr style="border-top: 1px solid #f1f5f9; background: #f8f9ff">
+<td style="padding: 10px 16px"><input aria-label="Сонгох" checked="" style="width: 18px; height: 18px; accent-color: #0000ff" type="checkbox"/></td>
+<td style="padding: 10px 8px">
+<span style="display: flex; align-items: center; gap: 12px">
+<span style="width: 44px; height: 44px; border-radius: 8px; background: #f1f5f9; flex: none"></span>
+<span style="display: flex; flex-direction: column; gap: 2px"><a href="AdminProductForm.dc.html" style="font-weight: 600">Робот тоос сорогч</a><span style="font-size: 12px; color: #64748b">HOME-ROBO-02</span></span>
+</span>
+</td>
+<td style="padding: 10px 8px; color: #475569">Гэр ахуй</td>
+<td style="padding: 10px 8px; font-weight: 600; font-variant-numeric: tabular-nums">1,290,000₮</td>
+<td style="padding: 10px 8px"><span style="font-weight: 600; color: #b45309">3 ш</span></td>
+<td style="padding: 10px 8px">
+<button aria-checked="true" aria-label="Сайтад харуулах" role="switch" style="border: 0; width: 40px; height: 22px; border-radius: 999px; background: #0000ff; display: flex; align-items: center; padding: 2px; box-sizing: border-box; justify-content: flex-end" type="button"><span style="width: 18px; height: 18px; border-radius: 999px; background: #ffffff"></span></button>
+</td>
+<td style="padding: 10px 16px; text-align: right; white-space: nowrap">
+<a href="AdminProductForm.dc.html" style="color: #0000ff; font-weight: 600; font-size: 13px; padding: 8px">Засах</a>
+<a href="#" style="color: #475569; font-size: 13px; padding: 8px">Хуулах</a>
+<a href="#" style="color: #b91c1c; font-size: 13px; padding: 8px">Устгах</a>
+</td>
+</tr>
+
+<tr style="border-top: 1px solid #f1f5f9; background: #ffffff">
+<td style="padding: 10px 16px"><input aria-label="Сонгох" style="width: 18px; height: 18px; accent-color: #0000ff" type="checkbox"/></td>
+<td style="padding: 10px 8px">
+<span style="display: flex; align-items: center; gap: 12px">
+<span style="width: 44px; height: 44px; border-radius: 8px; background: #fef3c7; flex: none"></span>
+<span style="display: flex; flex-direction: column; gap: 2px"><a href="AdminProductForm.dc.html" style="font-weight: 600">Бүтээлч барилгын блок, 1000ш</a><span style="font-size: 12px; color: #64748b">TOY-BLK-1000</span></span>
+</span>
+</td>
+<td style="padding: 10px 8px; color: #475569">Хүүхдийн тоглоом</td>
+<td style="padding: 10px 8px; font-weight: 600; font-variant-numeric: tabular-nums">129,000₮</td>
+<td style="padding: 10px 8px"><span style="font-weight: 600; color: #0f172a">34 ш</span></td>
+<td style="padding: 10px 8px">
+<button aria-checked="true" aria-label="Сайтад харуулах" role="switch" style="border: 0; width: 40px; height: 22px; border-radius: 999px; background: #0000ff; display: flex; align-items: center; padding: 2px; box-sizing: border-box; justify-content: flex-end" type="button"><span style="width: 18px; height: 18px; border-radius: 999px; background: #ffffff"></span></button>
+</td>
+<td style="padding: 10px 16px; text-align: right; white-space: nowrap">
+<a href="AdminProductForm.dc.html" style="color: #0000ff; font-weight: 600; font-size: 13px; padding: 8px">Засах</a>
+<a href="#" style="color: #475569; font-size: 13px; padding: 8px">Хуулах</a>
+<a href="#" style="color: #b91c1c; font-size: 13px; padding: 8px">Устгах</a>
+</td>
+</tr>
+
+<tr style="border-top: 1px solid #f1f5f9; background: #ffffff">
+<td style="padding: 10px 16px"><input aria-label="Сонгох" style="width: 18px; height: 18px; accent-color: #0000ff" type="checkbox"/></td>
+<td style="padding: 10px 8px">
+<span style="display: flex; align-items: center; gap: 12px">
+<span style="width: 44px; height: 44px; border-radius: 8px; background: #dcfce7; flex: none"></span>
+<span style="display: flex; flex-direction: column; gap: 2px"><a href="AdminProductForm.dc.html" style="font-weight: 600">55" 4K UHD Smart ТВ</a><span style="font-size: 12px; color: #64748b">ELEC-TV55-4K</span></span>
+</span>
+</td>
+<td style="padding: 10px 8px; color: #475569">Цахилгаан бараа</td>
+<td style="padding: 10px 8px; font-weight: 600; font-variant-numeric: tabular-nums">2,190,000₮</td>
+<td style="padding: 10px 8px"><span style="font-weight: 600; color: #0f172a">12 ш</span></td>
+<td style="padding: 10px 8px">
+<button aria-checked="true" aria-label="Сайтад харуулах" role="switch" style="border: 0; width: 40px; height: 22px; border-radius: 999px; background: #0000ff; display: flex; align-items: center; padding: 2px; box-sizing: border-box; justify-content: flex-end" type="button"><span style="width: 18px; height: 18px; border-radius: 999px; background: #ffffff"></span></button>
+</td>
+<td style="padding: 10px 16px; text-align: right; white-space: nowrap">
+<a href="AdminProductForm.dc.html" style="color: #0000ff; font-weight: 600; font-size: 13px; padding: 8px">Засах</a>
+<a href="#" style="color: #475569; font-size: 13px; padding: 8px">Хуулах</a>
+<a href="#" style="color: #b91c1c; font-size: 13px; padding: 8px">Устгах</a>
+</td>
+</tr>
+
+<tr style="border-top: 1px solid #f1f5f9; background: #ffffff">
+<td style="padding: 10px 16px"><input aria-label="Сонгох" style="width: 18px; height: 18px; accent-color: #0000ff" type="checkbox"/></td>
+<td style="padding: 10px 8px">
+<span style="display: flex; align-items: center; gap: 12px">
+<span style="width: 44px; height: 44px; border-radius: 8px; background: #fce7f3; flex: none"></span>
+<span style="display: flex; flex-direction: column; gap: 2px"><a href="AdminProductForm.dc.html" style="font-weight: 600">Эспрессо кофе машин</a><span style="font-size: 12px; color: #64748b">KIT-ESP-01</span></span>
+</span>
+</td>
+<td style="padding: 10px 8px; color: #475569">Гал тогоо</td>
+<td style="padding: 10px 8px; font-weight: 600; font-variant-numeric: tabular-nums">890,000₮</td>
+<td style="padding: 10px 8px"><span style="font-weight: 600; color: #b45309">5 ш</span></td>
+<td style="padding: 10px 8px">
+<button aria-checked="true" aria-label="Сайтад харуулах" role="switch" style="border: 0; width: 40px; height: 22px; border-radius: 999px; background: #0000ff; display: flex; align-items: center; padding: 2px; box-sizing: border-box; justify-content: flex-end" type="button"><span style="width: 18px; height: 18px; border-radius: 999px; background: #ffffff"></span></button>
+</td>
+<td style="padding: 10px 16px; text-align: right; white-space: nowrap">
+<a href="AdminProductForm.dc.html" style="color: #0000ff; font-weight: 600; font-size: 13px; padding: 8px">Засах</a>
+<a href="#" style="color: #475569; font-size: 13px; padding: 8px">Хуулах</a>
+<a href="#" style="color: #b91c1c; font-size: 13px; padding: 8px">Устгах</a>
+</td>
+</tr>
+
+<tr style="border-top: 1px solid #f1f5f9; background: #ffffff">
+<td style="padding: 10px 16px"><input aria-label="Сонгох" style="width: 18px; height: 18px; accent-color: #0000ff" type="checkbox"/></td>
+<td style="padding: 10px 8px">
+<span style="display: flex; align-items: center; gap: 12px">
+<span style="width: 44px; height: 44px; border-radius: 8px; background: #eef0ff; flex: none"></span>
+<span style="display: flex; flex-direction: column; gap: 2px"><a href="AdminProductForm.dc.html" style="font-weight: 600">Иогийн дэвсгэр 6 мм</a><span style="font-size: 12px; color: #64748b">SPT-YOGA-6</span></span>
+</span>
+</td>
+<td style="padding: 10px 8px; color: #475569">Спорт, фитнес</td>
+<td style="padding: 10px 8px; font-weight: 600; font-variant-numeric: tabular-nums">69,000₮</td>
+<td style="padding: 10px 8px"><span style="font-weight: 600; color: #0f172a">88 ш</span></td>
+<td style="padding: 10px 8px">
+<button aria-checked="true" aria-label="Сайтад харуулах" role="switch" style="border: 0; width: 40px; height: 22px; border-radius: 999px; background: #0000ff; display: flex; align-items: center; padding: 2px; box-sizing: border-box; justify-content: flex-end" type="button"><span style="width: 18px; height: 18px; border-radius: 999px; background: #ffffff"></span></button>
+</td>
+<td style="padding: 10px 16px; text-align: right; white-space: nowrap">
+<a href="AdminProductForm.dc.html" style="color: #0000ff; font-weight: 600; font-size: 13px; padding: 8px">Засах</a>
+<a href="#" style="color: #475569; font-size: 13px; padding: 8px">Хуулах</a>
+<a href="#" style="color: #b91c1c; font-size: 13px; padding: 8px">Устгах</a>
+</td>
+</tr>
+
+<tr style="border-top: 1px solid #f1f5f9; background: #ffffff">
+<td style="padding: 10px 16px"><input aria-label="Сонгох" style="width: 18px; height: 18px; accent-color: #0000ff" type="checkbox"/></td>
+<td style="padding: 10px 8px">
+<span style="display: flex; align-items: center; gap: 12px">
+<span style="width: 44px; height: 44px; border-radius: 8px; background: #f1f5f9; flex: none"></span>
+<span style="display: flex; flex-direction: column; gap: 2px"><a href="AdminProductForm.dc.html" style="font-weight: 600">Нүүрний чийгшүүлэгч крем</a><span style="font-size: 12px; color: #64748b">BTY-DEW-50</span></span>
+</span>
+</td>
+<td style="padding: 10px 8px; color: #475569">Гоо сайхан</td>
+<td style="padding: 10px 8px; font-weight: 600; font-variant-numeric: tabular-nums">58,000₮</td>
+<td style="padding: 10px 8px"><span style="font-weight: 600; color: #b91c1c">Дууссан</span></td>
+<td style="padding: 10px 8px">
+<button aria-checked="false" aria-label="Сайтад харуулах" role="switch" style="border: 0; width: 40px; height: 22px; border-radius: 999px; background: #cbd5e1; display: flex; align-items: center; padding: 2px; box-sizing: border-box; justify-content: flex-start" type="button"><span style="width: 18px; height: 18px; border-radius: 999px; background: #ffffff"></span></button>
+</td>
+<td style="padding: 10px 16px; text-align: right; white-space: nowrap">
+<a href="AdminProductForm.dc.html" style="color: #0000ff; font-weight: 600; font-size: 13px; padding: 8px">Засах</a>
+<a href="#" style="color: #475569; font-size: 13px; padding: 8px">Хуулах</a>
+<a href="#" style="color: #b91c1c; font-size: 13px; padding: 8px">Устгах</a>
+</td>
+</tr>
+
+<tr style="border-top: 1px solid #f1f5f9; background: #ffffff">
+<td style="padding: 10px 16px"><input aria-label="Сонгох" style="width: 18px; height: 18px; accent-color: #0000ff" type="checkbox"/></td>
+<td style="padding: 10px 8px">
+<span style="display: flex; align-items: center; gap: 12px">
+<span style="width: 44px; height: 44px; border-radius: 8px; background: #fef3c7; flex: none"></span>
+<span style="display: flex; flex-direction: column; gap: 2px"><a href="AdminProductForm.dc.html" style="font-weight: 600">Хүүхдийн тэрэг, 3 горим</a><span style="font-size: 12px; color: #64748b">BABY-STR-3</span></span>
+</span>
+</td>
+<td style="padding: 10px 8px; color: #475569">Нялх хүүхэд</td>
+<td style="padding: 10px 8px; font-weight: 600; font-variant-numeric: tabular-nums">820,000₮</td>
+<td style="padding: 10px 8px"><span style="font-weight: 600; color: #b45309">9 ш</span></td>
+<td style="padding: 10px 8px">
+<button aria-checked="true" aria-label="Сайтад харуулах" role="switch" style="border: 0; width: 40px; height: 22px; border-radius: 999px; background: #0000ff; display: flex; align-items: center; padding: 2px; box-sizing: border-box; justify-content: flex-end" type="button"><span style="width: 18px; height: 18px; border-radius: 999px; background: #ffffff"></span></button>
+</td>
+<td style="padding: 10px 16px; text-align: right; white-space: nowrap">
+<a href="AdminProductForm.dc.html" style="color: #0000ff; font-weight: 600; font-size: 13px; padding: 8px">Засах</a>
+<a href="#" style="color: #475569; font-size: 13px; padding: 8px">Хуулах</a>
+<a href="#" style="color: #b91c1c; font-size: 13px; padding: 8px">Устгах</a>
+</td>
+</tr>
+
+<tr style="border-top: 1px solid #f1f5f9; background: #ffffff">
+<td style="padding: 10px 16px"><input aria-label="Сонгох" style="width: 18px; height: 18px; accent-color: #0000ff" type="checkbox"/></td>
+<td style="padding: 10px 8px">
+<span style="display: flex; align-items: center; gap: 12px">
+<span style="width: 44px; height: 44px; border-radius: 8px; background: #dcfce7; flex: none"></span>
+<span style="display: flex; flex-direction: column; gap: 2px"><a href="AdminProductForm.dc.html" style="font-weight: 600">Машины видео бичигч 4K</a><span style="font-size: 12px; color: #64748b">AUTO-CAM-4K</span></span>
+</span>
+</td>
+<td style="padding: 10px 8px; color: #475569">Авто хэрэгсэл</td>
+<td style="padding: 10px 8px; font-weight: 600; font-variant-numeric: tabular-nums">239,000₮</td>
+<td style="padding: 10px 8px"><span style="font-weight: 600; color: #0f172a">17 ш</span></td>
+<td style="padding: 10px 8px">
+<button aria-checked="false" aria-label="Сайтад харуулах" role="switch" style="border: 0; width: 40px; height: 22px; border-radius: 999px; background: #cbd5e1; display: flex; align-items: center; padding: 2px; box-sizing: border-box; justify-content: flex-start" type="button"><span style="width: 18px; height: 18px; border-radius: 999px; background: #ffffff"></span></button>
+</td>
+<td style="padding: 10px 16px; text-align: right; white-space: nowrap">
+<a href="AdminProductForm.dc.html" style="color: #0000ff; font-weight: 600; font-size: 13px; padding: 8px">Засах</a>
+<a href="#" style="color: #475569; font-size: 13px; padding: 8px">Хуулах</a>
+<a href="#" style="color: #b91c1c; font-size: 13px; padding: 8px">Устгах</a>
+</td>
+</tr>
+
+<tr style="border-top: 1px solid #f1f5f9; background: #ffffff">
+<td style="padding: 10px 16px"><input aria-label="Сонгох" style="width: 18px; height: 18px; accent-color: #0000ff" type="checkbox"/></td>
+<td style="padding: 10px 8px">
+<span style="display: flex; align-items: center; gap: 12px">
+<span style="width: 44px; height: 44px; border-radius: 8px; background: #fce7f3; flex: none"></span>
+<span style="display: flex; flex-direction: column; gap: 2px"><a href="AdminProductForm.dc.html" style="font-weight: 600">Тэжээвэр нохойн ор, M</a><span style="font-size: 12px; color: #64748b">PET-BED-M</span></span>
+</span>
+</td>
+<td style="padding: 10px 8px; color: #475569">Тэжээвэр амьтан</td>
+<td style="padding: 10px 8px; font-weight: 600; font-variant-numeric: tabular-nums">89,000₮</td>
+<td style="padding: 10px 8px"><span style="font-weight: 600; color: #0f172a">41 ш</span></td>
+<td style="padding: 10px 8px">
+<button aria-checked="true" aria-label="Сайтад харуулах" role="switch" style="border: 0; width: 40px; height: 22px; border-radius: 999px; background: #0000ff; display: flex; align-items: center; padding: 2px; box-sizing: border-box; justify-content: flex-end" type="button"><span style="width: 18px; height: 18px; border-radius: 999px; background: #ffffff"></span></button>
+</td>
+<td style="padding: 10px 16px; text-align: right; white-space: nowrap">
+<a href="AdminProductForm.dc.html" style="color: #0000ff; font-weight: 600; font-size: 13px; padding: 8px">Засах</a>
+<a href="#" style="color: #475569; font-size: 13px; padding: 8px">Хуулах</a>
+<a href="#" style="color: #b91c1c; font-size: 13px; padding: 8px">Устгах</a>
+</td>
+</tr>
+
+</tbody>
+</table>
+</div>
+<div style="padding: 12px 16px; border-top: 1px solid #e2e8f0; display: flex; justify-content: space-between; align-items: center; font-size: 13px; color: #64748b; flex-wrap: wrap; gap: 8px">
+<span>1–10 / 1,284 бараа</span>
+<span style="display: flex; gap: 6px">
+<a href="#" style="width: 36px; height: 36px; border: 1px solid #cbd5e1; border-radius: 6px; display: grid; place-items: center">‹</a>
+<a href="#" style="width: 36px; height: 36px; border-radius: 6px; background: #0000ff; color: #ffffff; display: grid; place-items: center; font-weight: 700">1</a>
+<a href="#" style="width: 36px; height: 36px; border: 1px solid #cbd5e1; border-radius: 6px; display: grid; place-items: center">2</a>
+<a href="#" style="width: 36px; height: 36px; border: 1px solid #cbd5e1; border-radius: 6px; display: grid; place-items: center">›</a>
+</span>
+</div>
+</section>
+</main>
+</div>
+</div>
+</body>
+</html>

@@ -1,0 +1,417 @@
+<!doctype html>
+<html lang="mn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>hotulan.mn — Brainstorm ба Design system</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<style>
+body{margin:0}
+a{color:#0000ff}a:hover{color:#0000c2}
+</style>
+</head>
+<body>
+
+<div style="width: 1440px; box-sizing: border-box; padding: 72px 80px 96px; background: #f8fafc; font-family: Inter, ui-sans-serif, system-ui, sans-serif; color: #0f172a; display: flex; flex-direction: column; gap: 48px">
+<div style="display: flex; justify-content: space-between; align-items: flex-end; gap: 32px; border-bottom: 1px solid #e2e8f0; padding-bottom: 32px">
+<div style="display: flex; flex-direction: column; gap: 14px">
+<div style="display: flex; align-items: center; gap: 12px">
+<span style="width: 44px; height: 44px; border-radius: 10px; background: #0000ff; color: #ffffff; display: grid; place-items: center">
+<svg aria-hidden="true" fill="none" height="22" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="22"><path d="M3 9 4.5 4h15L21 9M3 9h18M3 9v11h18V9M9 20v-6h6v6"></path></svg>
+</span>
+<span style="font-size: 22px; font-weight: 800; letter-spacing: -0.02em">hotulan<span style="color: #0000ff">.mn</span></span>
+</div>
+<h1 style="margin: 0; font-size: 48px; line-height: 1.1; font-weight: 800; letter-spacing: -0.03em">Brainstorm — Онлайн дэлгүүр ба Админ панел</h1>
+<p style="margin: 0; font-size: 18px; line-height: 1.6; color: #475569; max-width: 860px">20 гаруй ангиллын бараа зардаг, зөвхөн Улаанбаатар хотод хүргэлттэй, сонгодог бүтэцтэй онлайн дэлгүүр. Админ нь ангилал, бараа, захиалга, нүүр хуудасны зураг/баннерыг өөрөө удирдана.</p>
+</div>
+<div style="display: flex; gap: 8px; flex-wrap: wrap; justify-content: flex-end; max-width: 380px">
+<span style="padding: 6px 12px; border-radius: 999px; background: #eef0ff; color: #0000c2; font-size: 13px; font-weight: 600">Next.js 15</span>
+<span style="padding: 6px 12px; border-radius: 999px; background: #eef0ff; color: #0000c2; font-size: 13px; font-weight: 600">Tailwind v4</span>
+<span style="padding: 6px 12px; border-radius: 999px; background: #eef0ff; color: #0000c2; font-size: 13px; font-weight: 600">Inter (Cyrillic)</span>
+<span style="padding: 6px 12px; border-radius: 999px; background: #eef0ff; color: #0000c2; font-size: 13px; font-weight: 600">Lucide icons</span>
+</div>
+</div>
+<div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px">
+<div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 24px; display: flex; flex-direction: column; gap: 10px">
+<p style="margin: 0; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #0000ff">01 · Зорилго</p>
+<h3 style="margin: 0; font-size: 18px; font-weight: 700">Итгэлтэй, хурдан худалдаа</h3>
+<ul style="margin: 0; padding-left: 18px; font-size: 14px; line-height: 1.7; color: #475569">
+<li>3 даралтаар бараа олох</li>
+<li>Бүртгэлгүй (guest) захиалга</li>
+<li>Албан ёсны баталгаа, буцаалт</li>
+<li>Гар утсанд эхэлж зохион бүтээх</li>
+</ul>
+</div>
+<div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 24px; display: flex; flex-direction: column; gap: 10px">
+<p style="margin: 0; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #0000ff">02 · Хүргэлт</p>
+<h3 style="margin: 0; font-size: 18px; font-weight: 700">Зөвхөн Улаанбаатар</h3>
+<ul style="margin: 0; padding-left: 18px; font-size: 14px; line-height: 1.7; color: #475569">
+<li>Захиалгад дүүрэг + хороо заавал</li>
+<li>Төв 6 дүүрэг / алслагдсан 3 дүүрэг өөр үнэ</li>
+<li>Тодорхой дүнгээс дээш үнэгүй</li>
+<li>Хотоос гадна — сонгох боломжгүй</li>
+</ul>
+</div>
+<div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 24px; display: flex; flex-direction: column; gap: 10px">
+<p style="margin: 0; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #0000ff">03 · Төлбөр</p>
+<h3 style="margin: 0; font-size: 18px; font-weight: 700">Монгол хэрэглэгчид танил</h3>
+<ul style="margin: 0; padding-left: 18px; font-size: 14px; line-height: 1.7; color: #475569">
+<li>QPay (бүх банкны апп)</li>
+<li>Дансаар шилжүүлэх</li>
+<li>Хүргэлтээр бэлэн / карт</li>
+<li>И-баримт (НӨАТ) автоматаар</li>
+</ul>
+</div>
+<div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 24px; display: flex; flex-direction: column; gap: 10px">
+<p style="margin: 0; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #0000ff">04 · Худалдан авагчийн урсгал</p>
+<h3 style="margin: 0; font-size: 18px; font-weight: 700">Сонгодог 5 алхам</h3>
+<ol style="margin: 0; padding-left: 18px; font-size: 14px; line-height: 1.7; color: #475569">
+<li>Нүүр / Хайлт</li>
+<li>Ангилал + шүүлтүүр</li>
+<li>Барааны дэлгэрэнгүй</li>
+<li>Сагс → Хүргэлт → Төлбөр</li>
+<li>Баталгаажуулалт + SMS</li>
+</ol>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 18px">
+<div style="display: flex; align-items: baseline; justify-content: space-between">
+<h2 style="margin: 0; font-size: 28px; font-weight: 800; letter-spacing: -0.02em">20 ангилал <span style="color: #64748b; font-weight: 500; font-size: 18px">— админаас нэмж, засаж, дараалал солино</span></h2>
+</div>
+<div style="display: grid; grid-template-columns: repeat(10, minmax(0, 1fr)); gap: 12px">
+
+<div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px 8px; display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center">
+<span style="width: 44px; height: 44px; border-radius: 10px; background: #eef0ff; color: #0000ff; display: grid; place-items: center">
+<svg aria-hidden="true" fill="none" height="22" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24" width="22"><path d="M4 4h7v7H4zM13 4h7v7h-7zM8.5 13h7v7h-7z"></path></svg>
+</span>
+<span style="font-size: 13px; font-weight: 600; line-height: 1.3">Хүүхдийн тоглоом</span>
+</div>
+
+<div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px 8px; display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center">
+<span style="width: 44px; height: 44px; border-radius: 10px; background: #eef0ff; color: #0000ff; display: grid; place-items: center">
+<svg aria-hidden="true" fill="none" height="22" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24" width="22"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"></path></svg>
+</span>
+<span style="font-size: 13px; font-weight: 600; line-height: 1.3">Гэр ахуй</span>
+</div>
+
+<div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px 8px; display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center">
+<span style="width: 44px; height: 44px; border-radius: 10px; background: #eef0ff; color: #0000ff; display: grid; place-items: center">
+<svg aria-hidden="true" fill="none" height="22" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24" width="22"><path d="M3 6h18v11H3zM8 21h8M12 17v4"></path></svg>
+</span>
+<span style="font-size: 13px; font-weight: 600; line-height: 1.3">Цахилгаан бараа</span>
+</div>
+
+<div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px 8px; display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center">
+<span style="width: 44px; height: 44px; border-radius: 10px; background: #eef0ff; color: #0000ff; display: grid; place-items: center">
+<svg aria-hidden="true" fill="none" height="22" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24" width="22"><path d="M6 7v10M3 9v6M18 7v10M21 9v6M6 12h12"></path></svg>
+</span>
+<span style="font-size: 13px; font-weight: 600; line-height: 1.3">Спорт, фитнес</span>
+</div>
+
+<div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px 8px; display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center">
+<span style="width: 44px; height: 44px; border-radius: 10px; background: #eef0ff; color: #0000ff; display: grid; place-items: center">
+<svg aria-hidden="true" fill="none" height="22" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24" width="22"><path d="M3 11h18M5 11v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7M8 7c0-1 1-2 2-2M14 7c0-1 1-2 2-2"></path></svg>
+</span>
+<span style="font-size: 13px; font-weight: 600; line-height: 1.3">Гал тогоо</span>
+</div>
+
+<div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px 8px; display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center">
+<span style="width: 44px; height: 44px; border-radius: 10px; background: #eef0ff; color: #0000ff; display: grid; place-items: center">
+<svg aria-hidden="true" fill="none" height="22" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24" width="22"><path d="M12 3l1.8 4.7 4.7 1.8-4.7 1.8L12 16l-1.8-4.7-4.7-1.8 4.7-1.8zM19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"></path></svg>
+</span>
+<span style="font-size: 13px; font-weight: 600; line-height: 1.3">Гоо сайхан</span>
+</div>
+
+<div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px 8px; display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center">
+<span style="width: 44px; height: 44px; border-radius: 10px; background: #eef0ff; color: #0000ff; display: grid; place-items: center">
+<svg aria-hidden="true" fill="none" height="22" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24" width="22"><path d="M8 3 4 5 2 9l4 2v10h12V11l4-2-2-4-4-2c0 2-2 3-4 3S8 5 8 3z"></path></svg>
+</span>
+<span style="font-size: 13px; font-weight: 600; line-height: 1.3">Хувцас</span>
+</div>
+
+<div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px 8px; display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center">
+<span style="width: 44px; height: 44px; border-radius: 10px; background: #eef0ff; color: #0000ff; display: grid; place-items: center">
+<svg aria-hidden="true" fill="none" height="22" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24" width="22"><path d="M3 16v-5l4-1 3-5 2 1-1 4 9 3a2 2 0 0 1 1 2v1zM3 19h18"></path></svg>
+</span>
+<span style="font-size: 13px; font-weight: 600; line-height: 1.3">Гутал</span>
+</div>
+
+<div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px 8px; display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center">
+<span style="width: 44px; height: 44px; border-radius: 10px; background: #eef0ff; color: #0000ff; display: grid; place-items: center">
+<svg aria-hidden="true" fill="none" height="22" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24" width="22"><path d="M5 8h14l-1 13H6zM9 8V6a3 3 0 0 1 6 0v2"></path></svg>
+</span>
+<span style="font-size: 13px; font-weight: 600; line-height: 1.3">Цүнх, аксессуар</span>
+</div>
+
+<div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px 8px; display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center">
+<span style="width: 44px; height: 44px; border-radius: 10px; background: #eef0ff; color: #0000ff; display: grid; place-items: center">
+<svg aria-hidden="true" fill="none" height="22" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24" width="22"><path d="M4 4h6a2 2 0 0 1 2 2v14a2 2 0 0 0-2-2H4zM20 4h-6a2 2 0 0 0-2 2v14a2 2 0 0 1 2-2h6z"></path></svg>
+</span>
+<span style="font-size: 13px; font-weight: 600; line-height: 1.3">Ном, бичиг хэрэг</span>
+</div>
+
+<div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px 8px; display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center">
+<span style="width: 44px; height: 44px; border-radius: 10px; background: #eef0ff; color: #0000ff; display: grid; place-items: center">
+<svg aria-hidden="true" fill="none" height="22" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24" width="22"><path d="M7 2h10a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V3a1 1 0 0 1 1-1zM11 18h2"></path></svg>
+</span>
+<span style="font-size: 13px; font-weight: 600; line-height: 1.3">Гар утас</span>
+</div>
+
+<div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px 8px; display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center">
+<span style="width: 44px; height: 44px; border-radius: 10px; background: #eef0ff; color: #0000ff; display: grid; place-items: center">
+<svg aria-hidden="true" fill="none" height="22" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24" width="22"><path d="M4 5h16v10H4zM2 19h20"></path></svg>
+</span>
+<span style="font-size: 13px; font-weight: 600; line-height: 1.3">Компьютер</span>
+</div>
+
+<div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px 8px; display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center">
+<span style="width: 44px; height: 44px; border-radius: 10px; background: #eef0ff; color: #0000ff; display: grid; place-items: center">
+<svg aria-hidden="true" fill="none" height="22" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24" width="22"><path d="M4 11V8a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2v3M2 12a2 2 0 0 1 4 0v2h12v-2a2 2 0 0 1 4 0v5H2zM5 17v3M19 17v3"></path></svg>
+</span>
+<span style="font-size: 13px; font-weight: 600; line-height: 1.3">Тавилга</span>
+</div>
+
+<div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px 8px; display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center">
+<span style="width: 44px; height: 44px; border-radius: 10px; background: #eef0ff; color: #0000ff; display: grid; place-items: center">
+<svg aria-hidden="true" fill="none" height="22" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24" width="22"><path d="M20.8 8.6a5 5 0 0 0-8.8-3.2 5 5 0 0 0-8.8 3.2C3.2 14 12 20 12 20s8.8-6 8.8-11.4zM3.5 12h4l2-3 3 5 2-2h5"></path></svg>
+</span>
+<span style="font-size: 13px; font-weight: 600; line-height: 1.3">Эрүүл мэнд</span>
+</div>
+
+<div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px 8px; display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center">
+<span style="width: 44px; height: 44px; border-radius: 10px; background: #eef0ff; color: #0000ff; display: grid; place-items: center">
+<svg aria-hidden="true" fill="none" height="22" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24" width="22"><path d="M9 3h6M10 3v3L8 8v12a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V8l-2-2V3M8 12h8"></path></svg>
+</span>
+<span style="font-size: 13px; font-weight: 600; line-height: 1.3">Нялх хүүхэд</span>
+</div>
+
+<div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px 8px; display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center">
+<span style="width: 44px; height: 44px; border-radius: 10px; background: #eef0ff; color: #0000ff; display: grid; place-items: center">
+<svg aria-hidden="true" fill="none" height="22" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24" width="22"><path d="M12 11c-3 0-6 4-6 7a2 2 0 0 0 2 2c1.5 0 2.5-1 4-1s2.5 1 4 1a2 2 0 0 0 2-2c0-3-3-7-6-7zM7 10a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zM17 10a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zM10 6a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zM14 6a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3z"></path></svg>
+</span>
+<span style="font-size: 13px; font-weight: 600; line-height: 1.3">Тэжээвэр амьтан</span>
+</div>
+
+<div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px 8px; display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center">
+<span style="width: 44px; height: 44px; border-radius: 10px; background: #eef0ff; color: #0000ff; display: grid; place-items: center">
+<svg aria-hidden="true" fill="none" height="22" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24" width="22"><path d="M5 17h14M3 17v-4l2-5a2 2 0 0 1 2-1h10a2 2 0 0 1 2 1l2 5v4h-2M3 13h18M7 17v2M17 17v2"></path></svg>
+</span>
+<span style="font-size: 13px; font-weight: 600; line-height: 1.3">Авто хэрэгсэл</span>
+</div>
+
+<div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px 8px; display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center">
+<span style="width: 44px; height: 44px; border-radius: 10px; background: #eef0ff; color: #0000ff; display: grid; place-items: center">
+<svg aria-hidden="true" fill="none" height="22" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24" width="22"><path d="M3 20 12 4l9 16zM12 4v16M9 20l3-5 3 5"></path></svg>
+</span>
+<span style="font-size: 13px; font-weight: 600; line-height: 1.3">Аялал, зугаалга</span>
+</div>
+
+<div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px 8px; display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center">
+<span style="width: 44px; height: 44px; border-radius: 10px; background: #eef0ff; color: #0000ff; display: grid; place-items: center">
+<svg aria-hidden="true" fill="none" height="22" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24" width="22"><path d="M12 7c-2-2-6-1-7 2-1 4 1 9 4 11 1 .7 2 .5 3 0 1 .5 2 .7 3 0 3-2 5-7 4-11-1-3-5-4-7-2zM12 7c0-2 1-4 3-4"></path></svg>
+</span>
+<span style="font-size: 13px; font-weight: 600; line-height: 1.3">Хүнс</span>
+</div>
+
+<div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 16px 8px; display: flex; flex-direction: column; align-items: center; gap: 10px; text-align: center">
+<span style="width: 44px; height: 44px; border-radius: 10px; background: #eef0ff; color: #0000ff; display: grid; place-items: center">
+<svg aria-hidden="true" fill="none" height="22" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24" width="22"><path d="M12 21V11M12 11C12 7 9 5 5 5c0 4 3 6 7 6zM12 13c0-4 3-6 7-6 0 4-3 6-7 6z"></path></svg>
+</span>
+<span style="font-size: 13px; font-weight: 600; line-height: 1.3">Цэцэрлэг, засвар</span>
+</div>
+
+</div>
+</div>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px">
+<div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 28px; display: flex; flex-direction: column; gap: 16px">
+<h2 style="margin: 0; font-size: 22px; font-weight: 800">Дэлгүүрийн сайтын бүтэц</h2>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px">
+
+<div style="border: 1px solid #e2e8f0; border-radius: 10px; padding: 14px 16px; display: flex; flex-direction: column; gap: 4px">
+<span style="font-size: 15px; font-weight: 700">Нүүр хуудас</span>
+<span style="font-size: 13px; line-height: 1.5; color: #64748b">Баннер слайдер, 20 ангилал, хямдрал, шинэ бараа, эрэлттэй</span>
+</div>
+
+<div style="border: 1px solid #e2e8f0; border-radius: 10px; padding: 14px 16px; display: flex; flex-direction: column; gap: 4px">
+<span style="font-size: 15px; font-weight: 700">Ангилал / Хайлт</span>
+<span style="font-size: 13px; line-height: 1.5; color: #64748b">Дэд ангилал, үнэ, брэнд, үнэлгээгээр шүүх, эрэмбэлэх</span>
+</div>
+
+<div style="border: 1px solid #e2e8f0; border-radius: 10px; padding: 14px 16px; display: flex; flex-direction: column; gap: 4px">
+<span style="font-size: 15px; font-weight: 700">Барааны дэлгэрэнгүй</span>
+<span style="font-size: 13px; line-height: 1.5; color: #64748b">Зургийн галерей, хувилбар, нөөц, хүргэлтийн мэдээлэл</span>
+</div>
+
+<div style="border: 1px solid #e2e8f0; border-radius: 10px; padding: 14px 16px; display: flex; flex-direction: column; gap: 4px">
+<span style="font-size: 15px; font-weight: 700">Сагс</span>
+<span style="font-size: 13px; line-height: 1.5; color: #64748b">Тоо ширхэг, купон, үнэгүй хүргэлт хүртэлх дүн</span>
+</div>
+
+<div style="border: 1px solid #e2e8f0; border-radius: 10px; padding: 14px 16px; display: flex; flex-direction: column; gap: 4px">
+<span style="font-size: 15px; font-weight: 700">Захиалга</span>
+<span style="font-size: 13px; line-height: 1.5; color: #64748b">Нэр, утас, дүүрэг/хороо, хаяг, төлбөрийн хэлбэр</span>
+</div>
+
+<div style="border: 1px solid #e2e8f0; border-radius: 10px; padding: 14px 16px; display: flex; flex-direction: column; gap: 4px">
+<span style="font-size: 15px; font-weight: 700">Амжилттай / Хянах</span>
+<span style="font-size: 13px; line-height: 1.5; color: #64748b">Захиалгын дугаар, QPay, статус дагах</span>
+</div>
+
+<div style="border: 1px solid #e2e8f0; border-radius: 10px; padding: 14px 16px; display: flex; flex-direction: column; gap: 4px">
+<span style="font-size: 15px; font-weight: 700">Миний захиалга</span>
+<span style="font-size: 13px; line-height: 1.5; color: #64748b">Утасны дугаараар (OTP) өмнөх захиалга харах</span>
+</div>
+
+<div style="border: 1px solid #e2e8f0; border-radius: 10px; padding: 14px 16px; display: flex; flex-direction: column; gap: 4px">
+<span style="font-size: 15px; font-weight: 700">Мэдээллийн хуудас</span>
+<span style="font-size: 13px; line-height: 1.5; color: #64748b">Бидний тухай, хүргэлт, буцаалт, холбоо барих</span>
+</div>
+
+</div>
+</div>
+<div style="background: #0f172a; color: #ffffff; border-radius: 12px; padding: 28px; display: flex; flex-direction: column; gap: 16px">
+<h2 style="margin: 0; font-size: 22px; font-weight: 800">Админ панелийн модулиуд</h2>
+<div style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px">
+
+<div style="border: 1px solid #334155; border-radius: 10px; padding: 14px 16px; display: flex; flex-direction: column; gap: 4px">
+<span style="font-size: 15px; font-weight: 700">Хяналтын самбар</span>
+<span style="font-size: 13px; line-height: 1.5; color: #cbd5e1">Борлуулалт, захиалга, дуусаж буй бараа</span>
+</div>
+
+<div style="border: 1px solid #334155; border-radius: 10px; padding: 14px 16px; display: flex; flex-direction: column; gap: 4px">
+<span style="font-size: 15px; font-weight: 700">Бараа</span>
+<span style="font-size: 13px; line-height: 1.5; color: #cbd5e1">Нэмэх, засах, зураг, хувилбар, нөөц, импорт</span>
+</div>
+
+<div style="border: 1px solid #334155; border-radius: 10px; padding: 14px 16px; display: flex; flex-direction: column; gap: 4px">
+<span style="font-size: 15px; font-weight: 700">Ангилал</span>
+<span style="font-size: 13px; line-height: 1.5; color: #cbd5e1">Нэмэх, дэд ангилал, икон, дараалал, нуух</span>
+</div>
+
+<div style="border: 1px solid #334155; border-radius: 10px; padding: 14px 16px; display: flex; flex-direction: column; gap: 4px">
+<span style="font-size: 15px; font-weight: 700">Захиалга</span>
+<span style="font-size: 13px; line-height: 1.5; color: #cbd5e1">Жагсаалт, статус, жолооч оноох, хэвлэх</span>
+</div>
+
+<div style="border: 1px solid #334155; border-radius: 10px; padding: 14px 16px; display: flex; flex-direction: column; gap: 4px">
+<span style="font-size: 15px; font-weight: 700">Харагдах байдал</span>
+<span style="font-size: 13px; line-height: 1.5; color: #cbd5e1">Лого, баннер, нүүрний хэсгүүд, өнгө</span>
+</div>
+
+<div style="border: 1px solid #334155; border-radius: 10px; padding: 14px 16px; display: flex; flex-direction: column; gap: 4px">
+<span style="font-size: 15px; font-weight: 700">Хүргэлтийн бүс</span>
+<span style="font-size: 13px; line-height: 1.5; color: #cbd5e1">УБ-ын дүүрэг, үнэ, хугацаа, үнэгүй босго</span>
+</div>
+
+<div style="border: 1px solid #334155; border-radius: 10px; padding: 14px 16px; display: flex; flex-direction: column; gap: 4px">
+<span style="font-size: 15px; font-weight: 700">Хэрэглэгчид</span>
+<span style="font-size: 13px; line-height: 1.5; color: #cbd5e1">Худалдан авагч, захиалгын түүх</span>
+</div>
+
+<div style="border: 1px solid #334155; border-radius: 10px; padding: 14px 16px; display: flex; flex-direction: column; gap: 4px">
+<span style="font-size: 15px; font-weight: 700">Урамшуулал</span>
+<span style="font-size: 13px; line-height: 1.5; color: #cbd5e1">Купон, хямдралын кампанит ажил</span>
+</div>
+
+<div style="border: 1px solid #334155; border-radius: 10px; padding: 14px 16px; display: flex; flex-direction: column; gap: 4px">
+<span style="font-size: 15px; font-weight: 700">Ажилтан, эрх</span>
+<span style="font-size: 13px; line-height: 1.5; color: #cbd5e1">Супер админ, менежер, агуулах, хүргэлт</span>
+</div>
+
+<div style="border: 1px solid #334155; border-radius: 10px; padding: 14px 16px; display: flex; flex-direction: column; gap: 4px">
+<span style="font-size: 15px; font-weight: 700">Тохиргоо</span>
+<span style="font-size: 13px; line-height: 1.5; color: #cbd5e1">Дэлгүүр, төлбөр, мэдэгдэл, үйлдлийн лог</span>
+</div>
+
+</div>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 20px">
+<h2 style="margin: 0; font-size: 28px; font-weight: 800; letter-spacing: -0.02em">Design system <span style="color: #64748b; font-weight: 500; font-size: 18px">— одоогийн hotulan.mn кодоос (globals.css, Tailwind)</span></h2>
+<div style="display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 20px">
+<div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 24px; display: flex; flex-direction: column; gap: 14px">
+<p style="margin: 0; font-size: 13px; font-weight: 700; color: #64748b">Өнгө</p>
+<div style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 10px">
+
+<div style="display: flex; flex-direction: column; gap: 6px">
+<div style="height: 52px; border-radius: 8px; border: 1px solid #e2e8f0; background: #0000ff"></div>
+<span style="font-size: 12px; font-weight: 600">Brand</span>
+<span style="font-size: 11px; color: #64748b">#0000ff</span>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 6px">
+<div style="height: 52px; border-radius: 8px; border: 1px solid #e2e8f0; background: #0000c2"></div>
+<span style="font-size: 12px; font-weight: 600">Brand dark</span>
+<span style="font-size: 11px; color: #64748b">#0000c2</span>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 6px">
+<div style="height: 52px; border-radius: 8px; border: 1px solid #e2e8f0; background: #eef0ff"></div>
+<span style="font-size: 12px; font-weight: 600">Brand soft</span>
+<span style="font-size: 11px; color: #64748b">#eef0ff</span>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 6px">
+<div style="height: 52px; border-radius: 8px; border: 1px solid #e2e8f0; background: #0f172a"></div>
+<span style="font-size: 12px; font-weight: 600">Ink</span>
+<span style="font-size: 11px; color: #64748b">#0f172a</span>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 6px">
+<div style="height: 52px; border-radius: 8px; border: 1px solid #e2e8f0; background: #64748b"></div>
+<span style="font-size: 12px; font-weight: 600">Muted</span>
+<span style="font-size: 11px; color: #64748b">#64748b</span>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 6px">
+<div style="height: 52px; border-radius: 8px; border: 1px solid #e2e8f0; background: #e2e8f0"></div>
+<span style="font-size: 12px; font-weight: 600">Border</span>
+<span style="font-size: 11px; color: #64748b">#e2e8f0</span>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 6px">
+<div style="height: 52px; border-radius: 8px; border: 1px solid #e2e8f0; background: #dc2626"></div>
+<span style="font-size: 12px; font-weight: 600">Sale</span>
+<span style="font-size: 11px; color: #64748b">#dc2626</span>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 6px">
+<div style="height: 52px; border-radius: 8px; border: 1px solid #e2e8f0; background: #15803d"></div>
+<span style="font-size: 12px; font-weight: 600">Success</span>
+<span style="font-size: 11px; color: #64748b">#15803d</span>
+</div>
+
+</div>
+</div>
+<div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 24px; display: flex; flex-direction: column; gap: 12px">
+<p style="margin: 0; font-size: 13px; font-weight: 700; color: #64748b">Үсэг — Inter</p>
+<p style="margin: 0; font-size: 36px; font-weight: 800; letter-spacing: -0.03em; line-height: 1.1">Гарчиг 36/800</p>
+<p style="margin: 0; font-size: 24px; font-weight: 700; letter-spacing: -0.02em">Дэд гарчиг 24/700</p>
+<p style="margin: 0; font-size: 16px; font-weight: 600">Картын нэр 16/600</p>
+<p style="margin: 0; font-size: 15px; line-height: 1.6; color: #475569">Үндсэн текст 15/400 — Өөрийн хүссэн бараагаа Улаанбаатар хот дотор хүргүүлээрэй.</p>
+<p style="margin: 0; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #64748b">Шошго 12/700</p>
+</div>
+<div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 12px; padding: 24px; display: flex; flex-direction: column; gap: 16px">
+<p style="margin: 0; font-size: 13px; font-weight: 700; color: #64748b">Элементүүд · радиус 8 / 12 / бүтэн</p>
+<div style="display: flex; flex-wrap: wrap; gap: 10px">
+<button style="height: 44px; padding: 0 20px; border: 0; border-radius: 8px; background: #0000ff; color: #ffffff; font: 600 14px Inter, sans-serif" type="button">Сагсанд нэмэх</button>
+<button style="height: 44px; padding: 0 20px; border: 1px solid #cbd5e1; border-radius: 8px; background: #ffffff; color: #0f172a; font: 600 14px Inter, sans-serif" type="button">Дэлгэрэнгүй</button>
+<button style="height: 44px; padding: 0 20px; border: 0; border-radius: 8px; background: #0f172a; color: #ffffff; font: 600 14px Inter, sans-serif" type="button">Хадгалах</button>
+</div>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<span style="padding: 4px 10px; border-radius: 6px; background: #dc2626; color: #ffffff; font-size: 12px; font-weight: 700">−20%</span>
+<span style="padding: 4px 10px; border-radius: 6px; background: #0000ff; color: #ffffff; font-size: 12px; font-weight: 700">Шинэ</span>
+<span style="padding: 4px 10px; border-radius: 999px; background: #dcfce7; color: #166534; font-size: 12px; font-weight: 600">Хүргэгдсэн</span>
+<span style="padding: 4px 10px; border-radius: 999px; background: #fef3c7; color: #92400e; font-size: 12px; font-weight: 600">Хүлээгдэж буй</span>
+<span style="padding: 4px 10px; border-radius: 999px; background: #eef0ff; color: #0000c2; font-size: 12px; font-weight: 600">Шинэ захиалга</span>
+</div>
+<label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600">Утасны дугаар
+          <input placeholder="9911-2345" style="height: 44px; padding: 0 14px; border: 1px solid #cbd5e1; border-radius: 8px; font: 400 15px Inter, sans-serif; color: #0f172a" type="tel"/>
+</label>
+</div>
+</div>
+</div>
+</div>
+</body>
+</html>

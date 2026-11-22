@@ -1,0 +1,218 @@
+<!doctype html>
+<html lang="mn">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Компонентын сан — hotulan.mn</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<style>
+body{margin:0}
+a{color:#0000ff;text-decoration:none}a:hover{color:#0000c2}
+</style>
+</head>
+<body>
+
+<div style="width: 1440px; box-sizing: border-box; padding: 64px 80px 80px; background: #f8fafc; font-family: Inter, ui-sans-serif, system-ui, sans-serif; color: #0f172a; display: flex; flex-direction: column; gap: 32px">
+<div style="display: flex; flex-direction: column; gap: 8px">
+<p style="margin: 0; font-size: 12px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #0000ff">Developer handoff</p>
+<h1 style="margin: 0; font-size: 44px; font-weight: 800; letter-spacing: -0.03em">Компонентын сан</h1>
+<p style="margin: 0; font-size: 16px; color: #475569">Бүх хувилбар, бүх төлөв. Нэр нь React компонентын нэртэй таарна.</p>
+</div>
+<section style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 28px; display: flex; flex-direction: column; gap: 18px">
+<div style="display: flex; justify-content: space-between; align-items: baseline"><h2 style="margin: 0; font-size: 20px; font-weight: 800">&lt;Button&gt;</h2><span style="font-size: 13px; color: #64748b">variant: primary · secondary · outline · ghost · danger  ·  size: sm 36 · md 44 · lg 52</span></div>
+<div style="display: grid; grid-template-columns: 140px repeat(5, minmax(0, 1fr)); gap: 14px; align-items: center; font-size: 12px; color: #64748b">
+<span></span><span>Default</span><span>Hover</span><span>Focus</span><span>Disabled</span><span>Loading</span>
+
+<span style="font-weight: 700; color: #0f172a; font-size: 13px">primary</span>
+<button style="height: 44px; border-radius: 8px; border: 0; background: #0000ff; color: #ffffff; font: 600 14px Inter, sans-serif" type="button">Хадгалах</button>
+<button style="height: 44px; border-radius: 8px; border: 0; background: #0000c2; color: #ffffff; font: 600 14px Inter, sans-serif" type="button">Хадгалах</button>
+<button style="height: 44px; border-radius: 8px; border: 0; background: #0000ff; color: #ffffff; font: 600 14px Inter, sans-serif; outline: 2px solid #0000ff; outline-offset: 2px" type="button">Хадгалах</button>
+<button disabled="" style="height: 44px; border-radius: 8px; border: 1px solid #e2e8f0; background: #f1f5f9; color: #94a3b8; font: 600 14px Inter, sans-serif" type="button">Хадгалах</button>
+<button aria-busy="true" style="height: 44px; border-radius: 8px; border: 0; background: #0000ff; color: #ffffff; font: 600 14px Inter, sans-serif; display: flex; align-items: center; justify-content: center; gap: 8px; opacity: 0.85" type="button"><span style="width: 14px; height: 14px; border-radius: 999px; border: 2px solid #ffffff; border-right-color: transparent"></span>Хадгалж байна</button>
+
+<span style="font-weight: 700; color: #0f172a; font-size: 13px">secondary</span>
+<button style="height: 44px; border-radius: 8px; border: 0; background: #0f172a; color: #ffffff; font: 600 14px Inter, sans-serif" type="button">Хадгалах</button>
+<button style="height: 44px; border-radius: 8px; border: 0; background: #1e293b; color: #ffffff; font: 600 14px Inter, sans-serif" type="button">Хадгалах</button>
+<button style="height: 44px; border-radius: 8px; border: 0; background: #0f172a; color: #ffffff; font: 600 14px Inter, sans-serif; outline: 2px solid #0000ff; outline-offset: 2px" type="button">Хадгалах</button>
+<button disabled="" style="height: 44px; border-radius: 8px; border: 1px solid #e2e8f0; background: #f1f5f9; color: #94a3b8; font: 600 14px Inter, sans-serif" type="button">Хадгалах</button>
+<button aria-busy="true" style="height: 44px; border-radius: 8px; border: 0; background: #0f172a; color: #ffffff; font: 600 14px Inter, sans-serif; display: flex; align-items: center; justify-content: center; gap: 8px; opacity: 0.85" type="button"><span style="width: 14px; height: 14px; border-radius: 999px; border: 2px solid #ffffff; border-right-color: transparent"></span>Хадгалж байна</button>
+
+<span style="font-weight: 700; color: #0f172a; font-size: 13px">outline</span>
+<button style="height: 44px; border-radius: 8px; border: 1px solid #cbd5e1; background: #ffffff; color: #0f172a; font: 600 14px Inter, sans-serif" type="button">Хадгалах</button>
+<button style="height: 44px; border-radius: 8px; border: 1px solid #cbd5e1; background: #f8fafc; color: #0f172a; font: 600 14px Inter, sans-serif" type="button">Хадгалах</button>
+<button style="height: 44px; border-radius: 8px; border: 1px solid #cbd5e1; background: #ffffff; color: #0f172a; font: 600 14px Inter, sans-serif; outline: 2px solid #0000ff; outline-offset: 2px" type="button">Хадгалах</button>
+<button disabled="" style="height: 44px; border-radius: 8px; border: 1px solid #e2e8f0; background: #f1f5f9; color: #94a3b8; font: 600 14px Inter, sans-serif" type="button">Хадгалах</button>
+<button aria-busy="true" style="height: 44px; border-radius: 8px; border: 1px solid #cbd5e1; background: #ffffff; color: #0f172a; font: 600 14px Inter, sans-serif; display: flex; align-items: center; justify-content: center; gap: 8px; opacity: 0.85" type="button"><span style="width: 14px; height: 14px; border-radius: 999px; border: 2px solid #0f172a; border-right-color: transparent"></span>Хадгалж байна</button>
+
+<span style="font-weight: 700; color: #0f172a; font-size: 13px">ghost</span>
+<button style="height: 44px; border-radius: 8px; border: 0; background: transparent; color: #0000ff; font: 600 14px Inter, sans-serif" type="button">Хадгалах</button>
+<button style="height: 44px; border-radius: 8px; border: 0; background: #eef0ff; color: #0000ff; font: 600 14px Inter, sans-serif" type="button">Хадгалах</button>
+<button style="height: 44px; border-radius: 8px; border: 0; background: transparent; color: #0000ff; font: 600 14px Inter, sans-serif; outline: 2px solid #0000ff; outline-offset: 2px" type="button">Хадгалах</button>
+<button disabled="" style="height: 44px; border-radius: 8px; border: 1px solid #e2e8f0; background: #f1f5f9; color: #94a3b8; font: 600 14px Inter, sans-serif" type="button">Хадгалах</button>
+<button aria-busy="true" style="height: 44px; border-radius: 8px; border: 0; background: transparent; color: #0000ff; font: 600 14px Inter, sans-serif; display: flex; align-items: center; justify-content: center; gap: 8px; opacity: 0.85" type="button"><span style="width: 14px; height: 14px; border-radius: 999px; border: 2px solid #0000ff; border-right-color: transparent"></span>Хадгалж байна</button>
+
+<span style="font-weight: 700; color: #0f172a; font-size: 13px">danger</span>
+<button style="height: 44px; border-radius: 8px; border: 0; background: #dc2626; color: #ffffff; font: 600 14px Inter, sans-serif" type="button">Хадгалах</button>
+<button style="height: 44px; border-radius: 8px; border: 0; background: #b91c1c; color: #ffffff; font: 600 14px Inter, sans-serif" type="button">Хадгалах</button>
+<button style="height: 44px; border-radius: 8px; border: 0; background: #dc2626; color: #ffffff; font: 600 14px Inter, sans-serif; outline: 2px solid #0000ff; outline-offset: 2px" type="button">Хадгалах</button>
+<button disabled="" style="height: 44px; border-radius: 8px; border: 1px solid #e2e8f0; background: #f1f5f9; color: #94a3b8; font: 600 14px Inter, sans-serif" type="button">Хадгалах</button>
+<button aria-busy="true" style="height: 44px; border-radius: 8px; border: 0; background: #dc2626; color: #ffffff; font: 600 14px Inter, sans-serif; display: flex; align-items: center; justify-content: center; gap: 8px; opacity: 0.85" type="button"><span style="width: 14px; height: 14px; border-radius: 999px; border: 2px solid #ffffff; border-right-color: transparent"></span>Хадгалж байна</button>
+
+</div>
+<div style="display: flex; gap: 12px; align-items: center; flex-wrap: wrap; border-top: 1px solid #f1f5f9; padding-top: 16px">
+<button style="height: 36px; padding: 0 14px; border: 0; border-radius: 8px; background: #0000ff; color: #ffffff; font: 600 13px Inter, sans-serif" type="button">sm 36</button>
+<button style="height: 44px; padding: 0 18px; border: 0; border-radius: 8px; background: #0000ff; color: #ffffff; font: 600 14px Inter, sans-serif" type="button">md 44</button>
+<button style="height: 52px; padding: 0 24px; border: 0; border-radius: 8px; background: #0000ff; color: #ffffff; font: 700 16px Inter, sans-serif" type="button">lg 52</button>
+<button aria-label="Хадгалах (икон)" style="width: 44px; height: 44px; border: 1px solid #cbd5e1; border-radius: 8px; background: #ffffff; color: #0f172a; display: grid; place-items: center" type="button"><svg aria-hidden="true" fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewbox="0 0 24 24" width="18"><path d="M19 14c1.5-1.5 3-3.2 3-5.5A5.5 5.5 0 0 0 16.5 3c-1.8 0-3 .5-4.5 2-1.5-1.5-2.7-2-4.5-2A5.5 5.5 0 0 0 2 8.5c0 2.3 1.5 4 3 5.5l7 7z"></path></svg></button>
+<span style="font-size: 13px; color: #64748b">Икон товч заавал aria-label-тэй</span>
+</div>
+</section>
+<section style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 28px; display: flex; flex-direction: column; gap: 18px">
+<h2 style="margin: 0; font-size: 20px; font-weight: 800">&lt;Input&gt; &lt;Select&gt; &lt;Textarea&gt;</h2>
+<div style="display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 16px">
+<label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600">Default<input placeholder="Нэр" style="height: 44px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0 12px; font: 400 15px Inter, sans-serif" type="text"/><span style="font-weight: 400; font-size: 12px; color: #64748b">Туслах текст</span></label>
+<label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600">Focus<input style="height: 44px; border: 1.5px solid #0000ff; box-shadow: 0 0 0 3px #e0e3ff; border-radius: 8px; padding: 0 12px; font: 400 15px Inter, sans-serif; outline: none" type="text" value="Сарангэрэл"/><span style="font-weight: 400; font-size: 12px; color: #64748b">ring brand-100</span></label>
+<label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600; color: #991b1b">Error<input aria-invalid="true" style="height: 44px; border: 1.5px solid #dc2626; border-radius: 8px; padding: 0 12px; font: 400 15px Inter, sans-serif; color: #0f172a" type="tel" value="9911"/><span style="font-weight: 500; font-size: 12px">8 оронтой дугаар оруулна уу</span></label>
+<label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600; color: #64748b">Disabled<input disabled="" style="height: 44px; border: 1px solid #e2e8f0; background: #f1f5f9; border-radius: 8px; padding: 0 12px; font: 400 15px Inter, sans-serif; color: #64748b" type="text" value="Улаанбаатар"/><span style="font-weight: 400; font-size: 12px">Засах боломжгүй</span></label>
+<label style="display: flex; flex-direction: column; gap: 6px; font-size: 13px; font-weight: 600">Select<select style="height: 44px; border: 1px solid #cbd5e1; border-radius: 8px; padding: 0 10px; font: 400 15px Inter, sans-serif; background: #ffffff; color: #0f172a"><option>Хан-Уул</option></select><span style="font-weight: 400; font-size: 12px; color: #64748b">Native select</span></label>
+</div>
+<div style="display: flex; gap: 32px; flex-wrap: wrap; align-items: center; border-top: 1px solid #f1f5f9; padding-top: 16px; font-size: 14px">
+<label style="display: flex; gap: 8px; align-items: center"><input checked="" style="width: 18px; height: 18px; accent-color: #0000ff" type="checkbox"/>Checkbox</label>
+<label style="display: flex; gap: 8px; align-items: center"><input style="width: 18px; height: 18px; accent-color: #0000ff" type="checkbox"/>Unchecked</label>
+<label style="display: flex; gap: 8px; align-items: center"><input checked="" style="width: 18px; height: 18px; accent-color: #0000ff" type="radio"/>Radio</label>
+<span style="display: flex; gap: 8px; align-items: center"><button aria-checked="true" aria-label="Switch on" role="switch" style="border: 0; width: 40px; height: 22px; border-radius: 999px; background: #0000ff; display: flex; justify-content: flex-end; align-items: center; padding: 2px; box-sizing: border-box" type="button"><span style="width: 18px; height: 18px; border-radius: 999px; background: #ffffff"></span></button>Switch on</span>
+<span style="display: flex; gap: 8px; align-items: center"><button aria-checked="false" aria-label="Switch off" role="switch" style="border: 0; width: 40px; height: 22px; border-radius: 999px; background: #cbd5e1; display: flex; justify-content: flex-start; align-items: center; padding: 2px; box-sizing: border-box" type="button"><span style="width: 18px; height: 18px; border-radius: 999px; background: #ffffff"></span></button>Switch off</span>
+<div style="display: flex; align-items: center; border: 1px solid #cbd5e1; border-radius: 8px; height: 44px"><button aria-label="Хасах" style="width: 44px; height: 42px; border: 0; background: none; font-size: 18px; color: #0f172a" type="button">−</button><span style="width: 36px; text-align: center; font-weight: 700">2</span><button aria-label="Нэмэх" style="width: 44px; height: 42px; border: 0; background: none; font-size: 18px; color: #0f172a" type="button">+</button></div>
+<span style="color: #64748b; font-size: 13px">&lt;QuantityStepper&gt; max = нөөц</span>
+</div>
+</section>
+<section style="display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 20px">
+
+<div style="display: flex; flex-direction: column; gap: 8px">
+<span style="font-size: 13px; font-weight: 700">&lt;ProductCard&gt; default</span>
+<article style="border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; background: #ffffff; box-shadow: none">
+<div style="aspect-ratio: 1 / 1; background: #eef0ff; position: relative; opacity: 1">
+
+</div>
+<div style="padding: 14px; display: flex; flex-direction: column; gap: 6px">
+<span style="font-size: 12px; color: #64748b">BrickLab</span>
+<span style="font-size: 14px; font-weight: 600; line-height: 1.4">Барилгын блок, 1000 ширхэг</span>
+<span style="display: flex; gap: 8px; align-items: baseline"><span style="font-size: 17px; font-weight: 800; color: #0f172a">129,000₮</span><span style="font-size: 13px; color: #64748b; text-decoration: line-through"></span></span>
+<button style="height: 40px; border: 0; border-radius: 8px; background: #0000ff; color: #ffffff; font: 600 14px Inter, sans-serif" type="button">Сагсанд нэмэх</button>
+</div>
+</article>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 8px">
+<span style="font-size: 13px; font-weight: 700">&lt;ProductCard&gt; hover</span>
+<article style="border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; background: #ffffff; box-shadow: 0 4px 12px rgba(15,23,42,0.08)">
+<div style="aspect-ratio: 1 / 1; background: #eef0ff; position: relative; opacity: 1">
+
+</div>
+<div style="padding: 14px; display: flex; flex-direction: column; gap: 6px">
+<span style="font-size: 12px; color: #64748b">BrickLab</span>
+<span style="font-size: 14px; font-weight: 600; line-height: 1.4">Барилгын блок, 1000 ширхэг</span>
+<span style="display: flex; gap: 8px; align-items: baseline"><span style="font-size: 17px; font-weight: 800; color: #0f172a">129,000₮</span><span style="font-size: 13px; color: #64748b; text-decoration: line-through"></span></span>
+<button style="height: 40px; border: 0; border-radius: 8px; background: #0000c2; color: #ffffff; font: 600 14px Inter, sans-serif" type="button">Сагсанд нэмэх</button>
+</div>
+</article>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 8px">
+<span style="font-size: 13px; font-weight: 700">&lt;ProductCard&gt; sale</span>
+<article style="border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; background: #ffffff; box-shadow: none">
+<div style="aspect-ratio: 1 / 1; background: #fef3c7; position: relative; opacity: 1">
+<span style="position: absolute; top: 10px; left: 10px; padding: 4px 8px; border-radius: 6px; background: #dc2626; color: #ffffff; font-size: 12px; font-weight: 700">−19%</span>
+</div>
+<div style="padding: 14px; display: flex; flex-direction: column; gap: 6px">
+<span style="font-size: 12px; color: #64748b">BrickLab</span>
+<span style="font-size: 14px; font-weight: 600; line-height: 1.4">Барилгын блок, 1000 ширхэг</span>
+<span style="display: flex; gap: 8px; align-items: baseline"><span style="font-size: 17px; font-weight: 800; color: #dc2626">129,000₮</span><span style="font-size: 13px; color: #64748b; text-decoration: line-through">159,000₮</span></span>
+<button style="height: 40px; border: 0; border-radius: 8px; background: #0000ff; color: #ffffff; font: 600 14px Inter, sans-serif" type="button">Сагсанд нэмэх</button>
+</div>
+</article>
+</div>
+
+<div style="display: flex; flex-direction: column; gap: 8px">
+<span style="font-size: 13px; font-weight: 700">&lt;ProductCard&gt; out of stock</span>
+<article style="border: 1px solid #e2e8f0; border-radius: 12px; overflow: hidden; display: flex; flex-direction: column; background: #ffffff; box-shadow: none">
+<div style="aspect-ratio: 1 / 1; background: #f1f5f9; position: relative; opacity: 0.6">
+<span style="position: absolute; top: 10px; left: 10px; padding: 4px 8px; border-radius: 6px; background: #475569; color: #ffffff; font-size: 12px; font-weight: 700">Дууссан</span>
+</div>
+<div style="padding: 14px; display: flex; flex-direction: column; gap: 6px">
+<span style="font-size: 12px; color: #64748b">BrickLab</span>
+<span style="font-size: 14px; font-weight: 600; line-height: 1.4">Барилгын блок, 1000 ширхэг</span>
+<span style="display: flex; gap: 8px; align-items: baseline"><span style="font-size: 17px; font-weight: 800; color: #64748b">129,000₮</span><span style="font-size: 13px; color: #64748b; text-decoration: line-through"></span></span>
+<button style="height: 40px; border: 1px solid #cbd5e1; border-radius: 8px; background: #ffffff; color: #0f172a; font: 600 14px Inter, sans-serif" type="button">Ирэхэд мэдэгдэх</button>
+</div>
+</article>
+</div>
+
+</section>
+<section style="display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 20px">
+<div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 28px; display: flex; flex-direction: column; gap: 14px">
+<h2 style="margin: 0; font-size: 20px; font-weight: 800">&lt;Toast&gt; · &lt;Alert&gt;</h2>
+
+<div role="status" style="display: flex; gap: 12px; align-items: flex-start; padding: 14px 16px; border-radius: 10px; background: #f0fdf4; border: 1px solid #bbf7d0; color: #166534">
+<span style="width: 22px; height: 22px; flex: none; border-radius: 999px; background: #15803d; color: #ffffff; display: grid; place-items: center; font-size: 12px; font-weight: 800">✓</span>
+<span style="flex: 1; display: flex; flex-direction: column; gap: 2px; font-size: 14px"><b>Сагсанд нэмэгдлээ</b><span>Утасгүй чихэвч, ANC × 1</span></span>
+<button aria-label="Хаах" style="width: 32px; height: 32px; border: 0; background: none; color: #166534; font-size: 14px" type="button">✕</button>
+</div>
+
+<div role="status" style="display: flex; gap: 12px; align-items: flex-start; padding: 14px 16px; border-radius: 10px; background: #fffbeb; border: 1px solid #fde68a; color: #92400e">
+<span style="width: 22px; height: 22px; flex: none; border-radius: 999px; background: #d97706; color: #ffffff; display: grid; place-items: center; font-size: 12px; font-weight: 800">!</span>
+<span style="flex: 1; display: flex; flex-direction: column; gap: 2px; font-size: 14px"><b>Нөөц хүрэлцэхгүй</b><span>Зөвхөн 3 ширхэг үлдсэн байна</span></span>
+<button aria-label="Хаах" style="width: 32px; height: 32px; border: 0; background: none; color: #92400e; font-size: 14px" type="button">✕</button>
+</div>
+
+<div role="status" style="display: flex; gap: 12px; align-items: flex-start; padding: 14px 16px; border-radius: 10px; background: #fef2f2; border: 1px solid #fecaca; color: #991b1b">
+<span style="width: 22px; height: 22px; flex: none; border-radius: 999px; background: #dc2626; color: #ffffff; display: grid; place-items: center; font-size: 12px; font-weight: 800">✕</span>
+<span style="flex: 1; display: flex; flex-direction: column; gap: 2px; font-size: 14px"><b>Төлбөр амжилтгүй</b><span>QPay гүйлгээ цуцлагдсан. Дахин оролдоно уу.</span></span>
+<button aria-label="Хаах" style="width: 32px; height: 32px; border: 0; background: none; color: #991b1b; font-size: 14px" type="button">✕</button>
+</div>
+
+<div role="status" style="display: flex; gap: 12px; align-items: flex-start; padding: 14px 16px; border-radius: 10px; background: #f0f9ff; border: 1px solid #bae6fd; color: #075985">
+<span style="width: 22px; height: 22px; flex: none; border-radius: 999px; background: #0284c7; color: #ffffff; display: grid; place-items: center; font-size: 12px; font-weight: 800">i</span>
+<span style="flex: 1; display: flex; flex-direction: column; gap: 2px; font-size: 14px"><b>Төлбөр шалгаж байна</b><span>Банкнаас баталгаажуулалт хүлээж байна</span></span>
+<button aria-label="Хаах" style="width: 32px; height: 32px; border: 0; background: none; color: #075985; font-size: 14px" type="button">✕</button>
+</div>
+
+<span style="font-size: 12px; color: #64748b">Toast: доод төвд, 4 секунд, role=status. Alert: хуудсан дотор, хаагдахгүй.</span>
+</div>
+<div style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 28px; display: flex; flex-direction: column; gap: 14px">
+<h2 style="margin: 0; font-size: 20px; font-weight: 800">&lt;Modal&gt; · &lt;ConfirmDialog&gt;</h2>
+<div style="background: rgba(15,23,42,0.5); border-radius: 12px; padding: 32px; display: grid; place-items: center">
+<div aria-labelledby="dlg-t" aria-modal="true" role="dialog" style="width: 100%; max-width: 400px; background: #ffffff; border-radius: 14px; padding: 24px; box-shadow: 0 16px 40px rgba(15,23,42,0.16); display: flex; flex-direction: column; gap: 14px">
+<span style="width: 44px; height: 44px; border-radius: 999px; background: #fee2e2; color: #dc2626; display: grid; place-items: center; font-weight: 800">!</span>
+<h3 id="dlg-t" style="margin: 0; font-size: 18px; font-weight: 700">Барааг устгах уу?</h3>
+<p style="margin: 0; font-size: 14px; line-height: 1.6; color: #475569">“Робот тоос сорогч” устгагдана. 3 идэвхтэй захиалгад нөлөөлөхгүй. Энэ үйлдлийг буцаах боломжгүй.</p>
+<div style="display: flex; gap: 8px; justify-content: flex-end"><button style="height: 44px; padding: 0 16px; border: 1px solid #cbd5e1; border-radius: 8px; background: #ffffff; color: #0f172a; font: 600 14px Inter, sans-serif" type="button">Болих</button><button style="height: 44px; padding: 0 16px; border: 0; border-radius: 8px; background: #dc2626; color: #ffffff; font: 600 14px Inter, sans-serif" type="button">Устгах</button></div>
+</div>
+</div>
+</div>
+</section>
+<section style="background: #ffffff; border: 1px solid #e2e8f0; border-radius: 16px; padding: 28px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 28px">
+<div style="display: flex; flex-direction: column; gap: 12px">
+<h2 style="margin: 0; font-size: 18px; font-weight: 800">&lt;Badge&gt;</h2>
+<div style="display: flex; flex-wrap: wrap; gap: 8px">
+<span style="padding: 4px 8px; border-radius: 6px; background: #dc2626; color: #ffffff; font-size: 12px; font-weight: 700">−20%</span>
+<span style="padding: 4px 8px; border-radius: 6px; background: #0000ff; color: #ffffff; font-size: 12px; font-weight: 700">Шинэ</span>
+<span style="padding: 4px 8px; border-radius: 6px; background: #0f172a; color: #ffffff; font-size: 12px; font-weight: 700">Эрэлттэй</span>
+<span style="padding: 4px 8px; border-radius: 6px; background: #475569; color: #ffffff; font-size: 12px; font-weight: 700">Дууссан</span>
+<span style="min-width: 20px; height: 20px; padding: 0 6px; box-sizing: border-box; border-radius: 999px; background: #dc2626; color: #ffffff; font-size: 11px; font-weight: 700; display: grid; place-items: center">3</span>
+</div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 12px">
+<h2 style="margin: 0; font-size: 18px; font-weight: 800">&lt;Tabs&gt; · &lt;Chip&gt;</h2>
+<div aria-label="Жишээ" role="tablist" style="display: flex; border-bottom: 1px solid #e2e8f0"><button aria-selected="true" role="tab" style="height: 44px; padding: 0 14px; border: 0; border-bottom: 2px solid #0000ff; background: none; color: #0000ff; font: 700 14px Inter, sans-serif" type="button">Идэвхтэй</button><button aria-selected="false" role="tab" style="height: 44px; padding: 0 14px; border: 0; background: none; color: #475569; font: 500 14px Inter, sans-serif" type="button">Энгийн</button></div>
+<div style="display: flex; gap: 6px"><span style="height: 36px; padding: 0 14px; border-radius: 999px; background: #0f172a; color: #ffffff; display: flex; align-items: center; font-size: 13px; font-weight: 600">Сонгосон</span><span style="height: 36px; padding: 0 14px; border-radius: 999px; border: 1px solid #cbd5e1; display: flex; align-items: center; font-size: 13px">Энгийн</span></div>
+</div>
+<div style="display: flex; flex-direction: column; gap: 12px">
+<h2 style="margin: 0; font-size: 18px; font-weight: 800">&lt;Skeleton&gt;</h2>
+<div style="display: flex; gap: 12px; align-items: center"><span style="width: 56px; height: 56px; border-radius: 10px; background: #e2e8f0"></span><span style="flex: 1; display: flex; flex-direction: column; gap: 8px"><span style="height: 12px; width: 80%; border-radius: 6px; background: #e2e8f0"></span><span style="height: 12px; width: 50%; border-radius: 6px; background: #f1f5f9"></span></span></div>
+<span style="font-size: 12px; color: #64748b">Shimmer 1.2s, prefers-reduced-motion үед хөдөлгөөнгүй</span>
+</div>
+</section>
+</div>
+</body>
+</html>
