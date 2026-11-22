@@ -153,3 +153,6 @@ vite.config.ts.timestamp-*
 .env*.local
 data/
 .claude/
+
+# uploaded images (lib/server/storage.ts — local driver)
+public/uploads/

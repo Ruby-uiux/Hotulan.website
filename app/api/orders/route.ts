@@ -1,65 +1,42 @@
-import { ORDER_DELIVERY_FEE, byNewest, orderTotal, type Order } from "@/lib/admin-data";
-import { handle, readJson, uniqueId } from "@/lib/server/http";
-import { mutateStore, readStore } from "@/lib/server/store";
-import { HttpError, parseCheckout } from "@/lib/server/validate";
+import { requireStaff } from "@/lib/server/actor";
+import { HttpError } from "@/lib/server/errors";
+import { handle, readJson } from "@/lib/server/http";
+import { clientIp, hit, retryAfter, type Limit } from "@/lib/server/rate-limit";
+import { createOrder, listOrders } from "@/lib/server/repo/orders";
+import { parseCheckout } from "@/lib/server/validate";
 
 export const dynamic = "force-dynamic";
 
+/** Staff with orders:view. Contains customer names and phone numbers; drivers only see orders assigned to them. */
 export const GET = handle(async () => {
-  const { orders } = await readStore();
-  return { orders: [...orders].sort(byNewest) };
+  const staff = await requireStaff("orders", "view");
+  return { orders: await listOrders(staff.role === "driver" ? { driverId: staff.id } : {}) };
 });
 
 /**
- * Storefront checkout. Prices, stock and delivery fee are all taken from the store,
- * never from the request — the client only says *what* and *how many*.
- * Stock check and decrement happen in one queued mutation, so two shoppers can't
- * both buy the last unit.
+ * Checkout is public and every order reserves stock, so it is throttled: 5 placed orders per
+ * 10 minutes per IP (when TRUST_PROXY=1 makes the IP trustworthy) and per phone number
+ * (always). Rejected attempts don't count — a shopper fixing a typo isn't penalised.
+ */
+const ORDER_LIMIT: Limit = { max: 5, windowMs: 10 * 60_000 };
+
+/**
+ * Storefront checkout (public). Prices, stock, delivery fee and discount are all computed from
+ * the database inside one transaction — the client only says what, how many and where.
  */
 export const POST = handle(async (request: Request) => {
   const input = parseCheckout(await readJson(request));
+  const ip = clientIp(request);
+  const keys = [`order:phone:${input.phone}`, ...(ip ? [`order:ip:${ip}`] : [])];
 
-  const order = await mutateStore((data) => {
-    const lines = input.lines.map(({ productId, quantity }) => {
-      const product = data.products.find((p) => p.id === productId);
-      if (!product) {
-        throw new HttpError(409, "Сагсанд байсан нэг бараа дэлгүүрээс хасагдсан байна.", { productId, available: 0 });
-      }
-      if (product.stock < quantity) {
-        throw new HttpError(
-          409,
-          product.stock === 0
-            ? `“${product.title}” дууссан байна.`
-            : `“${product.title}” — зөвхөн ${product.stock} ширхэг үлдсэн байна.`,
-          { productId, available: product.stock },
-        );
-      }
-      return { product, quantity };
+  const wait = Math.max(...keys.map((k) => retryAfter(k, ORDER_LIMIT)));
+  if (wait > 0) {
+    throw new HttpError(429, `Хэт олон захиалга илгээлээ. ${Math.ceil(wait / 60)} минутын дараа дахин оролдоно уу.`, {
+      retryAfter: wait,
     });
+  }
 
-    // All lines validated — only now touch stock, so a failure above leaves nothing half-applied.
-    for (const { product, quantity } of lines) product.stock -= quantity;
-
-    const subtotal = lines.reduce((s, l) => s + l.product.price * l.quantity, 0);
-    const created: Order = {
-      id: uniqueId("HTL-", new Set(data.orders.map((o) => o.id))),
-      customer: input.customer,
-      phone: input.phone,
-      district: input.district,
-      payment: input.payment,
-      status: "new",
-      createdAt: new Date().toISOString(),
-      deliveryFee: subtotal >= data.settings.freeDeliveryThreshold ? 0 : ORDER_DELIVERY_FEE,
-      lines: lines.map(({ product, quantity }) => ({
-        productId: product.id,
-        title: product.title,
-        unitPrice: product.price,
-        quantity,
-      })),
-    };
-    data.orders.unshift(created);
-    return created;
-  });
-
-  return Response.json({ order, total: orderTotal(order) }, { status: 201 });
+  const order = await createOrder(input);
+  for (const k of keys) hit(k, ORDER_LIMIT);
+  return Response.json({ order, total: order.total }, { status: 201, headers: { "Cache-Control": "no-store" } });
 });

@@ -1,12 +1,16 @@
 import { NextResponse, type NextRequest } from "next/server";
-import { SESSION_COOKIE, readAuthConfig, verifySessionToken } from "@/lib/auth/session";
+import { SESSION_COOKIE, readSessionSecret, verifySessionToken } from "@/lib/auth/session";
 
 /**
  * Gatekeeper for /admin and the API.
  *
  * Public (shoppers):  GET /api/products, GET /api/settings, POST /api/orders, /api/auth/*
- * Everything else under /api and /admin requires a valid signed session cookie.
+ * Everything else under /api and /admin requires a validly signed session cookie.
  * Notably GET /api/orders is private — it contains customer names and phone numbers.
+ *
+ * This is only the first, cheap layer (edge runtime, no database). The real check —
+ * staff still active, role unchanged, role allowed for this module — runs in every
+ * handler via requireStaff() (lib/server/actor.ts + lib/permissions.ts).
  */
 
 const PUBLIC_API: ReadonlyArray<{ path: string; method: string }> = [
@@ -40,16 +44,13 @@ export async function middleware(request: NextRequest) {
   }
   if (isApi && isPublicApi(pathname, request.method)) return NextResponse.next();
 
-  const config = readAuthConfig();
-  const session = config ? await verifySessionToken(request.cookies.get(SESSION_COOKIE)?.value, config.secret) : null;
-  // A session for a username that was since changed in .env is no longer valid.
-  const authenticated = session !== null && session.u === config?.username;
+  // The login page decides itself (against the database) whether the visitor is still signed in;
+  // redirecting here on the signature alone would loop for a deactivated account.
+  if (isLoginPage) return NextResponse.next();
 
-  if (isLoginPage) {
-    // Already signed in → skip the form.
-    return authenticated ? NextResponse.redirect(new URL("/admin", request.url)) : NextResponse.next();
-  }
-  if (authenticated) return NextResponse.next();
+  const secret = readSessionSecret();
+  const session = secret ? await verifySessionToken(request.cookies.get(SESSION_COOKIE)?.value, secret) : null;
+  if (session) return NextResponse.next();
 
   if (isApi) {
     return NextResponse.json({ error: "Нэвтрэх шаардлагатай." }, { status: 401 });

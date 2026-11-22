@@ -2,7 +2,8 @@
 
 import { Phone, Search, ShoppingCart, Store, Truck, X } from "lucide-react";
 import { useEffect, useRef, type FormEvent, type KeyboardEvent } from "react";
-import { CATEGORIES, formatMNT, type CategoryFilter } from "@/lib/catalog";
+import { formatMNT, type CategoryFilter } from "@/lib/catalog";
+import { useCatalog } from "./CatalogContext";
 
 interface HeaderProps {
   query: string;
@@ -28,6 +29,7 @@ export default function Header({
   supportPhone,
 }: HeaderProps) {
   const headerRef = useRef<HTMLElement>(null);
+  const { categories } = useCatalog();
 
   // The sticky header's height differs per breakpoint (top bar, mobile search row), so a
   // fixed scroll-margin can't be right everywhere. Publishing the live height as
@@ -117,7 +119,7 @@ export default function Header({
 
       <nav aria-label="Бүтээгдэхүүний ангилал" className="border-t border-slate-100">
         <ul className="mx-auto flex max-w-7xl gap-1 overflow-x-auto px-4 [scrollbar-width:none] sm:px-6 lg:px-8">
-          {CATEGORIES.map((c) => {
+          {categories.map((c) => {
             const active = c.id === category;
             return (
               <li key={c.id} className="shrink-0">

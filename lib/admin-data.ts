@@ -1,52 +1,48 @@
-import { PRODUCTS, type CategoryId, type Product } from "./catalog";
+/**
+ * Orders, customers, staff and store settings — types and pure helpers shared by
+ * the admin panel, the storefront and the server. Data lives in the database.
+ */
+import type { Role } from "./permissions";
 
 export type AdminView = "dashboard" | "products" | "orders" | "settings";
 
-export type OrderStatus = "new" | "paid" | "delivery" | "completed";
-export type PaymentMethod = "qpay" | "socialpay" | "card" | "cash";
+/* ------------------------------------------------------------------ Status */
 
-export interface OrderLine {
-  productId: string;
-  /** Title and price are snapshotted at purchase time — later catalog edits or deletes must not rewrite history. */
-  title: string;
-  unitPrice: number;
-  quantity: number;
+/** Flow (design/Tokens.dc.html): new → paid → packing → shipping → delivered; any step → cancelled | returned. */
+export const ORDER_STATUS_FLOW = ["new", "paid", "packing", "shipping", "delivered"] as const;
+export const ORDER_STATUS_IDS = [...ORDER_STATUS_FLOW, "cancelled", "returned"] as const;
+export type OrderStatus = (typeof ORDER_STATUS_IDS)[number];
+
+const TERMINAL: ReadonlySet<OrderStatus> = new Set(["cancelled", "returned"]);
+
+/**
+ * Forward moves along the flow may skip steps (a cash-on-delivery order goes
+ * new → packing without "paid"). Never backwards; cancelled/returned are final.
+ */
+export function canTransition(from: OrderStatus, to: OrderStatus): boolean {
+  if (from === to || TERMINAL.has(from)) return false;
+  if (TERMINAL.has(to)) return true;
+  return ORDER_STATUS_FLOW.indexOf(to as (typeof ORDER_STATUS_FLOW)[number]) > ORDER_STATUS_FLOW.indexOf(from as (typeof ORDER_STATUS_FLOW)[number]);
 }
 
-export interface Order {
-  id: string;
-  customer: string;
-  phone: string;
-  district: string;
-  /** ISO 8601 with offset, Ulaanbaatar time. */
-  createdAt: string;
-  payment: PaymentMethod;
-  status: OrderStatus;
-  lines: OrderLine[];
-  deliveryFee: number;
-}
-
-export interface StoreSettings {
-  storeName: string;
-  supportPhone: string;
-  supportEmail: string;
-  lowStockThreshold: number;
-  freeDeliveryThreshold: number;
-  notifyNewOrder: boolean;
-  notifyLowStock: boolean;
+export function nextStatuses(from: OrderStatus): OrderStatus[] {
+  return ORDER_STATUS_IDS.filter((to) => canTransition(from, to));
 }
 
 export const ORDER_STATUSES: ReadonlyArray<{
   id: OrderStatus;
   label: string;
-  /** Badge + select styling. Status colors are reserved for state and always paired with a label. */
+  /** Badge/select styling from the status tokens in globals.css. Always paired with the label. */
   tone: string;
   dot: string;
 }> = [
-  { id: "new", label: "Шинэ", tone: "bg-sky-50 text-sky-700 ring-sky-200", dot: "bg-sky-500" },
-  { id: "paid", label: "Төлөгдсөн", tone: "bg-violet-50 text-violet-700 ring-violet-200", dot: "bg-violet-500" },
-  { id: "delivery", label: "Хүргэлтэд гарсан", tone: "bg-amber-50 text-amber-800 ring-amber-200", dot: "bg-amber-500" },
-  { id: "completed", label: "Бүрэн дууссан", tone: "bg-emerald-50 text-emerald-700 ring-emerald-200", dot: "bg-emerald-500" },
+  { id: "new", label: "Шинэ", tone: "bg-status-new text-status-new-ink ring-status-new-ink/20", dot: "bg-status-new-ink" },
+  { id: "paid", label: "Төлөгдсөн", tone: "bg-status-paid text-status-paid-ink ring-status-paid-ink/20", dot: "bg-status-paid-ink" },
+  { id: "packing", label: "Савлаж байна", tone: "bg-status-packing text-status-packing-ink ring-status-packing-ink/20", dot: "bg-warning" },
+  { id: "shipping", label: "Хүргэлтэнд", tone: "bg-status-shipping text-status-shipping-ink ring-status-shipping-ink/20", dot: "bg-status-shipping-ink" },
+  { id: "delivered", label: "Хүргэгдсэн", tone: "bg-status-delivered text-status-delivered-ink ring-status-delivered-ink/20", dot: "bg-success" },
+  { id: "cancelled", label: "Цуцалсан", tone: "bg-status-cancelled text-status-cancelled-ink ring-status-cancelled-ink/20", dot: "bg-danger" },
+  { id: "returned", label: "Буцаасан", tone: "bg-status-returned text-status-returned-ink ring-status-returned-ink/20", dot: "bg-slate-500" },
 ];
 
 export const STATUS_META = Object.fromEntries(ORDER_STATUSES.map((s) => [s.id, s])) as Record<
@@ -54,56 +50,139 @@ export const STATUS_META = Object.fromEntries(ORDER_STATUSES.map((s) => [s.id, s
   (typeof ORDER_STATUSES)[number]
 >;
 
+export function isOrderStatus(v: unknown): v is OrderStatus {
+  return typeof v === "string" && (ORDER_STATUS_IDS as readonly string[]).includes(v);
+}
+
+/** Pre-2026.11 statuses found in data/store.json. */
+export const LEGACY_STATUS_MAP: Record<string, OrderStatus> = { delivery: "shipping", completed: "delivered" };
+
+/* ----------------------------------------------------------------- Payment */
+
+/** Methods offered at checkout. */
+export const PAYMENT_METHODS = ["qpay", "bank", "cod"] as const;
+export type PaymentMethod = (typeof PAYMENT_METHODS)[number];
+/** Values that only exist on old orders. Kept as-is, never converted. */
+export type LegacyPaymentMethod = "socialpay" | "card" | "cash";
+export type AnyPaymentMethod = PaymentMethod | LegacyPaymentMethod;
+
 export const PAYMENT_LABEL: Record<PaymentMethod, string> = {
   qpay: "QPay",
-  socialpay: "SocialPay",
-  card: "Банкны карт",
-  cash: "Бэлнээр",
+  bank: "Дансаар шилжүүлэх",
+  cod: "Хүлээн авахдаа төлөх",
 };
 
-export const CATEGORY_OPTIONS: ReadonlyArray<{ id: CategoryId; label: string }> = [
-  { id: "toys", label: "Тоглоом" },
-  { id: "home", label: "Гэр ахуй" },
-  { id: "electronics", label: "Цахилгаан бараа" },
-  { id: "sports", label: "Спорт" },
-];
-
-export const DEFAULT_SETTINGS: StoreSettings = {
-  storeName: "hotulan.mn",
-  supportPhone: "7700-0000",
-  supportEmail: "info@hotulan.mn",
-  lowStockThreshold: 10,
-  freeDeliveryThreshold: 200_000,
-  notifyNewOrder: true,
-  notifyLowStock: true,
+const LEGACY_PAYMENT_LABEL: Record<LegacyPaymentMethod, string> = {
+  socialpay: "SocialPay (хуучин)",
+  card: "Банкны карт (хуучин)",
+  cash: "Бэлнээр (хуучин)",
 };
 
-export const DISTRICTS = [
-  "Баянгол",
-  "Баянзүрх",
-  "Сонгинохайрхан",
-  "Сүхбаатар",
-  "Хан-Уул",
-  "Чингэлтэй",
-  "Налайх",
-  "Багануур",
-  "Багахангай",
-] as const;
+export function isPaymentMethod(v: unknown): v is PaymentMethod {
+  return typeof v === "string" && (PAYMENT_METHODS as readonly string[]).includes(v);
+}
 
-/** Mirrors the storefront rule; the server uses it to compute the authoritative order total. */
-export const ORDER_DELIVERY_FEE = 5_000;
+/** Label for any stored payment value; unknown values are shown raw rather than hidden. */
+export function paymentLabel(method: string): string {
+  return (
+    (PAYMENT_LABEL as Record<string, string>)[method] ??
+    (LEGACY_PAYMENT_LABEL as Record<string, string>)[method] ??
+    `${method} (хуучин)`
+  );
+}
+
+export type PaymentStatus = "pending" | "paid" | "failed" | "refunded";
+
+export const PAYMENT_STATUS_LABEL: Record<PaymentStatus, string> = {
+  pending: "Хүлээгдэж буй",
+  paid: "Төлөгдсөн",
+  failed: "Амжилтгүй",
+  refunded: "Буцаан олгосон",
+};
+
+/* ------------------------------------------------------------------- Order */
+
+export interface OrderLine {
+  productId: string;
+  variantId: string | null;
+  /** Title, variant, SKU and price are snapshotted — later catalog edits or deletes must not rewrite history. */
+  title: string;
+  variantName: string | null;
+  sku: string | null;
+  unitPrice: number;
+  quantity: number;
+}
+
+export type EbarimtType = "person" | "company";
+
+export interface Order {
+  id: string;
+  customerId: string | null;
+  customer: string;
+  phone: string;
+  /** District name snapshot ("Хан-Уул"). */
+  district: string;
+  zoneId: string | null;
+  khoroo: number | null;
+  address: string;
+  /** Shopper's delivery note ("Орцны код 41#"). */
+  deliveryNote: string;
+  /** YYYY-MM-DD, Ulaanbaatar. */
+  deliveryDate: string | null;
+  /** Slot label snapshot ("10:00–14:00"). */
+  deliverySlot: string | null;
+  /** ISO 8601. */
+  createdAt: string;
+  updatedAt: string;
+  payment: AnyPaymentMethod;
+  paymentStatus: PaymentStatus;
+  status: OrderStatus;
+  lines: OrderLine[];
+  subtotal: number;
+  discount: number;
+  couponCode: string | null;
+  deliveryFee: number;
+  total: number;
+  ebarimtType: EbarimtType;
+  /** Company registration number when ebarimtType = "company". */
+  ebarimtRegNo: string | null;
+  driverId: string | null;
+}
+
+export type OrderEventType = "created" | "status" | "payment" | "note" | "assign" | "imported";
+
+export interface OrderEvent {
+  id: number;
+  orderId: string;
+  type: OrderEventType;
+  message: string;
+  fromStatus: OrderStatus | null;
+  toStatus: OrderStatus | null;
+  /** Staff username, "customer" or "system". */
+  actor: string;
+  createdAt: string;
+}
 
 /** Orders mix "+08:00" and "Z" timestamps, so compare instants — never the raw strings. */
 export function byNewest(a: Order, b: Order): number {
   return Date.parse(b.createdAt) - Date.parse(a.createdAt);
 }
 
-export function orderTotal(order: Order): number {
-  return order.lines.reduce((sum, l) => sum + l.unitPrice * l.quantity, 0) + order.deliveryFee;
+export function orderTotal(order: Pick<Order, "total">): number {
+  return order.total;
 }
 
-export function orderItemCount(order: Order): number {
+export function linesSubtotal(lines: ReadonlyArray<Pick<OrderLine, "unitPrice" | "quantity">>): number {
+  return lines.reduce((sum, l) => sum + l.unitPrice * l.quantity, 0);
+}
+
+export function orderItemCount(order: Pick<Order, "lines">): number {
   return order.lines.reduce((sum, l) => sum + l.quantity, 0);
+}
+
+/** Revenue counts once money is (or will be) collected — not for cancelled/returned orders. */
+export function countsAsRevenue(order: Pick<Order, "status">): boolean {
+  return order.status !== "cancelled" && order.status !== "returned";
 }
 
 /** "2026.11.08 14:32" in Ulaanbaatar time regardless of the viewer's machine timezone. */
@@ -118,32 +197,114 @@ export function dayKey(date: Date): string {
   return new Date(date.getTime() + 8 * 3600_000).toISOString().slice(0, 10);
 }
 
-const byId = new Map(PRODUCTS.map((p) => [p.id, p]));
+/* ---------------------------------------------------------------- Customer */
 
-function line(productId: string, quantity: number): OrderLine {
-  const p = byId.get(productId) as Product;
-  return { productId, title: p.title, unitPrice: p.price, quantity };
+/** Guest checkout: a customer is identified by phone number. */
+export interface Customer {
+  id: string;
+  phone: string;
+  name: string;
+  district: string | null;
+  vip: boolean;
+  note: string;
+  createdAt: string;
 }
 
-/** Delivery fee mirrors the storefront rule so totals in admin match what shoppers paid. */
-function makeOrder(o: Omit<Order, "deliveryFee">): Order {
-  const subtotal = o.lines.reduce((s, l) => s + l.unitPrice * l.quantity, 0);
-  return { ...o, deliveryFee: subtotal >= DEFAULT_SETTINGS.freeDeliveryThreshold ? 0 : 5_000 };
+export interface CustomerSummary extends Customer {
+  orderCount: number;
+  totalSpent: number;
+  lastOrderAt: string | null;
 }
 
-export const INITIAL_ORDERS: Order[] = [
-  makeOrder({ id: "HTL-482913", customer: "Б. Сарангэрэл", phone: "9911-2345", district: "Хан-Уул", createdAt: "2026-11-08T14:32:00+08:00", payment: "qpay", status: "new", lines: [line("elec-anc-headphones", 1), line("toy-teddy-60", 1)] }),
-  makeOrder({ id: "HTL-482907", customer: "Г. Тэмүүлэн", phone: "8800-4512", district: "Баянзүрх", createdAt: "2026-11-08T12:05:00+08:00", payment: "socialpay", status: "new", lines: [line("home-kettle", 2)] }),
-  makeOrder({ id: "HTL-482889", customer: "Д. Номин-Эрдэнэ", phone: "9505-7781", district: "Сүхбаатар", createdAt: "2026-11-08T09:47:00+08:00", payment: "card", status: "paid", lines: [line("home-air-purifier", 1)] }),
-  makeOrder({ id: "HTL-482861", customer: "Э. Батбаяр", phone: "9119-0032", district: "Чингэлтэй", createdAt: "2026-11-07T19:22:00+08:00", payment: "qpay", status: "paid", lines: [line("toy-blocks-1000", 2), line("toy-wood-puzzle", 1)] }),
-  makeOrder({ id: "HTL-482840", customer: "О. Анужин", phone: "8611-9087", district: "Баянгол", createdAt: "2026-11-07T15:10:00+08:00", payment: "qpay", status: "delivery", lines: [line("elec-smartwatch", 1)] }),
-  makeOrder({ id: "HTL-482812", customer: "Ц. Мөнхбат", phone: "9900-1188", district: "Сонгинохайрхан", createdAt: "2026-11-06T20:41:00+08:00", payment: "cash", status: "delivery", lines: [line("sport-yoga-mat", 1), line("sport-adjustable-dumbbell", 1)] }),
-  makeOrder({ id: "HTL-482790", customer: "Ж. Хулан", phone: "9977-6655", district: "Хан-Уул", createdAt: "2026-11-06T11:18:00+08:00", payment: "card", status: "completed", lines: [line("elec-tv-55", 1)] }),
-  makeOrder({ id: "HTL-482755", customer: "С. Билгүүн", phone: "8080-3434", district: "Баянзүрх", createdAt: "2026-11-05T17:56:00+08:00", payment: "socialpay", status: "completed", lines: [line("toy-rc-car", 1), line("toy-mini-drone", 1)] }),
-  makeOrder({ id: "HTL-482731", customer: "Н. Оюунчимэг", phone: "9191-2020", district: "Сүхбаатар", createdAt: "2026-11-05T10:02:00+08:00", payment: "qpay", status: "completed", lines: [line("home-bedding-set", 2)] }),
-  makeOrder({ id: "HTL-482702", customer: "А. Энхжин", phone: "9444-8181", district: "Баянгол", createdAt: "2026-11-04T13:29:00+08:00", payment: "qpay", status: "completed", lines: [line("home-robot-vacuum", 1)] }),
-  makeOrder({ id: "HTL-482688", customer: "П. Ганзориг", phone: "8899-5050", district: "Чингэлтэй", createdAt: "2026-11-03T18:44:00+08:00", payment: "card", status: "completed", lines: [line("elec-laptop-14", 1)] }),
-  makeOrder({ id: "HTL-482650", customer: "Т. Мишээл", phone: "9933-7171", district: "Хан-Уул", createdAt: "2026-11-03T09:15:00+08:00", payment: "socialpay", status: "completed", lines: [line("elec-bt-speaker", 1), line("home-desk-lamp", 2)] }),
-  makeOrder({ id: "HTL-482611", customer: "Х. Ариунбилэг", phone: "8686-2424", district: "Баянзүрх", createdAt: "2026-11-02T16:37:00+08:00", payment: "qpay", status: "completed", lines: [line("sport-mtb-275", 1)] }),
-  makeOrder({ id: "HTL-482598", customer: "М. Дөлгөөн", phone: "9595-1313", district: "Сонгинохайрхан", createdAt: "2026-11-02T10:50:00+08:00", payment: "cash", status: "completed", lines: [line("home-espresso", 1)] }),
-];
+/* ------------------------------------------------------------------- Staff */
+
+export interface StaffMember {
+  id: string;
+  username: string;
+  name: string;
+  /** Job title shown under the name ("Агуулахын нярав"). */
+  title: string;
+  role: Role;
+  phone: string | null;
+  /** Drivers: delivery zone ids they cover. */
+  zoneIds: string[];
+  twoFactorEnabled: boolean;
+  active: boolean;
+  /** False when no password is set (e.g. a driver without panel access). */
+  canLogin: boolean;
+  lastLoginAt: string | null;
+  createdAt: string;
+}
+
+export interface AuditEntry {
+  id: number;
+  actor: string;
+  action: string;
+  entity: string;
+  entityId: string | null;
+  summary: string;
+  createdAt: string;
+}
+
+/* ---------------------------------------------------------------- Settings */
+
+export interface PaymentSettings {
+  qpay: boolean;
+  bank: boolean;
+  cod: boolean;
+  bankName: string;
+  bankAccount: string;
+  bankAccountName: string;
+}
+
+export interface StoreSettings {
+  storeName: string;
+  supportPhone: string;
+  supportEmail: string;
+  workingHours: string;
+  address: string;
+  lowStockThreshold: number;
+  returnDays: number;
+  /** Central zones only. */
+  freeDeliveryThreshold: number;
+  /** "HH:MM" — orders after this go to the day after tomorrow. */
+  nextDayCutoff: string;
+  oversizedFee: number;
+  payments: PaymentSettings;
+  notifyNewOrder: boolean;
+  notifyLowStock: boolean;
+  smsOrderConfirm: boolean;
+  smsShipping: boolean;
+}
+
+export const DEFAULT_SETTINGS: StoreSettings = {
+  storeName: "hotulan.mn",
+  supportPhone: "7700-0000",
+  supportEmail: "info@hotulan.mn",
+  workingHours: "Даваа–Ням 09:00–21:00",
+  address: "[ДЭЛГҮҮРИЙН ХАЯГ]",
+  lowStockThreshold: 10,
+  returnDays: 14,
+  freeDeliveryThreshold: 200_000,
+  nextDayCutoff: "16:00",
+  oversizedFee: 10_000,
+  payments: { qpay: true, bank: true, cod: true, bankName: "Хаан банк", bankAccount: "", bankAccountName: "" },
+  notifyNewOrder: true,
+  notifyLowStock: true,
+  smsOrderConfirm: true,
+  smsShipping: false,
+};
+
+/** Fills in fields added after a settings row was saved, including nested payment settings. */
+export function withSettingsDefaults(stored: Partial<StoreSettings> | null | undefined): StoreSettings {
+  return {
+    ...DEFAULT_SETTINGS,
+    ...stored,
+    payments: { ...DEFAULT_SETTINGS.payments, ...stored?.payments },
+  };
+}
+
+/** Payment methods currently enabled for checkout, in display order. */
+export function enabledPaymentMethods(settings: Pick<StoreSettings, "payments">): PaymentMethod[] {
+  return PAYMENT_METHODS.filter((m) => settings.payments[m]);
+}

@@ -3,7 +3,7 @@
 import { ImageOff } from "lucide-react";
 import { useState, type FormEvent } from "react";
 import { formatMNT, type CategoryId, type Product } from "@/lib/catalog";
-import { CATEGORY_OPTIONS } from "@/lib/admin-data";
+import { useCatalog } from "@/components/store/CatalogContext";
 import SafeImage from "@/components/store/SafeImage";
 import { Button, Input, Modal, Select, Textarea } from "@/components/ui";
 
@@ -12,7 +12,22 @@ interface ProductFormModalProps {
   /** null = creating a new product. */
   product: Product | null;
   onClose: () => void;
-  onSave: (product: Product) => Promise<void>;
+  onSave: (draft: ProductDraft) => Promise<void>;
+}
+
+/** What the form sends. Fields it doesn't edit (cost, SKU, gallery, …) are kept by the server. */
+export interface ProductDraft {
+  /** Absent when creating. */
+  id?: string;
+  title: string;
+  category: CategoryId;
+  price: number;
+  compareAtPrice: number | null;
+  stock: number;
+  description: string;
+  summary: string;
+  image: string;
+  badge: Product["badge"] | null;
 }
 
 interface FormState {
@@ -27,9 +42,9 @@ interface FormState {
 
 type FormErrors = Partial<Record<keyof FormState, string>>;
 
-function toFormState(p: Product | null): FormState {
+function toFormState(p: Product | null, defaultCategory: CategoryId): FormState {
   if (!p) {
-    return { title: "", category: "toys", regularPrice: "", salePrice: "", stock: "0", description: "", image: "" };
+    return { title: "", category: defaultCategory, regularPrice: "", salePrice: "", stock: "0", description: "", image: "" };
   }
   // Catalog stores the selling price in `price` and the pre-discount price in `compareAtPrice`.
   const onSale = p.compareAtPrice !== undefined && p.compareAtPrice > p.price;
@@ -93,9 +108,11 @@ function ProductForm({
 }: {
   product: Product | null;
   onCancel: () => void;
-  onSave: (product: Product) => Promise<void>;
+  onSave: (draft: ProductDraft) => Promise<void>;
 }) {
-  const [form, setForm] = useState<FormState>(() => toFormState(product));
+  const { categories } = useCatalog();
+  const categoryOptions = categories.filter((c) => c.id !== "all");
+  const [form, setForm] = useState<FormState>(() => toFormState(product, categoryOptions[0]?.id ?? ""));
   const [touched, setTouched] = useState<Partial<Record<keyof FormState, boolean>>>({});
   const [submitted, setSubmitted] = useState(false);
   const [saving, setSaving] = useState(false);
@@ -122,35 +139,18 @@ function ProductForm({
     const salePrice = sale ?? undefined;
     const description = form.description.trim();
 
-    const base: Product = product ?? {
-      id: `p-${Date.now().toString(36)}`,
-      title: "",
-      brand: "hotulan",
-      category: form.category,
-      price: 0,
-      rating: 0,
-      reviewCount: 0,
-      image: "",
-      stock: 0,
-      warrantyMonths: 12,
-      summary: "",
-      description: "",
-      features: [],
-      specs: [],
-    };
-
     // A sale badge follows the price data; a manually chosen "Шинэ"/"Эрэлттэй" badge is preserved.
-    const badge = salePrice !== undefined ? "Хямдрал" : base.badge === "Хямдрал" ? undefined : base.badge;
+    const badge = salePrice !== undefined ? "Хямдрал" : product?.badge === "Хямдрал" ? null : (product?.badge ?? null);
 
     // The modal stays open until the server confirms, so a rejected save never loses typed input.
     setSaving(true);
     try {
       await onSave({
-        ...base,
+        id: product?.id,
         title: form.title.trim(),
         category: form.category,
         price: salePrice ?? regularPrice,
-        compareAtPrice: salePrice !== undefined ? regularPrice : undefined,
+        compareAtPrice: salePrice !== undefined ? regularPrice : null,
         stock: parseAmount(form.stock) as number,
         description,
         summary: description.slice(0, 120),
@@ -183,7 +183,7 @@ function ProductForm({
           required
           value={form.category}
           onChange={(e) => set("category", e.target.value as CategoryId)}
-          options={CATEGORY_OPTIONS.map((c) => ({ value: c.id, label: c.label }))}
+          options={categoryOptions.map((c) => ({ value: c.id, label: c.label }))}
         />
 
         <div className="grid gap-4 sm:grid-cols-2">
@@ -214,11 +214,15 @@ function ProductForm({
           />
         </div>
 
+        {/* Opening stock only. Afterwards stock moves by +/− in the product list, so saving this
+            form can never undo sales made while it was open. */}
         <Input
           id="pf-stock"
-          label="Үлдэгдэл тоо"
-          required
-          error={showError("stock")}
+          label={product ? "Үлдэгдэл" : "Эхний үлдэгдэл"}
+          required={!product}
+          disabled={!!product}
+          hint={product ? "Жагсаалтын +/− товчоор нэмж, хасна" : undefined}
+          error={product ? undefined : showError("stock")}
           controlClassName="tabular-nums sm:w-40"
           inputMode="numeric"
           value={form.stock}

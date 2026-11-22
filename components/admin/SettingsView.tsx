@@ -9,7 +9,8 @@ import { Button, ConfirmDialog, Input, Switch } from "@/components/ui";
 interface SettingsViewProps {
   settings: StoreSettings;
   onSave: (settings: StoreSettings) => void;
-  onResetDemoData: () => void;
+  /** Development only — absent in production, where the reset API doesn't exist. */
+  onResetDemoData?: () => void;
 }
 
 export default function SettingsView({ settings, onSave, onResetDemoData }: SettingsViewProps) {
@@ -96,6 +97,7 @@ export default function SettingsView({ settings, onSave, onResetDemoData }: Sett
         />
       </SettingsGroup>
 
+      {onResetDemoData && (
       <section className="rounded-lg border border-rose-200 bg-white p-5 shadow-sm">
         <h2 className="text-sm font-bold text-slate-900">Демо өгөгдөл</h2>
         <p className="mt-1 text-sm text-slate-500">Бараа, захиалгын өөрчлөлтүүдийг цуцалж анхны жишээ өгөгдөл рүү буцаана.</p>
@@ -108,6 +110,7 @@ export default function SettingsView({ settings, onSave, onResetDemoData }: Sett
           Анхны байдалд оруулах
         </button>
       </section>
+      )}
 
       {/* Sticky save bar only appears with unsaved changes, so it never competes for attention otherwise. */}
       {dirty && (
@@ -128,7 +131,7 @@ export default function SettingsView({ settings, onSave, onResetDemoData }: Sett
         open={confirmReset}
         onClose={() => setConfirmReset(false)}
         onConfirm={() => {
-          onResetDemoData();
+          onResetDemoData?.();
           setConfirmReset(false);
         }}
         title="Анхны байдалд оруулах уу?"

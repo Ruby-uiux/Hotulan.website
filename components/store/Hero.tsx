@@ -1,8 +1,9 @@
 import { ArrowRight, ArrowUpRight, BadgeCheck, CreditCard, Headphones, ShieldCheck, Truck } from "lucide-react";
-import { formatMNT, type CategoryId } from "@/lib/catalog";
+import { formatMNT } from "@/lib/catalog";
 import SafeImage from "./SafeImage";
 
-export type CategorySummary = Record<CategoryId, { count: number; minPrice: number | null }>;
+/** Per root-category id; categories with no visible products are simply absent. */
+export type CategorySummary = Record<string, { count: number; minPrice: number | null }>;
 
 interface HeroProps {
   /** Live per-category counts so tile captions never drift from the actual catalog. */
@@ -61,7 +62,7 @@ export default function Hero({ categories, freeDeliveryThreshold, supportPhone }
     { icon: ShieldCheck, title: "Албан ёсны баталгаа", body: "2 жил хүртэл" },
     { icon: Truck, title: "Хурдан хүргэлт", body: `${formatMNT(freeDeliveryThreshold)}-өөс үнэгүй` },
     { icon: Headphones, title: "24/7 тусламж", body: supportPhone },
-    { icon: CreditCard, title: "Аюулгүй төлбөр", body: "QPay · SocialPay · Карт" },
+    { icon: CreditCard, title: "Аюулгүй төлбөр", body: "QPay · Дансаар · Хүлээн авахдаа" },
   ];
 
   return (
@@ -150,7 +151,7 @@ export default function Hero({ categories, freeDeliveryThreshold, supportPhone }
                   <span className="absolute inset-x-0 bottom-0 flex items-end justify-between gap-2 p-4">
                     <span>
                       <span className="block text-base font-bold text-white sm:text-lg">{tile.label}</span>
-                      <span className="block text-xs text-white/75">{tileMeta(categories[tile.category], tile.withPrice)}</span>
+                      <span className="block text-xs text-white/75">{tileMeta(categories[tile.category] ?? { count: 0, minPrice: null }, tile.withPrice)}</span>
                     </span>
                     <span className="grid h-9 w-9 shrink-0 place-items-center rounded-full bg-white text-slate-900 transition group-hover:bg-brand group-hover:text-white">
                       <ArrowUpRight className="h-4 w-4" aria-hidden="true" />

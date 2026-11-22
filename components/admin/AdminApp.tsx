@@ -12,8 +12,10 @@ import {
   type OrderStatus,
   type StoreSettings,
 } from "@/lib/admin-data";
+import { CatalogProvider, type NavCategory } from "@/components/store/CatalogContext";
 import DashboardView from "./DashboardView";
 import OrdersView from "./OrdersView";
+import type { ProductDraft } from "./ProductFormModal";
 import ProductsView, { type StockFilter } from "./ProductsView";
 import SettingsView from "./SettingsView";
 import Sidebar, { NAV_ITEMS } from "./Sidebar";
@@ -32,15 +34,29 @@ interface AdminAppProps {
   initialProducts: Product[];
   initialOrders: Order[];
   initialSettings: StoreSettings;
+  /** Every root category (hidden/empty included) for the product form and filters. */
+  categories: NavCategory[];
+  categoryNames: Record<string, string>;
   /** Server render time — keeps the 7-day chart identical between SSR and hydration. */
   renderedAt: string;
   /** Signed-in operator, from the verified session. */
   adminName: string;
+  /** Show "reset demo data" (development only; the API refuses it in production). */
+  demoTools: boolean;
 }
 
 type Toast = { id: number; message: string; tone: "success" | "error" };
 
-export default function AdminApp({ initialProducts, initialOrders, initialSettings, renderedAt, adminName }: AdminAppProps) {
+export default function AdminApp({
+  initialProducts,
+  initialOrders,
+  initialSettings,
+  categories,
+  categoryNames,
+  renderedAt,
+  adminName,
+  demoTools,
+}: AdminAppProps) {
   const [signingOut, setSigningOut] = useState(false);
   const signOut = useCallback(async () => {
     setSigningOut(true);
@@ -142,17 +158,17 @@ export default function AdminApp({ initialProducts, initialOrders, initialSettin
 
   /** Throws on failure so the form can show the server's message and stay open. */
   const saveProduct = useCallback(
-    async (draft: Product) => {
+    async (draft: ProductDraft) => {
       mutationSeq.current++;
-      const isNew = !products.some((p) => p.id === draft.id);
+      const isNew = draft.id === undefined;
       const { product } = isNew
         ? await api<{ product: Product }>("/api/products", { method: "POST", body: draft })
-        : await api<{ product: Product }>(`/api/products/${encodeURIComponent(draft.id)}`, { method: "PUT", body: draft });
+        : await api<{ product: Product }>(`/api/products/${encodeURIComponent(draft.id!)}`, { method: "PUT", body: draft });
 
       setProducts((prev) => (isNew ? [product, ...prev] : prev.map((p) => (p.id === product.id ? product : p))));
       notify(isNew ? "Шинэ бараа нэмэгдэж, дэлгүүрт нийтлэгдлээ" : "Барааны мэдээлэл шинэчлэгдлээ");
     },
-    [notify, products],
+    [notify],
   );
 
   const deleteProduct = useCallback(
@@ -170,22 +186,27 @@ export default function AdminApp({ initialProducts, initialOrders, initialSettin
   );
 
   /** Optimistic: the stepper must feel instant during restocking; rolled back if the server refuses. */
+  /**
+   * Restock / write-off as a relative change. The server applies `stock + delta`, so units
+   * sold since this screen loaded are kept; its answer (the real new stock) replaces ours.
+   */
   const changeStock = useCallback(
-    async (productId: string, stock: number) => {
+    async (productId: string, delta: number) => {
+      if (!Number.isInteger(delta) || delta === 0) return;
       mutationSeq.current++;
-      const previous = products.find((p) => p.id === productId)?.stock;
-      const next = Math.max(0, Math.floor(stock));
-      setProducts((prev) => prev.map((p) => (p.id === productId ? { ...p, stock: next } : p)));
+      setProducts((prev) => prev.map((p) => (p.id === productId ? { ...p, stock: Math.max(0, p.stock + delta) } : p)));
       try {
-        await api(`/api/products/${encodeURIComponent(productId)}`, { method: "PATCH", body: { stock: next } });
+        const { product } = await api<{ product: Product }>(`/api/products/${encodeURIComponent(productId)}`, {
+          method: "PATCH",
+          body: { delta },
+        });
+        setProducts((prev) => prev.map((p) => (p.id === productId ? product : p)));
       } catch (err) {
-        if (previous !== undefined) {
-          setProducts((prev) => prev.map((p) => (p.id === productId ? { ...p, stock: previous } : p)));
-        }
+        setProducts((prev) => prev.map((p) => (p.id === productId ? { ...p, stock: Math.max(0, p.stock - delta) } : p)));
         notifyError(err, "Үлдэгдэл хадгалагдсангүй.");
       }
     },
-    [products, notifyError],
+    [notifyError],
   );
 
   // ——— Order mutations ———
@@ -196,7 +217,16 @@ export default function AdminApp({ initialProducts, initialOrders, initialSettin
       const previous = orders.find((o) => o.id === orderId)?.status;
       setOrders((prev) => prev.map((o) => (o.id === orderId ? { ...o, status } : o)));
       try {
-        await api(`/api/orders/${encodeURIComponent(orderId)}`, { method: "PATCH", body: { status } });
+        const { order } = await api<{ order: Order }>(`/api/orders/${encodeURIComponent(orderId)}`, {
+          method: "PATCH",
+          body: { status },
+        });
+        // The server may also change payment status; cancelling puts stock back.
+        setOrders((prev) => prev.map((o) => (o.id === order.id ? order : o)));
+        if (status === "cancelled") {
+          const { products: fresh } = await api<{ products: Product[] }>("/api/products");
+          setProducts(fresh);
+        }
         notify(`${orderId} → ${STATUS_META[status].label}`);
       } catch (err) {
         if (previous) setOrders((prev) => prev.map((o) => (o.id === orderId ? { ...o, status: previous } : o)));
@@ -305,6 +335,7 @@ export default function AdminApp({ initialProducts, initialOrders, initialSettin
         </header>
 
         <main className="mx-auto w-full max-w-[1400px] flex-1 p-4 sm:p-6 lg:p-8">
+          <CatalogProvider categories={categories} names={categoryNames}>
           {view === "dashboard" && (
             <DashboardView
               products={products}
@@ -331,9 +362,10 @@ export default function AdminApp({ initialProducts, initialOrders, initialSettin
               key={JSON.stringify(settings)}
               settings={settings}
               onSave={saveSettings}
-              onResetDemoData={resetDemoData}
+              onResetDemoData={demoTools ? resetDemoData : undefined}
             />
           )}
+          </CatalogProvider>
         </main>
       </div>
 
