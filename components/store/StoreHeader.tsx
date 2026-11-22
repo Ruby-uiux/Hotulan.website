@@ -37,7 +37,9 @@ export default function StoreHeader({ storeName, supportPhone, freeDeliveryThres
     <header id="site-header" className="relative z-30 border-b border-slate-200 bg-white text-slate-900">
       {/* ——— Phones ——— */}
       <div className="lg:hidden">
-        <div className="bg-[#020617] px-4 py-2 text-center text-xs text-slate-200">{bar}</div>
+        <div className="bg-[#020617] px-4 py-2 text-center text-xs text-slate-200">
+          {announcement ? bar : `Зөвхөн Улаанбаатарт · ${formatMNT(freeDeliveryThreshold)}-өөс дээш үнэгүй`}
+        </div>
         <div className="flex flex-col gap-3 px-4 py-3">
           <div className="flex items-center gap-2.5">
             <MenuButton />

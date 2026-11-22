@@ -1,7 +1,8 @@
 import { cache } from "react";
 import { enabledPaymentMethods } from "@/lib/admin-data";
-import type { CategoryNode } from "@/lib/categories";
-import { getStoreCategoryTree } from "./repo/categories";
+import type { Category, CategoryNode } from "@/lib/categories";
+import { getStoreCategoryTree, listCategories } from "./repo/categories";
+import { listStoreProducts } from "./repo/products";
 import { listZones } from "./repo/delivery";
 import { getAppearance, getStoreSettings } from "./repo/settings";
 
@@ -19,6 +20,17 @@ export const getStoreShell = cache(async () => {
   ]);
   return { tree, settings, appearance, zones, paymentMethods: enabledPaymentMethods(settings) };
 });
+
+/** category id → line icon. Subcategories have no icon of their own and use their root's. */
+export function categoryIcons(categories: Category[]): Record<string, string | null> {
+  const byId = new Map(categories.map((c) => [c.id, c]));
+  return Object.fromEntries(categories.map((c) => [c.id, c.icon ?? (c.parentId ? (byId.get(c.parentId)?.icon ?? null) : null)]));
+}
+
+export const getAllCategories = cache(listCategories);
+
+/** Published products (admin-only fields stripped), once per request. */
+export const getStoreProducts = cache(listStoreProducts);
 
 /** The category menu shape used by the header (and the mobile drawer). */
 export function toMenuCategories(tree: CategoryNode[]) {

@@ -121,6 +121,11 @@ export function purchaseLimit(product: Pick<Product, "stock">): number {
   return Math.max(0, Math.min(product.stock, MAX_PER_PRODUCT));
 }
 
+/** Whole-percent discount from the crossed-out price; 0 when not on sale. */
+export function discountPercent(p: Pick<Product, "price" | "compareAtPrice">): number {
+  return p.compareAtPrice && p.compareAtPrice > p.price ? Math.round((1 - p.price / p.compareAtPrice) * 100) : 0;
+}
+
 export function formatMNT(value: number): string {
   return `${Math.round(value).toLocaleString("en-US")}₮`;
 }
