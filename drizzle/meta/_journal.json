@@ -15,6 +15,13 @@
       "when": 1795345772036,
       "tag": "0001_otp_codes",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "6",
+      "when": 1795346758573,
+      "tag": "0002_stock_release",
+      "breakpoints": true
     }
   ]
 }

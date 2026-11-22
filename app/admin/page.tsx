@@ -8,6 +8,7 @@ import { listCategories } from "@/lib/server/repo/categories";
 import { listOrders } from "@/lib/server/repo/orders";
 import { listProducts, listStoreProducts } from "@/lib/server/repo/products";
 import { getStoreSettings } from "@/lib/server/repo/settings";
+import { demoDataAllowed } from "@/lib/server/seed";
 
 export const metadata: Metadata = {
   title: "Админ — hotulan.mn",
@@ -38,6 +39,7 @@ export default async function AdminPage() {
       categoryNames={categoryNameMap(categories)}
       renderedAt={new Date().toISOString()}
       adminName={staff.name}
+      demoTools={demoDataAllowed()}
     />
   );
 }

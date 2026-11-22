@@ -3,7 +3,9 @@
 import { ArrowUp, CheckCircle2 } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import {
+  MAX_PER_PRODUCT,
   SORT_OPTIONS,
+  purchaseLimit,
   type CartLine,
   type CategoryFilter,
   type PriceBandId,
@@ -115,7 +117,7 @@ export default function StoreFront({
       let changed = false;
       const next = prev.flatMap((line) => {
         const product = productById.get(line.productId);
-        const quantity = Math.min(line.quantity, product?.stock ?? 0);
+        const quantity = Math.min(line.quantity, product ? purchaseLimit(product) : 0);
         if (quantity !== line.quantity) changed = true;
         return quantity > 0 ? [{ ...line, quantity }] : [];
       });
@@ -182,7 +184,7 @@ export default function StoreFront({
       setCart((prev) => {
         const existing = prev.find((l) => l.productId === productId);
         const current = existing?.quantity ?? 0;
-        const target = Math.max(0, Math.min(product.stock, next(current)));
+        const target = Math.max(0, Math.min(purchaseLimit(product), next(current)));
 
         if (target === current) return prev;
         if (target === 0) return prev.filter((l) => l.productId !== productId);
@@ -199,13 +201,18 @@ export default function StoreFront({
       if (!product || product.stock === 0) return;
 
       const alreadyInCart = quantities[productId] ?? 0;
-      const addable = Math.min(amount, product.stock - alreadyInCart);
+      const limit = purchaseLimit(product);
+      const addable = Math.min(amount, limit - alreadyInCart);
       if (addable <= 0) {
-        showToast("Энэ барааны үлдэгдэл таны сагсанд бүрэн орсон байна");
+        showToast(
+          limit < product.stock
+            ? `Нэг захиалгад ${MAX_PER_PRODUCT} ширхэгээс ихгүй авах боломжтой`
+            : "Энэ барааны үлдэгдэл таны сагсанд бүрэн орсон байна",
+        );
         return;
       }
       setLineQuantity(productId, (q) => q + addable);
-      showToast(addable < amount ? `Үлдэгдлийн хэмжээгээр ${addable} ширхэг нэмэгдлээ` : "Сагсанд нэмэгдлээ");
+      showToast(addable < amount ? `Боломжит хэмжээгээр ${addable} ширхэг нэмэгдлээ` : "Сагсанд нэмэгдлээ");
     },
     [productById, quantities, setLineQuantity, showToast],
   );

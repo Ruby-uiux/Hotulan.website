@@ -219,8 +219,24 @@ async function seedDemoExtras(db: DbOrTx): Promise<void> {
   ]);
 }
 
-/** Brand-new database with no legacy JSON: structure + demo catalogue, orders and marketing. */
+/**
+ * Demo products, orders, coupons and drivers exist only outside production. A live store
+ * must never show made-up customers in its order list or count them in revenue.
+ */
+export function demoDataAllowed(): boolean {
+  return process.env.NODE_ENV !== "production";
+}
+
+/** Brand-new production database: categories, zones, slots, settings — no demo rows at all. */
+export async function seedEmptyStore(db: DbOrTx): Promise<void> {
+  await db.transaction(async (tx) => {
+    await seedBaseline(tx, DEFAULT_SETTINGS);
+  });
+}
+
+/** Brand-new database with no legacy JSON: structure + demo catalogue, orders and marketing. Dev only. */
 export async function seedDemoStore(db: DbOrTx): Promise<void> {
+  if (!demoDataAllowed()) throw new Error("Demo data is disabled in production.");
   await db.transaction(async (tx) => {
     await seedBaseline(tx, DEFAULT_SETTINGS);
     await insertSeedProducts(tx, DEMO_PRODUCTS);
@@ -234,6 +250,8 @@ export async function seedDemoStore(db: DbOrTx): Promise<void> {
  * settings, staff, coupons and banners are kept. Must run inside writeTx.
  */
 export async function resetDemoCatalog(tx: DbOrTx): Promise<void> {
+  // Second guard behind the route's: this wipes every order.
+  if (!demoDataAllowed()) throw new Error("Demo reset is disabled in production.");
   await tx.delete(t.orderEvents);
   await tx.delete(t.orderLines);
   await tx.delete(t.orders);

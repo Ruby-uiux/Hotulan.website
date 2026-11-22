@@ -60,9 +60,18 @@ async function prepare(state: DbState, options: { seedIfEmpty: boolean }): Promi
   if (n === 0) {
     // Never seed demo data on top of a store that still has real data waiting in JSON.
     if (existsSync(LEGACY_JSON_FILE)) throw new LegacyDataNotImportedError();
-    const { seedDemoStore } = await import("../seed");
-    await seedDemoStore(state.db);
+    const { demoDataAllowed, seedDemoStore, seedEmptyStore } = await import("../seed");
+    if (demoDataAllowed()) {
+      await seedDemoStore(state.db);
+    } else {
+      // Production: structure only. Products come from the admin panel or `npm run db:import`.
+      await seedEmptyStore(state.db);
+      console.log("[db] Шинэ өгөгдлийн сан: ангилал, хүргэлтийн бүс, тохиргоо үүслээ (demo өгөгдөлгүй).");
+    }
   }
+  // Unpaid QPay reservations are released on a timer as well as lazily on reads.
+  const { startReservationSweeper } = await import("../repo/orders");
+  startReservationSweeper();
   // First super admin from .env — a no-op once any staff member can sign in.
   const { bootstrapOwner } = await import("../repo/people");
   await bootstrapOwner(state.db);

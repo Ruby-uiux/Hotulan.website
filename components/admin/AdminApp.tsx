@@ -41,6 +41,8 @@ interface AdminAppProps {
   renderedAt: string;
   /** Signed-in operator, from the verified session. */
   adminName: string;
+  /** Show "reset demo data" (development only; the API refuses it in production). */
+  demoTools: boolean;
 }
 
 type Toast = { id: number; message: string; tone: "success" | "error" };
@@ -53,6 +55,7 @@ export default function AdminApp({
   categoryNames,
   renderedAt,
   adminName,
+  demoTools,
 }: AdminAppProps) {
   const [signingOut, setSigningOut] = useState(false);
   const signOut = useCallback(async () => {
@@ -183,22 +186,27 @@ export default function AdminApp({
   );
 
   /** Optimistic: the stepper must feel instant during restocking; rolled back if the server refuses. */
+  /**
+   * Restock / write-off as a relative change. The server applies `stock + delta`, so units
+   * sold since this screen loaded are kept; its answer (the real new stock) replaces ours.
+   */
   const changeStock = useCallback(
-    async (productId: string, stock: number) => {
+    async (productId: string, delta: number) => {
+      if (!Number.isInteger(delta) || delta === 0) return;
       mutationSeq.current++;
-      const previous = products.find((p) => p.id === productId)?.stock;
-      const next = Math.max(0, Math.floor(stock));
-      setProducts((prev) => prev.map((p) => (p.id === productId ? { ...p, stock: next } : p)));
+      setProducts((prev) => prev.map((p) => (p.id === productId ? { ...p, stock: Math.max(0, p.stock + delta) } : p)));
       try {
-        await api(`/api/products/${encodeURIComponent(productId)}`, { method: "PATCH", body: { stock: next } });
+        const { product } = await api<{ product: Product }>(`/api/products/${encodeURIComponent(productId)}`, {
+          method: "PATCH",
+          body: { delta },
+        });
+        setProducts((prev) => prev.map((p) => (p.id === productId ? product : p)));
       } catch (err) {
-        if (previous !== undefined) {
-          setProducts((prev) => prev.map((p) => (p.id === productId ? { ...p, stock: previous } : p)));
-        }
+        setProducts((prev) => prev.map((p) => (p.id === productId ? { ...p, stock: Math.max(0, p.stock - delta) } : p)));
         notifyError(err, "Үлдэгдэл хадгалагдсангүй.");
       }
     },
-    [products, notifyError],
+    [notifyError],
   );
 
   // ——— Order mutations ———
@@ -354,7 +362,7 @@ export default function AdminApp({
               key={JSON.stringify(settings)}
               settings={settings}
               onSave={saveSettings}
-              onResetDemoData={resetDemoData}
+              onResetDemoData={demoTools ? resetDemoData : undefined}
             />
           )}
           </CatalogProvider>

@@ -17,7 +17,8 @@ interface ProductsViewProps {
   initialStockFilter: StockFilter;
   onSave: (draft: ProductDraft) => Promise<void>;
   onDelete: (productId: string) => void;
-  onStockChange: (productId: string, stock: number) => void;
+  /** Relative change (+5 restock, −2 write-off) — the server never takes an absolute stock. */
+  onStockChange: (productId: string, delta: number) => void;
 }
 
 const STOCK_FILTERS: ReadonlyArray<{ id: StockFilter; label: string }> = [
@@ -190,7 +191,7 @@ export default function ProductsView({
                     {p.compareAtPrice && <p className="text-xs text-slate-400 line-through">{formatMNT(p.compareAtPrice)}</p>}
                   </td>
                   <td className="px-3 py-3">
-                    <StockStepper key={`${p.id}:${p.stock}`} product={p} onCommit={(n) => onStockChange(p.id, n)} />
+                    <StockStepper key={`${p.id}:${p.stock}`} product={p} onCommit={(n) => onStockChange(p.id, n - p.stock)} />
                   </td>
                   <td className="px-3 py-3">
                     <StockBadge stock={p.stock} threshold={lowStockThreshold} />

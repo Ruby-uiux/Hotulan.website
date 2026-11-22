@@ -1,4 +1,4 @@
-import { and, asc, count, desc, eq, gt, inArray, ne, notInArray, sql } from "drizzle-orm";
+import { and, asc, count, desc, eq, gt, inArray, isNull, ne, notInArray, sql } from "drizzle-orm";
 import {
   STATUS_META,
   canTransition,
@@ -79,6 +79,8 @@ async function withLines(db: DbOrTx, rows: OrderRow[]): Promise<Order[]> {
 
 /** Newest first. */
 export async function listOrders(filter: { status?: OrderStatus; phone?: string; driverId?: string; limit?: number } = {}): Promise<Order[]> {
+  // Staff should never see a stale "new" QPay order whose reservation has already lapsed.
+  await releaseExpiredReservations();
   const db = await getDb();
   const where = and(
     filter.status ? eq(t.orders.status, filter.status) : undefined,
@@ -162,6 +164,8 @@ function toCoupon(r: typeof t.coupons.$inferSelect): Coupon {
  * Everything happens in one transaction: any failure leaves stock and coupons untouched.
  */
 export async function createOrder(input: CheckoutInput): Promise<Order> {
+  // Free lapsed QPay reservations first, so their units are buyable again by this shopper.
+  await releaseExpiredReservations();
   return writeTx(async (tx) => {
     const settings = await getStoreSettings(tx);
     if (!enabledPaymentMethods(settings).includes(input.payment)) {
@@ -308,8 +312,38 @@ async function upsertCustomer(tx: DbOrTx, phone: string, name: string, district:
 /* -------------------------------------------------------------- Admin edits */
 
 /**
- * Moves an order along the flow (see canTransition). Cancelling puts the items back
- * in stock; a return does not, because returned goods are inspected before resale.
+ * Puts an order's items back in stock — at most once per order, ever.
+ *
+ * The guarded UPDATE claims the order (stock_released_at NULL → now) before any stock
+ * moves; a second caller (double click, two admins, the QPay sweeper racing an admin)
+ * finds it already claimed and does nothing. Must run inside the caller's transaction so
+ * the claim and the stock change commit or roll back together.
+ *
+ * @returns false when this order's stock had already been released.
+ */
+async function releaseOrderStock(tx: DbOrTx, order: Order, opts: { freeCoupon: boolean }): Promise<boolean> {
+  const claimed = await tx
+    .update(t.orders)
+    .set({ stockReleasedAt: nowIso() })
+    .where(and(eq(t.orders.id, order.id), isNull(t.orders.stockReleasedAt)))
+    .returning({ id: t.orders.id });
+  if (claimed.length === 0) return false;
+
+  for (const l of order.lines) await returnStock(tx, l.productId, l.variantId, l.quantity);
+  if (opts.freeCoupon && order.couponCode) {
+    // Free the redemption again (guarded so it never goes below zero).
+    await tx
+      .update(t.coupons)
+      .set({ usedCount: sql`${t.coupons.usedCount} - 1` })
+      .where(and(eq(t.coupons.code, order.couponCode), gt(t.coupons.usedCount, 0)));
+  }
+  return true;
+}
+
+/**
+ * Moves an order along the flow (see canTransition). Cancelled and returned orders put
+ * their items back in stock (once — see releaseOrderStock); a cancelled order also frees
+ * its coupon redemption, a returned one doesn't (the discount was used).
  */
 export async function changeOrderStatus(id: string, to: OrderStatus, actor: string): Promise<Order> {
   return writeTx(async (tx) => {
@@ -318,15 +352,8 @@ export async function changeOrderStatus(id: string, to: OrderStatus, actor: stri
     if (!canTransition(order.status, to)) {
       throw new HttpError(409, `“${STATUS_META[order.status].label}” төлөвөөс “${STATUS_META[to].label}” руу шилжих боломжгүй.`);
     }
-    if (to === "cancelled") {
-      for (const l of order.lines) await returnStock(tx, l.productId, l.variantId, l.quantity);
-      if (order.couponCode) {
-        // Free the redemption again (guarded so it never goes below zero).
-        await tx
-          .update(t.coupons)
-          .set({ usedCount: sql`${t.coupons.usedCount} - 1` })
-          .where(and(eq(t.coupons.code, order.couponCode), gt(t.coupons.usedCount, 0)));
-      }
+    if (to === "cancelled" || to === "returned") {
+      await releaseOrderStock(tx, order, { freeCoupon: to === "cancelled" });
     }
     // "Paid" status implies the money arrived.
     const payment: { paymentStatus?: PaymentStatus } = to === "paid" ? { paymentStatus: "paid" } : {};
@@ -385,4 +412,95 @@ export async function slotUsage(deliveryDate: string): Promise<Record<string, nu
     .where(and(eq(t.orders.deliveryDate, deliveryDate), notInArray(t.orders.status, ["cancelled", "returned"])))
     .groupBy(t.orders.deliverySlot);
   return Object.fromEntries(rows.filter((r) => r.slot).map((r) => [r.slot!, r.n]));
+}
+
+/* ------------------------------------------------------- QPay reservations */
+
+/**
+ * An unpaid QPay order holds its stock for this long; then it is cancelled and the
+ * units go back on sale. QPAY_RESERVATION_MINUTES overrides it (e.g. for testing).
+ */
+export function reservationMinutes(): number {
+  const fromEnv = Number(process.env.QPAY_RESERVATION_MINUTES);
+  return Number.isFinite(fromEnv) && fromEnv >= 1 ? fromEnv : 30;
+}
+
+const SWEEP_EVERY_MS = 60_000;
+/** Lazy sweeps (on checkout / order list) run at most this often. */
+const SWEEP_THROTTLE_MS = 30_000;
+
+const sweepState = globalThis as unknown as {
+  __hotulanSweep?: { last: number; running: Promise<number> | null; timer: ReturnType<typeof setInterval> | null };
+};
+function sweeper() {
+  return (sweepState.__hotulanSweep ??= { last: 0, running: null, timer: null });
+}
+
+/**
+ * Cancels new, unpaid QPay orders older than reservationMinutes() and releases their stock.
+ *
+ * Only orders placed through checkout qualify: orders imported from store.json predate
+ * online payment, so their "pending" QPay status says nothing about an abandoned payment.
+ * Each order is cancelled in its own transaction that re-checks the state, so an admin
+ * marking it paid at the same moment wins cleanly.
+ *
+ * @returns how many orders were released.
+ */
+export async function releaseExpiredReservations(opts: { force?: boolean; now?: number } = {}): Promise<number> {
+  const s = sweeper();
+  const now = opts.now ?? Date.now();
+  if (s.running) return s.running;
+  if (!opts.force && now - s.last < SWEEP_THROTTLE_MS) return 0;
+  s.last = now;
+  s.running = (async () => {
+    const db = await getDb();
+    const cutoff = now - reservationMinutes() * 60_000;
+    const candidates = await db
+      .select({ id: t.orders.id, createdAt: t.orders.createdAt })
+      .from(t.orders)
+      .where(and(eq(t.orders.payment, "qpay"), eq(t.orders.paymentStatus, "pending"), eq(t.orders.status, "new"), isNull(t.orders.stockReleasedAt)));
+    // Compare instants in JS: stored timestamps mix "Z" and "+08:00" offsets.
+    const expired = candidates.filter((c) => Date.parse(c.createdAt) < cutoff).map((c) => c.id);
+    if (expired.length === 0) return 0;
+    const imported = new Set(
+      (await db.select({ id: t.orderEvents.orderId }).from(t.orderEvents).where(and(inArray(t.orderEvents.orderId, expired), eq(t.orderEvents.type, "imported")))).map((r) => r.id),
+    );
+
+    let released = 0;
+    for (const id of expired.filter((x) => !imported.has(x))) {
+      const done = await writeTx(async (tx) => {
+        const order = await getOrder(id, tx);
+        // Re-check inside the transaction: it may have been paid or cancelled meanwhile.
+        if (!order || order.status !== "new" || order.paymentStatus !== "pending" || order.payment !== "qpay") return false;
+        if (!(await releaseOrderStock(tx, order, { freeCoupon: true }))) return false;
+        await tx.update(t.orders).set({ status: "cancelled", paymentStatus: "failed", updatedAt: nowIso() }).where(eq(t.orders.id, id));
+        await addEvent(tx, {
+          orderId: id,
+          type: "status",
+          message: `QPay төлбөр ${reservationMinutes()} минутад хийгдээгүй тул автоматаар цуцлагдаж, нөөц суллагдлаа`,
+          actor: "system",
+          fromStatus: "new",
+          toStatus: "cancelled",
+        });
+        return true;
+      });
+      if (done) released++;
+    }
+    if (released > 0) console.log(`[orders] ${released} төлөгдөөгүй QPay захиалгын нөөц суллагдлаа.`);
+    return released;
+  })().finally(() => {
+    s.running = null;
+  });
+  return s.running;
+}
+
+/** Background timer for long-running servers (`next start`); one per process. */
+export function startReservationSweeper(): void {
+  const s = sweeper();
+  if (s.timer) return;
+  s.timer = setInterval(() => {
+    releaseExpiredReservations().catch((err) => console.error("[orders] reservation sweep failed", err));
+  }, SWEEP_EVERY_MS);
+  // Never keep a script or a shutting-down server alive just for this.
+  s.timer.unref?.();
 }

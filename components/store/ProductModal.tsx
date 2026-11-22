@@ -2,7 +2,7 @@
 
 import { CheckCircle2, Minus, Plus, RotateCcw, ShieldCheck, ShoppingCart, Truck, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import { formatMNT, type Product } from "@/lib/catalog";
+import { MAX_PER_PRODUCT, formatMNT, purchaseLimit, type Product } from "@/lib/catalog";
 import { useCatalog } from "./CatalogContext";
 import { useOverlay } from "@/lib/useOverlay";
 import Rating from "./Rating";
@@ -28,7 +28,7 @@ function ProductDialog({
   onAddToCart,
 }: Omit<ProductModalProps, "product"> & { product: Product }) {
   const { categoryName } = useCatalog();
-  const available = Math.max(0, product.stock - quantityInCart);
+  const available = Math.max(0, purchaseLimit(product) - quantityInCart);
   const [quantity, setQuantity] = useState(available > 0 ? 1 : 0);
   const closeRef = useRef<HTMLButtonElement>(null);
 
@@ -160,7 +160,9 @@ function ProductDialog({
               </p>
             ) : available === 0 ? (
               <p className="rounded-lg bg-amber-50 py-3 text-center text-sm font-semibold text-amber-700">
-                Үлдэгдэл бүхэлдээ таны сагсанд байна ({quantityInCart} ширхэг)
+                {product.stock > MAX_PER_PRODUCT
+                  ? `Нэг захиалгад ${MAX_PER_PRODUCT} ширхэг хүртэл — сагсанд ${quantityInCart} байна`
+                  : `Үлдэгдэл бүхэлдээ таны сагсанд байна (${quantityInCart} ширхэг)`}
               </p>
             ) : (
               <div className="flex items-center gap-3">

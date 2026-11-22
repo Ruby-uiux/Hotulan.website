@@ -214,11 +214,18 @@ export const orders = sqliteTable(
     ebarimtType: text("ebarimt_type", { enum: ["person", "company"] }).notNull().default("person"),
     ebarimtRegNo: text("ebarimt_reg_no"),
     driverId: text("driver_id").references(() => staff.id, { onDelete: "set null" }),
+    /**
+     * Set once, in the same transaction that puts the order's items back on the shelf
+     * (cancelled, returned, or an expired unpaid QPay reservation). A non-null value
+     * means "already restocked" — the guard that stops stock being returned twice.
+     */
+    stockReleasedAt: text("stock_released_at"),
     createdAt: createdAt(),
     updatedAt: updatedAt(),
   },
   (t) => [
     index("orders_created_idx").on(t.createdAt),
+    index("orders_reservation_idx").on(t.payment, t.paymentStatus, t.status, t.createdAt),
     index("orders_status_idx").on(t.status),
     index("orders_phone_idx").on(t.phone),
     index("orders_customer_idx").on(t.customerId),

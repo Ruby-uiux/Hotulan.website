@@ -1,7 +1,7 @@
 "use client";
 
 import { Check, Eye, ShoppingCart } from "lucide-react";
-import { formatMNT, type Product } from "@/lib/catalog";
+import { MAX_PER_PRODUCT, formatMNT, purchaseLimit, type Product } from "@/lib/catalog";
 import { useCatalog } from "./CatalogContext";
 import Rating from "./Rating";
 import SafeImage from "./SafeImage";
@@ -25,7 +25,7 @@ const LOW_STOCK_THRESHOLD = 5;
 export default function ProductCard({ product, quantityInCart, onAddToCart, onQuickView }: ProductCardProps) {
   const { categoryName } = useCatalog();
   const soldOut = product.stock === 0;
-  const reachedLimit = !soldOut && quantityInCart >= product.stock;
+  const reachedLimit = !soldOut && quantityInCart >= purchaseLimit(product);
   const discountPct = product.compareAtPrice
     ? Math.round((1 - product.price / product.compareAtPrice) * 100)
     : 0;
@@ -109,7 +109,7 @@ export default function ProductCard({ product, quantityInCart, onAddToCart, onQu
             className="inline-flex h-10 items-center justify-center gap-2 rounded-lg bg-brand text-sm font-bold text-white shadow-sm shadow-brand/20 transition hover:bg-brand-dark active:scale-[0.98] disabled:cursor-not-allowed disabled:bg-slate-200 disabled:text-slate-500 disabled:shadow-none"
           >
             <ShoppingCart className="h-4 w-4" aria-hidden="true" />
-            {soldOut ? "Дууссан" : reachedLimit ? "Үлдэгдэл хүрлээ" : "Сагсанд хийх"}
+            {soldOut ? "Дууссан" : reachedLimit ? (product.stock > MAX_PER_PRODUCT ? `${MAX_PER_PRODUCT} ширхэг хүрлээ` : "Үлдэгдэл хүрлээ") : "Сагсанд хийх"}
           </button>
           <button
             type="button"

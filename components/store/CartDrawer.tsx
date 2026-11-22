@@ -13,7 +13,7 @@ import {
   X,
 } from "lucide-react";
 import { useEffect, useRef, useState, type FormEvent } from "react";
-import { formatMNT, type Product } from "@/lib/catalog";
+import { MAX_PER_PRODUCT, formatMNT, purchaseLimit, type Product } from "@/lib/catalog";
 import { PAYMENT_LABEL, type PaymentMethod } from "@/lib/admin-data";
 import { computeDeliveryFee, type DeliveryZone } from "@/lib/delivery";
 import { useOverlay } from "@/lib/useOverlay";
@@ -327,7 +327,7 @@ export default function CartDrawer({
 
             <ul className="flex-1 divide-y divide-slate-100 overflow-y-auto px-5">
               {items.map(({ product, quantity }) => {
-                const atStockLimit = quantity >= product.stock;
+                const atStockLimit = quantity >= purchaseLimit(product);
                 return (
                   <li key={product.id} className="flex gap-4 py-4">
                     <SafeImage
@@ -374,7 +374,9 @@ export default function CartDrawer({
                             </button>
                           </div>
                           {atStockLimit && (
-                            <p className="mt-1 text-[11px] font-medium text-amber-600">Үлдэгдэл: {product.stock} ширхэг</p>
+                            <p className="mt-1 text-[11px] font-medium text-amber-600">
+                              {product.stock > MAX_PER_PRODUCT ? `Нэг захиалгад ${MAX_PER_PRODUCT} хүртэл` : `Үлдэгдэл: ${product.stock} ширхэг`}
+                            </p>
                           )}
                         </div>
                         <p className="text-sm font-bold text-slate-900">{formatMNT(product.price * quantity)}</p>

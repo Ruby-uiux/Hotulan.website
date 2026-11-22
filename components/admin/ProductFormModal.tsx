@@ -214,11 +214,15 @@ function ProductForm({
           />
         </div>
 
+        {/* Opening stock only. Afterwards stock moves by +/− in the product list, so saving this
+            form can never undo sales made while it was open. */}
         <Input
           id="pf-stock"
-          label="Үлдэгдэл тоо"
-          required
-          error={showError("stock")}
+          label={product ? "Үлдэгдэл" : "Эхний үлдэгдэл"}
+          required={!product}
+          disabled={!!product}
+          hint={product ? "Жагсаалтын +/− товчоор нэмж, хасна" : undefined}
+          error={product ? undefined : showError("stock")}
           controlClassName="tabular-nums sm:w-40"
           inputMode="numeric"
           value={form.stock}

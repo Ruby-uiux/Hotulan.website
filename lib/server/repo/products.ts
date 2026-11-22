@@ -3,6 +3,7 @@ import { isPublished, type Product, type ProductBadge, type ProductStatus, type 
 import { getDb, nowIso, writeTx, type DbOrTx } from "../db/client";
 import * as t from "../db/schema";
 import { HttpError } from "../errors";
+import { recordAudit } from "./people";
 
 type ProductRow = typeof t.products.$inferSelect;
 type VariantRow = typeof t.productVariants.$inferSelect;
@@ -175,7 +176,9 @@ export async function updateProduct(id: string, input: ProductInput): Promise<Pr
   try {
     return await writeTx(async (tx) => {
       await assertCategory(tx, input.category, input.subcategory);
-      const updated = await tx.update(t.products).set({ ...toRow(input), updatedAt: nowIso() }).where(eq(t.products.id, id)).returning({ id: t.products.id });
+      // Stock is deliberately not written here — it only moves by adjustProductStock() or orders.
+      const { stock: _stock, ...row } = toRow(input);
+      const updated = await tx.update(t.products).set({ ...row, updatedAt: nowIso() }).where(eq(t.products.id, id)).returning({ id: t.products.id });
       if (updated.length === 0) throw new HttpError(404, "Бараа олдсонгүй. Өөр хэрэглэгч устгасан байж магадгүй.");
       return (await getProduct(id, tx))!;
     });
@@ -185,10 +188,38 @@ export async function updateProduct(id: string, input: ProductInput): Promise<Pr
   }
 }
 
-export async function setProductStock(id: string, stock: number): Promise<Product> {
+/**
+ * Restock or write-off by a relative amount (+5, −2) — never by overwriting the number.
+ *
+ * An absolute "set to 12" from a screen loaded a minute ago would silently undo every
+ * sale made in that minute; `stock = stock + delta` keeps them. The WHERE guard refuses a
+ * delta that would take stock below zero instead of clamping it.
+ *
+ * Products with variants keep stock per variant (the product row is their total), so a
+ * product-level delta is refused for them.
+ */
+export async function adjustProductStock(id: string, delta: number, actor: string): Promise<Product> {
   return writeTx(async (tx) => {
-    const updated = await tx.update(t.products).set({ stock, updatedAt: nowIso() }).where(eq(t.products.id, id)).returning({ id: t.products.id });
-    if (updated.length === 0) throw new HttpError(404, "Бараа олдсонгүй.");
+    const product = await getProduct(id, tx);
+    if (!product) throw new HttpError(404, "Бараа олдсонгүй.");
+    if (product.variants.length > 0) {
+      throw new HttpError(400, "Хувилбартай барааны үлдэгдлийг хувилбар бүрээр нь засна.");
+    }
+    const updated = await tx
+      .update(t.products)
+      .set({ stock: sql`${t.products.stock} + ${delta}`, updatedAt: nowIso() })
+      .where(and(eq(t.products.id, id), gte(sql`${t.products.stock} + ${delta}`, 0)))
+      .returning({ stock: t.products.stock });
+    if (updated.length === 0) {
+      throw new HttpError(409, `Үлдэгдэл ${product.stock} ширхэг тул ${Math.abs(delta)} ширхэг хасах боломжгүй.`, { available: product.stock });
+    }
+    await recordAudit(tx, {
+      actor,
+      action: "stock",
+      entity: "product",
+      entityId: id,
+      summary: `${delta > 0 ? "+" : "−"}${Math.abs(delta)} → ${updated[0].stock} ширхэг`,
+    });
     return (await getProduct(id, tx))!;
   });
 }

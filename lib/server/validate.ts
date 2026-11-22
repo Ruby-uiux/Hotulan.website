@@ -1,4 +1,4 @@
-import { PRODUCT_BADGES, type Product, type ProductBadge, type ProductStatus } from "../catalog";
+import { MAX_PER_PRODUCT, PRODUCT_BADGES, type Product, type ProductBadge, type ProductStatus } from "../catalog";
 import { isCategoryIcon, SLUG_PATTERN } from "../categories";
 import {
   isOrderStatus,
@@ -129,7 +129,9 @@ export function parseProductInput(body: unknown, existing: Product | null): Prod
     image,
     gallery,
     badge,
-    stock: int(b.stock ?? e?.stock, "Үлдэгдэл", { min: 0, max: 1_000_000 }),
+    // Opening stock on create only. On edit the current value is carried through and the
+    // repository never writes it — stock moves by +/− deltas (parseStockDelta) and orders.
+    stock: e ? e.stock : int(b.stock ?? 0, "Үлдэгдэл", { min: 0, max: 1_000_000 }),
     lowStockAlert: optInt(b.lowStockAlert, "Анхааруулах үлдэгдэл", e?.lowStockAlert ?? null, { min: 0, max: 100_000 }),
     status,
     publishAt,
@@ -142,8 +144,15 @@ export function parseProductInput(body: unknown, existing: Product | null): Prod
   };
 }
 
-export function parseStock(body: unknown): number {
-  return int(asObject(body).stock, "Үлдэгдэл", { min: 0, max: 1_000_000 });
+/** `{ delta: +5 }` restocks, `{ delta: -2 }` writes off. An absolute `stock` is rejected on purpose. */
+export function parseStockDelta(body: unknown): number {
+  const b = asObject(body);
+  if (b.delta === undefined && b.stock !== undefined) {
+    throw new HttpError(400, "Үлдэгдлийг шинэ утгаар бус, нэмэх/хасах дүнгээр (delta) илгээнэ үү.");
+  }
+  const delta = int(b.delta, "Үлдэгдлийн өөрчлөлт", { min: -1_000_000, max: 1_000_000 });
+  if (delta === 0) throw new HttpError(400, "Үлдэгдлийн өөрчлөлт 0 байж болохгүй.");
+  return delta;
 }
 
 export function parseStatus(body: unknown): OrderStatus {
@@ -185,10 +194,22 @@ export function parseCheckout(body: unknown): CheckoutInput {
     const l = asObject(raw);
     const productId = str(l.productId, "Бараа", { min: 1, max: 100 });
     const variantId = empty(l.variantId) ? null : str(l.variantId, "Хувилбар", { min: 1, max: 100 });
-    const quantity = int(l.quantity, "Тоо ширхэг", { min: 1, max: 99 });
+    const quantity = int(l.quantity, "Тоо ширхэг", { min: 1, max: MAX_PER_PRODUCT });
     const key = `${productId}::${variantId ?? ""}`;
     const prev = merged.get(key);
     merged.set(key, { productId, variantId, quantity: (prev?.quantity ?? 0) + quantity });
+  }
+  // The cap is per product across all its variants and duplicate lines — one order
+  // can't reserve a whole shelf (see MAX_PER_PRODUCT).
+  const perProduct = new Map<string, number>();
+  for (const l of merged.values()) perProduct.set(l.productId, (perProduct.get(l.productId) ?? 0) + l.quantity);
+  for (const [productId, total] of perProduct) {
+    if (total > MAX_PER_PRODUCT) {
+      throw new HttpError(400, `Нэг захиалгад нэг бараанаас ${MAX_PER_PRODUCT} ширхэгээс ихгүй авах боломжтой.`, {
+        productId,
+        available: MAX_PER_PRODUCT,
+      });
+    }
   }
 
   return {

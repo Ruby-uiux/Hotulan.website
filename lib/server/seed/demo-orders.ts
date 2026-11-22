@@ -3,6 +3,9 @@
  * real import, so the demo exercises legacy statuses ("delivery", "completed") and
  * legacy payment methods (socialpay, card, cash) exactly like migrated data.
  */
+import { DEFAULT_SETTINGS } from "@/lib/admin-data";
+import { computeDeliveryFee } from "@/lib/delivery";
+import { ZONE_SEED } from "./baseline";
 import { DEMO_PRODUCTS } from "./demo-products";
 import type { LegacyOrder } from "./types";
 
@@ -13,10 +16,19 @@ function line(productId: string, quantity: number): LegacyOrder["lines"][number]
   return { productId, title: p.title, unitPrice: p.price, quantity };
 }
 
-/** Old rule: 5,000₮ delivery, free from 200,000₮. */
+/** Same fee rule as checkout: the seeded zone's fee, waived above the free-delivery threshold. */
 function makeOrder(o: Omit<LegacyOrder, "deliveryFee">): LegacyOrder {
+  const zone = ZONE_SEED.find((z) => z.name === o.district);
+  if (!zone) throw new Error(`Demo order ${o.id}: unknown district ${o.district}`);
   const subtotal = o.lines.reduce((s, l) => s + l.unitPrice * l.quantity, 0);
-  return { ...o, deliveryFee: subtotal >= 200_000 ? 0 : 5_000 };
+  const deliveryFee = computeDeliveryFee({
+    zone,
+    subtotal,
+    freeDeliveryThreshold: DEFAULT_SETTINGS.freeDeliveryThreshold,
+    hasOversized: false,
+    oversizedFee: DEFAULT_SETTINGS.oversizedFee,
+  });
+  return { ...o, deliveryFee };
 }
 
 export const DEMO_ORDERS: LegacyOrder[] = [

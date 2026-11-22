@@ -110,6 +110,17 @@ export const SORT_OPTIONS: ReadonlyArray<{ id: SortKey; label: string }> = [
  * Fixed en-US grouping keeps server and client output identical (no hydration drift
  * from differing ICU data) and matches how ₮ prices are printed on local receipts.
  */
+/**
+ * Most units of one product a single order may contain. Enforced by the server
+ * (lib/server/validate.ts) and mirrored in the cart so shoppers never hit the error.
+ */
+export const MAX_PER_PRODUCT = 10;
+
+/** How many of `product` one order may hold: its stock, capped at MAX_PER_PRODUCT. */
+export function purchaseLimit(product: Pick<Product, "stock">): number {
+  return Math.max(0, Math.min(product.stock, MAX_PER_PRODUCT));
+}
+
 export function formatMNT(value: number): string {
   return `${Math.round(value).toLocaleString("en-US")}₮`;
 }
