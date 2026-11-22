@@ -8,6 +8,7 @@ import {
   ORDER_STATUSES,
   dayKey,
   formatDateTime,
+  countsAsRevenue,
   orderTotal,
   type AdminView,
   type Order,
@@ -26,8 +27,10 @@ interface DashboardViewProps {
 
 const WEEKDAY_MN = ["Ня", "Да", "Мя", "Лх", "Пү", "Ба", "Бя"];
 
-/** Revenue only counts money actually received; "new" orders are still awaiting payment. */
-const isPaid = (o: Order) => o.status !== "new";
+/** Revenue only counts money actually received, and never cancelled or returned orders. */
+const isPaid = (o: Order) => o.paymentStatus === "paid" && countsAsRevenue(o);
+/** Still to be collected: live orders whose payment hasn't arrived (incl. cash on delivery). */
+const isAwaitingPayment = (o: Order) => o.paymentStatus === "pending" && countsAsRevenue(o);
 
 function formatCompact(value: number): string {
   if (value >= 1_000_000) return `${(value / 1_000_000).toFixed(value >= 10_000_000 ? 0 : 1)} сая₮`;
@@ -38,13 +41,13 @@ function formatCompact(value: number): string {
 export default function DashboardView({ products, orders, lowStockThreshold, onNavigate, now }: DashboardViewProps) {
   const stats = useMemo(() => {
     const paid = orders.filter(isPaid);
-    const pending = orders.filter((o) => !isPaid(o));
+    const pending = orders.filter(isAwaitingPayment);
     const lowOrOut = products.filter((p) => p.stock <= lowStockThreshold);
     return {
       revenue: paid.reduce((s, o) => s + orderTotal(o), 0),
       pendingAmount: pending.reduce((s, o) => s + orderTotal(o), 0),
       orderCount: orders.length,
-      newCount: pending.length,
+      newCount: orders.filter((o) => o.status === "new").length,
       unitsInStock: products.reduce((s, p) => s + Math.max(0, p.stock), 0),
       skuCount: products.length,
       lowCount: lowOrOut.length,

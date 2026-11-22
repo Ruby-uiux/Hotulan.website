@@ -2,7 +2,8 @@
 
 import { CheckCircle2, Minus, Plus, RotateCcw, ShieldCheck, ShoppingCart, Truck, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
-import { CATEGORY_LABEL, formatMNT, type Product } from "@/lib/catalog";
+import { formatMNT, type Product } from "@/lib/catalog";
+import { useCatalog } from "./CatalogContext";
 import { useOverlay } from "@/lib/useOverlay";
 import Rating from "./Rating";
 import SafeImage from "./SafeImage";
@@ -26,6 +27,7 @@ function ProductDialog({
   onClose,
   onAddToCart,
 }: Omit<ProductModalProps, "product"> & { product: Product }) {
+  const { categoryName } = useCatalog();
   const available = Math.max(0, product.stock - quantityInCart);
   const [quantity, setQuantity] = useState(available > 0 ? 1 : 0);
   const closeRef = useRef<HTMLButtonElement>(null);
@@ -72,7 +74,7 @@ function ProductDialog({
         <div className="flex min-h-0 flex-1 flex-col overflow-y-auto">
           <div className="p-6 sm:p-8">
             <p className="text-xs font-semibold uppercase tracking-wider text-brand">
-              {product.brand} · {CATEGORY_LABEL[product.category]}
+              {product.brand} · {categoryName(product.category)}
             </p>
             <h2 id="product-dialog-title" className="mt-2 pr-8 text-2xl font-bold leading-tight text-slate-900">
               {product.title}

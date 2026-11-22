@@ -5,7 +5,8 @@ import { Fragment, useMemo, useState } from "react";
 import { formatMNT } from "@/lib/catalog";
 import {
   ORDER_STATUSES,
-  PAYMENT_LABEL,
+  canTransition,
+  paymentLabel,
   STATUS_META,
   byNewest,
   formatDateTime,
@@ -28,7 +29,7 @@ export default function OrdersView({ orders, onStatusChange }: OrdersViewProps) 
   const [expanded, setExpanded] = useState<string | null>(null);
 
   const counts = useMemo(() => {
-    const c: Record<OrderStatus | "all", number> = { all: orders.length, new: 0, paid: 0, delivery: 0, completed: 0 };
+    const c = Object.fromEntries([["all", orders.length], ...ORDER_STATUSES.map((s) => [s.id, 0])]) as Record<OrderStatus | "all", number>;
     for (const o of orders) c[o.status] += 1;
     return c;
   }, [orders]);
@@ -164,7 +165,7 @@ export default function OrdersView({ orders, onStatusChange }: OrdersViewProps) 
                       </td>
                       <td className="whitespace-nowrap px-3 py-3 tabular-nums text-slate-600">{formatDateTime(o.createdAt)}</td>
                       <td className="px-3 py-3 text-right font-bold tabular-nums text-slate-900">{formatMNT(orderTotal(o))}</td>
-                      <td className="px-3 py-3 text-slate-600">{PAYMENT_LABEL[o.payment]}</td>
+                      <td className="px-3 py-3 text-slate-600">{paymentLabel(o.payment)}</td>
                       <td className="px-5 py-3">
                         <StatusSelect status={o.status} orderId={o.id} onChange={(s) => onStatusChange(o.id, s)} />
                       </td>
@@ -218,6 +219,9 @@ export default function OrdersView({ orders, onStatusChange }: OrdersViewProps) 
 /** Native select (keyboard + mobile pickers for free) dressed as the status badge it controls. */
 function StatusSelect({ status, orderId, onChange }: { status: OrderStatus; orderId: string; onChange: (s: OrderStatus) => void }) {
   const meta = STATUS_META[status];
+  // Only legal moves are offered (forward along the flow, or cancel/return); final states lock.
+  const options = ORDER_STATUSES.filter((s) => s.id === status || canTransition(status, s.id));
+  const locked = options.length === 1;
   return (
     <div className="relative inline-flex">
       <span className={`pointer-events-none absolute left-2.5 top-1/2 h-1.5 w-1.5 -translate-y-1/2 rounded-full ${meta.dot}`} aria-hidden="true" />
@@ -225,9 +229,10 @@ function StatusSelect({ status, orderId, onChange }: { status: OrderStatus; orde
         value={status}
         onChange={(e) => onChange(e.target.value as OrderStatus)}
         aria-label={`${orderId} — төлөв өөрчлөх`}
-        className={`h-8 cursor-pointer appearance-none rounded-full py-0 pl-6 pr-8 text-xs font-semibold ring-1 ring-inset transition focus:outline-none focus:ring-2 focus:ring-brand ${meta.tone}`}
+        disabled={locked}
+        className={`h-8 cursor-pointer disabled:cursor-default appearance-none rounded-full py-0 pl-6 pr-8 text-xs font-semibold ring-1 ring-inset transition focus:outline-none focus:ring-2 focus:ring-brand ${meta.tone}`}
       >
-        {ORDER_STATUSES.map((s) => (
+        {options.map((s) => (
           <option key={s.id} value={s.id}>
             {s.label}
           </option>

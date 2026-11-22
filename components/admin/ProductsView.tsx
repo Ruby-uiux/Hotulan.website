@@ -2,10 +2,10 @@
 
 import { Minus, PackagePlus, PackageSearch, Pencil, Plus, Search, Trash2, X } from "lucide-react";
 import { useMemo, useState, type KeyboardEvent } from "react";
-import { CATEGORY_LABEL, formatMNT, type CategoryId, type Product } from "@/lib/catalog";
-import { CATEGORY_OPTIONS } from "@/lib/admin-data";
+import { formatMNT, type CategoryId, type Product } from "@/lib/catalog";
+import { useCatalog } from "@/components/store/CatalogContext";
 import SafeImage from "@/components/store/SafeImage";
-import ProductFormModal from "./ProductFormModal";
+import ProductFormModal, { type ProductDraft } from "./ProductFormModal";
 import { Button, ConfirmDialog, Input, Select } from "@/components/ui";
 import { EmptyState, StockBadge, stockLevel, type StockLevel } from "./ui";
 
@@ -15,7 +15,7 @@ interface ProductsViewProps {
   products: Product[];
   lowStockThreshold: number;
   initialStockFilter: StockFilter;
-  onSave: (product: Product) => Promise<void>;
+  onSave: (draft: ProductDraft) => Promise<void>;
   onDelete: (productId: string) => void;
   onStockChange: (productId: string, stock: number) => void;
 }
@@ -41,6 +41,7 @@ export default function ProductsView({
   onDelete,
   onStockChange,
 }: ProductsViewProps) {
+  const { categories, categoryName } = useCatalog();
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState<CategoryId | "all">("all");
   const [stockFilter, setStockFilter] = useState<StockFilter>(initialStockFilter);
@@ -121,7 +122,7 @@ export default function ProductsView({
             onChange={(e) => setCategory(e.target.value as CategoryId | "all")}
             aria-label="Ангиллаар шүүх"
             controlClassName="sm:w-44"
-            options={[{ value: "all", label: "Бүх ангилал" }, ...CATEGORY_OPTIONS.map((c) => ({ value: c.id, label: c.label }))]}
+            options={[{ value: "all", label: "Бүх ангилал" }, ...categories.filter((c) => c.id !== "all").map((c) => ({ value: c.id, label: c.label }))]}
           />
           <Select
             value={stockFilter}
@@ -183,7 +184,7 @@ export default function ProductsView({
                       </div>
                     </div>
                   </td>
-                  <td className="px-3 py-3 text-slate-600">{CATEGORY_LABEL[p.category]}</td>
+                  <td className="px-3 py-3 text-slate-600">{categoryName(p.category)}</td>
                   <td className="px-3 py-3 text-right tabular-nums">
                     <p className="font-semibold text-slate-900">{formatMNT(p.price)}</p>
                     {p.compareAtPrice && <p className="text-xs text-slate-400 line-through">{formatMNT(p.compareAtPrice)}</p>}

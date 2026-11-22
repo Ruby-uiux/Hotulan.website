@@ -12,8 +12,10 @@ import {
   type OrderStatus,
   type StoreSettings,
 } from "@/lib/admin-data";
+import { CatalogProvider, type NavCategory } from "@/components/store/CatalogContext";
 import DashboardView from "./DashboardView";
 import OrdersView from "./OrdersView";
+import type { ProductDraft } from "./ProductFormModal";
 import ProductsView, { type StockFilter } from "./ProductsView";
 import SettingsView from "./SettingsView";
 import Sidebar, { NAV_ITEMS } from "./Sidebar";
@@ -32,6 +34,9 @@ interface AdminAppProps {
   initialProducts: Product[];
   initialOrders: Order[];
   initialSettings: StoreSettings;
+  /** Every root category (hidden/empty included) for the product form and filters. */
+  categories: NavCategory[];
+  categoryNames: Record<string, string>;
   /** Server render time — keeps the 7-day chart identical between SSR and hydration. */
   renderedAt: string;
   /** Signed-in operator, from the verified session. */
@@ -40,7 +45,15 @@ interface AdminAppProps {
 
 type Toast = { id: number; message: string; tone: "success" | "error" };
 
-export default function AdminApp({ initialProducts, initialOrders, initialSettings, renderedAt, adminName }: AdminAppProps) {
+export default function AdminApp({
+  initialProducts,
+  initialOrders,
+  initialSettings,
+  categories,
+  categoryNames,
+  renderedAt,
+  adminName,
+}: AdminAppProps) {
   const [signingOut, setSigningOut] = useState(false);
   const signOut = useCallback(async () => {
     setSigningOut(true);
@@ -142,17 +155,17 @@ export default function AdminApp({ initialProducts, initialOrders, initialSettin
 
   /** Throws on failure so the form can show the server's message and stay open. */
   const saveProduct = useCallback(
-    async (draft: Product) => {
+    async (draft: ProductDraft) => {
       mutationSeq.current++;
-      const isNew = !products.some((p) => p.id === draft.id);
+      const isNew = draft.id === undefined;
       const { product } = isNew
         ? await api<{ product: Product }>("/api/products", { method: "POST", body: draft })
-        : await api<{ product: Product }>(`/api/products/${encodeURIComponent(draft.id)}`, { method: "PUT", body: draft });
+        : await api<{ product: Product }>(`/api/products/${encodeURIComponent(draft.id!)}`, { method: "PUT", body: draft });
 
       setProducts((prev) => (isNew ? [product, ...prev] : prev.map((p) => (p.id === product.id ? product : p))));
       notify(isNew ? "Шинэ бараа нэмэгдэж, дэлгүүрт нийтлэгдлээ" : "Барааны мэдээлэл шинэчлэгдлээ");
     },
-    [notify, products],
+    [notify],
   );
 
   const deleteProduct = useCallback(
@@ -196,7 +209,16 @@ export default function AdminApp({ initialProducts, initialOrders, initialSettin
       const previous = orders.find((o) => o.id === orderId)?.status;
       setOrders((prev) => prev.map((o) => (o.id === orderId ? { ...o, status } : o)));
       try {
-        await api(`/api/orders/${encodeURIComponent(orderId)}`, { method: "PATCH", body: { status } });
+        const { order } = await api<{ order: Order }>(`/api/orders/${encodeURIComponent(orderId)}`, {
+          method: "PATCH",
+          body: { status },
+        });
+        // The server may also change payment status; cancelling puts stock back.
+        setOrders((prev) => prev.map((o) => (o.id === order.id ? order : o)));
+        if (status === "cancelled") {
+          const { products: fresh } = await api<{ products: Product[] }>("/api/products");
+          setProducts(fresh);
+        }
         notify(`${orderId} → ${STATUS_META[status].label}`);
       } catch (err) {
         if (previous) setOrders((prev) => prev.map((o) => (o.id === orderId ? { ...o, status: previous } : o)));
@@ -305,6 +327,7 @@ export default function AdminApp({ initialProducts, initialOrders, initialSettin
         </header>
 
         <main className="mx-auto w-full max-w-[1400px] flex-1 p-4 sm:p-6 lg:p-8">
+          <CatalogProvider categories={categories} names={categoryNames}>
           {view === "dashboard" && (
             <DashboardView
               products={products}
@@ -334,6 +357,7 @@ export default function AdminApp({ initialProducts, initialOrders, initialSettin
               onResetDemoData={resetDemoData}
             />
           )}
+          </CatalogProvider>
         </main>
       </div>
 

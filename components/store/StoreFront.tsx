@@ -3,7 +3,6 @@
 import { ArrowUp, CheckCircle2 } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
 import {
-  CATEGORY_LABEL,
   SORT_OPTIONS,
   type CartLine,
   type CategoryFilter,
@@ -13,8 +12,10 @@ import {
 } from "@/lib/catalog";
 import { useRouter } from "next/navigation";
 import { api, ApiError } from "@/lib/api-client";
-import type { Order } from "@/lib/admin-data";
+import type { Order, PaymentMethod } from "@/lib/admin-data";
+import type { DeliveryZone } from "@/lib/delivery";
 import { applyCatalogQuery, countByCategory } from "@/lib/filtering";
+import { CatalogProvider, type NavCategory } from "./CatalogContext";
 import CartDrawer, { type CartItem, type CheckoutDetails, type PlacedOrder } from "./CartDrawer";
 import FilterBar from "./FilterBar";
 import Header from "./Header";
@@ -24,6 +25,15 @@ import ProductModal from "./ProductModal";
 interface StoreFrontProps {
   /** Live catalog from the shared store; re-delivered by router.refresh() after admin edits or checkout. */
   products: Product[];
+  /** Visible root categories for the tabs (hidden and empty ones already removed). */
+  categories: NavCategory[];
+  /** id → name for every category, including subcategories. */
+  categoryNames: Record<string, string>;
+  /** Active delivery districts with fees. */
+  zones: DeliveryZone[];
+  /** Payment methods enabled in settings. */
+  paymentMethods: PaymentMethod[];
+  oversizedFee: number;
   freeDeliveryThreshold: number;
   supportPhone: string;
   /** Server-rendered hero, slotted in so it stays out of the client bundle. */
@@ -41,7 +51,18 @@ const TOAST_DURATION_MS = 2600;
 
 const CART_STORAGE_KEY = "hotulan.cart.v1";
 
-export default function StoreFront({ products, freeDeliveryThreshold, supportPhone, hero, children }: StoreFrontProps) {
+export default function StoreFront({
+  products,
+  categories,
+  categoryNames,
+  zones,
+  paymentMethods,
+  oversizedFee,
+  freeDeliveryThreshold,
+  supportPhone,
+  hero,
+  children,
+}: StoreFrontProps) {
   const router = useRouter();
   // Catalog view state
   const [query, setQuery] = useState("");
@@ -112,13 +133,13 @@ export default function StoreFront({ products, freeDeliveryThreshold, supportPho
   }, [router]);
 
   const visibleProducts = useMemo(
-    () => applyCatalogQuery(products, { query, category, priceBand, sort }),
-    [products, query, category, priceBand, sort],
+    () => applyCatalogQuery(products, { query, category, priceBand, sort }, categoryNames),
+    [products, query, category, priceBand, sort, categoryNames],
   );
 
   const categoryCounts = useMemo(
-    () => countByCategory(products, { query, priceBand }),
-    [products, query, priceBand],
+    () => countByCategory(products, { query, priceBand }, categoryNames),
+    [products, query, priceBand, categoryNames],
   );
 
   // Lines whose product vanished from the catalog (e.g. delisted between sessions) are dropped silently.
@@ -250,16 +271,18 @@ export default function StoreFront({ products, freeDeliveryThreshold, supportPho
   // state here keeps the hero JS-free and makes category links shareable.
   useEffect(() => {
     const applyHash = () => {
-      const match = /^#category-(all|toys|home|electronics|sports)$/.exec(window.location.hash);
+      const match = /^#category-([a-z0-9-]+)$/.exec(window.location.hash);
       if (!match) return;
-      updateCategory(match[1] as CategoryFilter, "force");
+      // A link to a hidden or empty category falls back to all products.
+      const known = match[1] === "all" || categories.some((c) => c.id === match[1]);
+      updateCategory(known ? match[1] : "all", "force");
       // Strip the hash so clicking the same tile again fires another hashchange.
       window.history.replaceState(null, "", window.location.pathname + window.location.search);
     };
     applyHash();
     window.addEventListener("hashchange", applyHash);
     return () => window.removeEventListener("hashchange", applyHash);
-  }, [updateCategory]);
+  }, [updateCategory, categories]);
 
   const resetFilters = useCallback(() => {
     setQuery("");
@@ -294,7 +317,7 @@ export default function StoreFront({ products, freeDeliveryThreshold, supportPho
   const detailProduct = detailId ? (productById.get(detailId) ?? null) : null;
 
   return (
-    <>
+    <CatalogProvider categories={categories} names={categoryNames}>
       <Header
         query={query}
         onQueryChange={handleQueryChange}
@@ -337,7 +360,7 @@ export default function StoreFront({ products, freeDeliveryThreshold, supportPho
           />
           <div ref={resultsRef} id="results" className="mt-8">
             <ResultsContext
-              category={category}
+              label={category === "all" ? "Бүх бараа" : (categoryNames[category] ?? "Бүх бараа")}
               count={visibleProducts.length}
               sortLabel={SORT_OPTIONS.find((o) => o.id === sort)?.label ?? ""}
             />
@@ -366,6 +389,9 @@ export default function StoreFront({ products, freeDeliveryThreshold, supportPho
         onDecrement={(id) => setLineQuantity(id, (q) => q - 1)}
         onRemove={(id) => setLineQuantity(id, () => 0)}
         freeDeliveryThreshold={freeDeliveryThreshold}
+        oversizedFee={oversizedFee}
+        zones={zones}
+        paymentMethods={paymentMethods}
         onPlaceOrder={placeOrder}
       />
 
@@ -397,7 +423,7 @@ export default function StoreFront({ products, freeDeliveryThreshold, supportPho
           </div>
         )}
       </div>
-    </>
+    </CatalogProvider>
   );
 }
 
@@ -405,8 +431,7 @@ export default function StoreFront({ products, freeDeliveryThreshold, supportPho
  * Landing strip for result jumps: after a scroll, the shopper immediately sees which
  * category they're in and has a one-tap way back to the filter controls.
  */
-function ResultsContext({ category, count, sortLabel }: { category: CategoryFilter; count: number; sortLabel: string }) {
-  const label = category === "all" ? "Бүх бараа" : CATEGORY_LABEL[category];
+function ResultsContext({ label, count, sortLabel }: { label: string; count: number; sortLabel: string }) {
   return (
     <div className="mb-5 flex items-center justify-between gap-3 border-b border-slate-200 pb-3">
       <p className="text-sm text-slate-600">

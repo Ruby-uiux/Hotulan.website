@@ -1,17 +1,19 @@
-import { byNewest } from "@/lib/admin-data";
+import { requireStaff } from "@/lib/server/actor";
+import { writeTx } from "@/lib/server/db/client";
 import { handle } from "@/lib/server/http";
-import { mutateStore } from "@/lib/server/store";
-import { seedData } from "@/lib/server/store";
+import { listOrders } from "@/lib/server/repo/orders";
+import { listProducts } from "@/lib/server/repo/products";
+import { resetDemoCatalog } from "@/lib/server/seed";
 
 export const dynamic = "force-dynamic";
 
-/** Restores demo products and orders; store settings are intentionally kept. */
+/**
+ * Restores demo products and orders (and their customers). Categories, delivery zones,
+ * settings, staff, coupons and banners are intentionally kept.
+ */
 export const POST = handle(async () => {
-  const data = await mutateStore((d) => {
-    const seed = seedData();
-    d.products = seed.products;
-    d.orders = seed.orders;
-    return { products: d.products, orders: [...d.orders].sort(byNewest) };
-  });
-  return data;
+  await requireStaff("staff", "full");
+  await writeTx((tx) => resetDemoCatalog(tx));
+  const [products, orders] = await Promise.all([listProducts(), listOrders()]);
+  return { products, orders };
 });

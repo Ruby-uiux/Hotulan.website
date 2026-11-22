@@ -2,18 +2,18 @@
 
 import { ArrowUpDown, ChevronDown, RotateCcw, Tag, X } from "lucide-react";
 import {
-  CATEGORIES,
   PRICE_BANDS,
   SORT_OPTIONS,
   type CategoryFilter,
   type PriceBandId,
   type SortKey,
 } from "@/lib/catalog";
+import { useCatalog } from "./CatalogContext";
 
 interface FilterBarProps {
   category: CategoryFilter;
   onCategoryChange: (c: CategoryFilter) => void;
-  counts: Record<CategoryFilter, number>;
+  counts: Record<string, number>;
   priceBand: PriceBandId;
   onPriceBandChange: (b: PriceBandId) => void;
   sort: SortKey;
@@ -37,6 +37,7 @@ export default function FilterBar({
   resultCount,
   onReset,
 }: FilterBarProps) {
+  const { categories } = useCatalog();
   const trimmedQuery = query.trim();
   const activeBand = PRICE_BANDS.find((b) => b.id === priceBand);
   const hasActiveFilters = category !== "all" || priceBand !== "all" || trimmedQuery.length > 0;
@@ -55,9 +56,9 @@ export default function FilterBar({
       </div>
 
       <div className="flex gap-2 overflow-x-auto pb-1 [scrollbar-width:none]" role="group" aria-label="Ангиллаар шүүх">
-        {CATEGORIES.map((c) => {
+        {categories.map((c) => {
           const active = c.id === category;
-          const count = counts[c.id];
+          const count = counts[c.id] ?? 0;
           return (
             <button
               key={c.id}

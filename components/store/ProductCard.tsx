@@ -1,7 +1,8 @@
 "use client";
 
 import { Check, Eye, ShoppingCart } from "lucide-react";
-import { CATEGORY_LABEL, formatMNT, type Product } from "@/lib/catalog";
+import { formatMNT, type Product } from "@/lib/catalog";
+import { useCatalog } from "./CatalogContext";
 import Rating from "./Rating";
 import SafeImage from "./SafeImage";
 
@@ -22,6 +23,7 @@ const BADGE_STYLES: Record<NonNullable<Product["badge"]>, string> = {
 const LOW_STOCK_THRESHOLD = 5;
 
 export default function ProductCard({ product, quantityInCart, onAddToCart, onQuickView }: ProductCardProps) {
+  const { categoryName } = useCatalog();
   const soldOut = product.stock === 0;
   const reachedLimit = !soldOut && quantityInCart >= product.stock;
   const discountPct = product.compareAtPrice
@@ -72,7 +74,7 @@ export default function ProductCard({ product, quantityInCart, onAddToCart, onQu
 
       <div className="flex flex-1 flex-col p-4">
         <p className="text-xs font-medium text-slate-500">
-          {product.brand} <span aria-hidden="true">·</span> {CATEGORY_LABEL[product.category]}
+          {product.brand} <span aria-hidden="true">·</span> {categoryName(product.category)}
         </p>
         <h3 className="mt-1 line-clamp-2 min-h-[2.5rem] text-sm font-semibold leading-5 text-slate-900">
           {product.title}

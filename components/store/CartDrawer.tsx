@@ -13,8 +13,9 @@ import {
   X,
 } from "lucide-react";
 import { useEffect, useRef, useState, type FormEvent } from "react";
-import { DELIVERY_FEE, formatMNT, type Product } from "@/lib/catalog";
-import { DISTRICTS, PAYMENT_LABEL, type PaymentMethod } from "@/lib/admin-data";
+import { formatMNT, type Product } from "@/lib/catalog";
+import { PAYMENT_LABEL, type PaymentMethod } from "@/lib/admin-data";
+import { computeDeliveryFee, type DeliveryZone } from "@/lib/delivery";
 import { useOverlay } from "@/lib/useOverlay";
 import { Button, Input, Select } from "@/components/ui";
 import SafeImage from "./SafeImage";
@@ -27,7 +28,8 @@ export interface CartItem {
 export interface CheckoutDetails {
   customer: string;
   phone: string;
-  district: string;
+  /** Delivery zone id ("khan-uul"). */
+  zoneId: string;
   payment: PaymentMethod;
 }
 
@@ -43,6 +45,11 @@ interface CartDrawerProps {
   items: CartItem[];
   subtotal: number;
   freeDeliveryThreshold: number;
+  oversizedFee: number;
+  /** Active delivery districts. */
+  zones: DeliveryZone[];
+  /** Enabled payment methods, in display order. */
+  paymentMethods: PaymentMethod[];
   onIncrement: (productId: string) => void;
   onDecrement: (productId: string) => void;
   onRemove: (productId: string) => void;
@@ -52,7 +59,12 @@ interface CartDrawerProps {
 
 type Stage = "cart" | "details" | "done";
 
-const EMPTY_DETAILS: CheckoutDetails = { customer: "", phone: "", district: "", payment: "qpay" };
+const emptyDetails = (paymentMethods: PaymentMethod[]): CheckoutDetails => ({
+  customer: "",
+  phone: "",
+  zoneId: "",
+  payment: paymentMethods[0] ?? "qpay",
+});
 
 export default function CartDrawer({
   open,
@@ -60,13 +72,16 @@ export default function CartDrawer({
   items,
   subtotal,
   freeDeliveryThreshold,
+  oversizedFee,
+  zones,
+  paymentMethods,
   onIncrement,
   onDecrement,
   onRemove,
   onPlaceOrder,
 }: CartDrawerProps) {
   const [stage, setStage] = useState<Stage>("cart");
-  const [details, setDetails] = useState<CheckoutDetails>(EMPTY_DETAILS);
+  const [details, setDetails] = useState<CheckoutDetails>(() => emptyDetails(paymentMethods));
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState<string | null>(null);
   const [showErrors, setShowErrors] = useState(false);
@@ -96,7 +111,18 @@ export default function CartDrawer({
 
   const itemCount = items.reduce((sum, i) => sum + i.quantity, 0);
   const qualifiesForFreeDelivery = subtotal >= freeDeliveryThreshold;
-  const deliveryFee = subtotal === 0 || qualifiesForFreeDelivery ? 0 : DELIVERY_FEE;
+  // Same rule the server charges. Before a district is picked, quote the first central one.
+  const zone = zones.find((z) => z.id === details.zoneId) ?? zones.find((z) => z.region === "central") ?? zones[0];
+  const deliveryFee =
+    subtotal === 0 || !zone
+      ? 0
+      : computeDeliveryFee({
+          zone,
+          subtotal,
+          freeDeliveryThreshold,
+          hasOversized: items.some((i) => i.product.oversized),
+          oversizedFee,
+        });
   const total = subtotal + deliveryFee;
   const remainingForFree = Math.max(0, freeDeliveryThreshold - subtotal);
   const freeDeliveryProgress = freeDeliveryThreshold > 0 ? Math.min(100, (subtotal / freeDeliveryThreshold) * 100) : 100;
@@ -105,9 +131,9 @@ export default function CartDrawer({
   const fieldErrors = {
     customer: details.customer.trim().length < 2 ? "Нэрээ оруулна уу." : undefined,
     phone: /^\d{8}$/.test(phoneDigits) ? undefined : "8 оронтой утасны дугаар оруулна уу.",
-    district: details.district ? undefined : "Дүүргээ сонгоно уу.",
+    zoneId: details.zoneId ? undefined : "Дүүргээ сонгоно уу.",
   };
-  const detailsValid = !fieldErrors.customer && !fieldErrors.phone && !fieldErrors.district;
+  const detailsValid = !fieldErrors.customer && !fieldErrors.phone && !fieldErrors.zoneId;
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
@@ -121,7 +147,7 @@ export default function CartDrawer({
       const order = await onPlaceOrder({ ...details, customer: details.customer.trim(), phone: phoneDigits });
       setConfirmed(order);
       setStage("done");
-      setDetails(EMPTY_DETAILS);
+      setDetails(emptyDetails(paymentMethods));
       setShowErrors(false);
     } catch (err) {
       setSubmitError(err instanceof Error ? err.message : "Захиалга илгээхэд алдаа гарлаа.");
@@ -207,23 +233,23 @@ export default function CartDrawer({
               />
               <Select
                 label="Дүүрэг (Улаанбаатар)"
-                error={showErrors ? fieldErrors.district : undefined}
+                error={showErrors ? fieldErrors.zoneId : undefined}
                 placeholder="Сонгох…"
                 id="co-district"
-                value={details.district}
-                onChange={(e) => setDetails((d) => ({ ...d, district: e.target.value }))}
+                value={details.zoneId}
+                onChange={(e) => setDetails((d) => ({ ...d, zoneId: e.target.value }))}
               >
-                {DISTRICTS.map((d) => (
-                  <option key={d} value={d}>
-                    {d}
+                {zones.map((z) => (
+                  <option key={z.id} value={z.id}>
+                    {z.region === "remote" ? `${z.name} (${formatMNT(z.fee)})` : z.name}
                   </option>
                 ))}
               </Select>
 
               <fieldset>
                 <legend className="mb-1.5 text-[13px] font-semibold text-slate-900">Төлбөрийн хэлбэр</legend>
-                <div className="grid grid-cols-2 gap-2">
-                  {(Object.keys(PAYMENT_LABEL) as PaymentMethod[]).map((method) => (
+                <div className="grid gap-2">
+                  {paymentMethods.map((method) => (
                     <label
                       key={method}
                       className={`flex cursor-pointer items-center gap-2 rounded-lg border px-3 py-2.5 text-sm font-medium transition ${

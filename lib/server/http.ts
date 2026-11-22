@@ -1,5 +1,5 @@
 import { NextResponse } from "next/server";
-import { HttpError } from "./validate";
+import { HttpError } from "./errors";
 
 /**
  * Wraps a route handler so validation/business errors become `{ error }` JSON with the

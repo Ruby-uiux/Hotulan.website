@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
-import { verifyPassword } from "@/lib/auth/password";
-import { SESSION_COOKIE, SESSION_TTL_SECONDS, createSessionToken, readAuthConfig } from "@/lib/auth/session";
+import { hashPassword, verifyPassword } from "@/lib/auth/password";
+import { SESSION_COOKIE, SESSION_TTL_SECONDS, createSessionToken, readSessionSecret } from "@/lib/auth/session";
+import { findStaffForLogin, touchLastLogin } from "@/lib/server/repo/people";
 
 export const runtime = "nodejs";
 export const dynamic = "force-dynamic";
@@ -23,13 +24,16 @@ function clientKey(request: Request): string {
   return request.headers.get("x-forwarded-for")?.split(",")[0].trim() || request.headers.get("x-real-ip") || "unknown";
 }
 
+/** Verified against when the username doesn't exist, so timing doesn't reveal valid usernames. */
+let dummyHash: Promise<string> | null = null;
+
 function json(error: string, status: number, headers?: HeadersInit) {
   return NextResponse.json({ error }, { status, headers });
 }
 
 export async function POST(request: Request) {
-  const config = readAuthConfig();
-  if (!config) {
+  const secret = readSessionSecret();
+  if (!secret) {
     return json("Админ нэвтрэлт тохируулагдаагүй байна. .env.local файлыг шалгана уу.", 503);
   }
 
@@ -56,9 +60,12 @@ export async function POST(request: Request) {
     return json("Нэвтрэх нэр, нууц үгээ оруулна уу.", 400);
   }
 
-  // Always run the hash, even for a wrong username, so response time doesn't reveal which part was wrong.
-  const passwordOk = await verifyPassword(password, config.passwordHash);
-  const ok = passwordOk && username === config.username;
+  // Always run the hash, even for an unknown username, so response time doesn't reveal which part was wrong.
+  const staff = await findStaffForLogin(username);
+  dummyHash ??= hashPassword("not-a-real-password");
+  const passwordOk = await verifyPassword(password, staff?.passwordHash ?? (await dummyHash));
+  // Deactivated staff get the same generic answer — no hint that the account exists.
+  const ok = passwordOk && staff !== null && staff.active && staff.passwordHash !== null;
 
   if (!ok) {
     const current = record && record.resetAt > now ? record : { count: 0, resetAt: now + WINDOW_MS };
@@ -72,8 +79,9 @@ export async function POST(request: Request) {
   }
 
   failures.delete(key);
-  const token = await createSessionToken(config.username, config.secret);
-  const response = NextResponse.json({ ok: true, username: config.username });
+  await touchLastLogin(staff.id);
+  const token = await createSessionToken({ id: staff.id, role: staff.role }, secret);
+  const response = NextResponse.json({ ok: true, username: staff.username, role: staff.role });
   response.cookies.set(SESSION_COOKIE, token, {
     httpOnly: true, // unreadable from page scripts — an XSS bug can't exfiltrate the session
     sameSite: "lax", // not sent on cross-site POSTs (CSRF)

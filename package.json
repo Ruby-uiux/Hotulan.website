@@ -6,9 +6,14 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "admin:hash": "node scripts/hash-password.mjs"
+    "admin:hash": "node scripts/hash-password.mjs",
+    "db:generate": "drizzle-kit generate",
+    "db:import": "tsx --env-file-if-exists=.env.local scripts/import-json.ts",
+    "db:studio": "drizzle-kit studio"
   },
   "dependencies": {
+    "@libsql/client": "^0.18.0",
+    "drizzle-orm": "^0.45.4",
     "lucide-react": "^0.544.0",
     "next": "^15.5.4",
     "react": "^19.1.1",
@@ -19,7 +24,9 @@
     "@types/node": "^22.18.0",
     "@types/react": "^19.1.13",
     "@types/react-dom": "^19.1.9",
+    "drizzle-kit": "^0.31.11",
     "tailwindcss": "^4.1.13",
+    "tsx": "^4.23.15",
     "typescript": "^5.9.2"
   }
 }

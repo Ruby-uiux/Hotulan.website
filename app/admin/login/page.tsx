@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import { ShieldCheck, Store } from "lucide-react";
 import LoginForm from "@/components/admin/LoginForm";
-import { readAuthConfig } from "@/lib/auth/session";
+import { redirect } from "next/navigation";
+import { readSessionSecret } from "@/lib/auth/session";
+import { getStaffSession } from "@/lib/server/actor";
 
 export const metadata: Metadata = {
   title: "Нэвтрэх — hotulan.mn админ",
@@ -18,7 +20,9 @@ function safeNext(value: string | string[] | undefined): string {
 
 export default async function LoginPage({ searchParams }: { searchParams: Promise<Record<string, string | string[] | undefined>> }) {
   const params = await searchParams;
-  const configured = readAuthConfig() !== null;
+  const configured = readSessionSecret() !== null;
+  // Still signed in (checked against the staff table) → skip the form.
+  if (configured && (await getStaffSession())) redirect(safeNext(params.next));
 
   return (
     <main className="grid min-h-screen bg-slate-100/70 lg:grid-cols-[1fr_1.1fr]">
@@ -64,9 +68,9 @@ export default async function LoginPage({ searchParams }: { searchParams: Promis
               <p className="font-semibold">Нэвтрэлт тохируулагдаагүй байна</p>
               <p className="mt-1">
                 Серверийн <code className="rounded bg-amber-100 px-1">.env.local</code> файлд{" "}
+                <code className="rounded bg-amber-100 px-1">SESSION_SECRET</code> (32+ тэмдэгт), анхны удаад{" "}
                 <code className="rounded bg-amber-100 px-1">ADMIN_USERNAME</code>,{" "}
-                <code className="rounded bg-amber-100 px-1">ADMIN_PASSWORD_HASH</code>,{" "}
-                <code className="rounded bg-amber-100 px-1">SESSION_SECRET</code> утгуудыг оруулаад серверийг дахин
+                <code className="rounded bg-amber-100 px-1">ADMIN_PASSWORD_HASH</code> утгуудыг оруулаад серверийг дахин
                 асаана уу. Аюулгүй байдлын үүднээс тохиргоо дутуу үед админ хэсэг хаалттай байна.
               </p>
             </div>
