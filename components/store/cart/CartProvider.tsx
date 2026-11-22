@@ -49,6 +49,9 @@ interface CartContextValue {
   isOpen: boolean;
   open: () => void;
   close: () => void;
+  /** Coupon typed in the cart or at checkout; validated by the quote, carried between them. */
+  coupon: string | null;
+  setCoupon: (code: string | null) => void;
 }
 
 const CartContext = createContext<CartContextValue | null>(null);
@@ -56,6 +59,7 @@ const CartContext = createContext<CartContextValue | null>(null);
 export const CART_STORAGE_KEY = "hotulan.cart.v2";
 /** The single-page store (before phase 4) saved `[{ productId, quantity }]` here. */
 export const LEGACY_CART_STORAGE_KEY = "hotulan.cart.v1";
+const COUPON_STORAGE_KEY = "hotulan.coupon";
 
 const keyOf = (productId: string, variantId: string | null) => `${productId}::${variantId ?? ""}`;
 
@@ -118,6 +122,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const [entries, setEntries] = useState<CartEntry[]>([]);
   const [products, setProducts] = useState<Map<string, Product>>(() => new Map());
   const [isOpen, setOpen] = useState(false);
+  const [coupon, setCouponState] = useState<string | null>(null);
   const entriesRef = useRef(entries);
   entriesRef.current = entries;
   const productsRef = useRef(products);
@@ -126,6 +131,9 @@ export function CartProvider({ children }: { children: ReactNode }) {
   // Restore after mount so the server HTML (empty cart) and the first client render match.
   useEffect(() => {
     setEntries(readStoredCart());
+    try {
+      setCouponState(window.localStorage.getItem(COUPON_STORAGE_KEY));
+    } catch {}
     setReady(true);
   }, []);
 
@@ -300,7 +308,18 @@ export function CartProvider({ children }: { children: ReactNode }) {
   }, []);
 
   const remove = useCallback((productId: string, variantId: string | null) => setQuantity(productId, variantId, 0), [setQuantity]);
-  const clear = useCallback(() => setEntries([]), []);
+  const setCoupon = useCallback((code: string | null) => {
+    const value = code?.trim().toUpperCase() || null;
+    setCouponState(value);
+    try {
+      if (value) window.localStorage.setItem(COUPON_STORAGE_KEY, value);
+      else window.localStorage.removeItem(COUPON_STORAGE_KEY);
+    } catch {}
+  }, []);
+  const clear = useCallback(() => {
+    setEntries([]);
+    setCoupon(null);
+  }, [setCoupon]);
   const refresh = useCallback(() => fetchProducts(), [fetchProducts]);
   const open = useCallback(() => {
     setOpen(true);
@@ -309,8 +328,8 @@ export function CartProvider({ children }: { children: ReactNode }) {
   const close = useCallback(() => setOpen(false), []);
 
   const value = useMemo<CartContextValue>(
-    () => ({ ready, items, count, subtotal, quantityOf, add, setQuantity, remove, clear, refresh, isOpen, open, close }),
-    [ready, items, count, subtotal, quantityOf, add, setQuantity, remove, clear, refresh, isOpen, open, close],
+    () => ({ ready, items, count, subtotal, quantityOf, add, setQuantity, remove, clear, refresh, isOpen, open, close, coupon, setCoupon }),
+    [ready, items, count, subtotal, quantityOf, add, setQuantity, remove, clear, refresh, isOpen, open, close, coupon, setCoupon],
   );
 
   return <CartContext.Provider value={value}>{children}</CartContext.Provider>;

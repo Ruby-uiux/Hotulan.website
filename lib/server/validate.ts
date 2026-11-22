@@ -216,9 +216,9 @@ export function parseCheckout(body: unknown): CheckoutInput {
     customer,
     phone,
     zoneId,
-    // Khoroo and street address become required with the new checkout page (phase 4).
-    khoroo: empty(b.khoroo) ? null : int(b.khoroo, "Хороо", { min: 1, max: 60 }),
-    address: empty(b.address) ? "" : str(b.address, "Хаяг", { max: 300 }),
+    // Required since the /checkout page (phase 4): a driver needs khoroo and building.
+    khoroo: int(b.khoroo, "Хороо", { min: 1, max: 60 }),
+    address: str(b.address, "Байр, орц, тоот", { min: 3, max: 300 }),
     deliveryNote: empty(b.deliveryNote) ? "" : str(b.deliveryNote, "Тэмдэглэл", { max: 300 }),
     deliveryDate,
     slotId: empty(b.slotId) ? null : str(b.slotId, "Хүргэлтийн цаг", { max: 40 }),
@@ -268,8 +268,7 @@ export function parseSettings(body: unknown): Partial<StoreSettings> {
   if (!absent(b.payments)) {
     const p = asObject(b.payments);
     const payments: Partial<PaymentSettings> = {};
-    for (const k of ["qpay", "bank", "cod"] as const) if (!absent(p[k])) payments[k] = Boolean(p[k]);
-    for (const k of ["bankName", "bankAccount", "bankAccountName"] as const) if (!absent(p[k])) payments[k] = str(p[k], "Дансны мэдээлэл", { max: 80 });
+    for (const k of ["qpay", "cod"] as const) if (!absent(p[k])) payments[k] = Boolean(p[k]);
     out.payments = payments as PaymentSettings;
   }
   return out;

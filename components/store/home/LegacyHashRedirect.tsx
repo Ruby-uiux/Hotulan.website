@@ -11,11 +11,17 @@ import { useEffect } from "react";
 export default function LegacyHashRedirect({ slugById }: { slugById: Record<string, string> }) {
   const router = useRouter();
   useEffect(() => {
-    const match = /^#category-([a-z0-9-]+)$/i.exec(window.location.hash);
-    if (!match) return;
-    const slug = slugById[match[1]];
-    if (slug) router.replace(`/c/${slug}`);
-    else window.history.replaceState(null, "", window.location.pathname + window.location.search);
+    const apply = () => {
+      const match = /^#category-([a-z0-9-]+)$/i.exec(window.location.hash);
+      if (!match) return;
+      const slug = slugById[match[1]];
+      if (slug) router.replace(`/c/${slug}`);
+      else window.history.replaceState(null, "", window.location.pathname + window.location.search);
+    };
+    apply();
+    // Also when the hash changes on an already-open home page (an old link clicked in place).
+    window.addEventListener("hashchange", apply);
+    return () => window.removeEventListener("hashchange", apply);
   }, [router, slugById]);
   return null;
 }

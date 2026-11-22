@@ -1,11 +1,11 @@
 import type { ReactNode } from "react";
-import CartDrawerHost from "@/components/store/cart/CartDrawerHost";
+import CartDrawer from "@/components/store/cart/CartDrawer";
 import { CartProvider } from "@/components/store/cart/CartProvider";
 import MobileTabBar from "@/components/store/shell/MobileTabBar";
 import { ShellProvider } from "@/components/store/shell/ShellProvider";
 import StoreFooter from "@/components/store/StoreFooter";
 import StoreHeader from "@/components/store/StoreHeader";
-import { getStoreShell, toMenuCategories } from "@/lib/server/storefront";
+import { categoryIcons, getAllCategories, getStoreShell, toMenuCategories } from "@/lib/server/storefront";
 
 // Catalog, stock and settings are edited live from /admin — never serve a build-time snapshot.
 export const dynamic = "force-dynamic";
@@ -17,7 +17,7 @@ const PAYMENT_BADGE: Record<string, string> = { qpay: "QPay", cod: "Бэлэн, 
  * on phones, the bottom tab bar. /admin has its own layout and none of this.
  */
 export default async function StoreLayout({ children }: { children: ReactNode }) {
-  const { tree, settings, appearance, zones, paymentMethods } = await getStoreShell();
+  const [{ tree, settings, appearance, paymentMethods }, allCategories] = await Promise.all([getStoreShell(), getAllCategories()]);
   const categories = toMenuCategories(tree);
   const menuCategories = toMenuCategories(tree.filter((c) => c.showInMenu));
   const announcement = appearance.announcement.enabled && appearance.announcement.text ? appearance.announcement : null;
@@ -47,12 +47,7 @@ export default async function StoreLayout({ children }: { children: ReactNode })
           />
         </div>
         <MobileTabBar />
-        <CartDrawerHost
-          zones={zones}
-          paymentMethods={paymentMethods}
-          freeDeliveryThreshold={settings.freeDeliveryThreshold}
-          oversizedFee={settings.oversizedFee}
-        />
+        <CartDrawer freeDeliveryThreshold={settings.freeDeliveryThreshold} icons={categoryIcons(allCategories)} />
       </CartProvider>
     </ShellProvider>
   );

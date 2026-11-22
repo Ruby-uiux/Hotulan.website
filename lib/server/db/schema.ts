@@ -200,7 +200,7 @@ export const orders = sqliteTable(
     deliveryNote: text("delivery_note").notNull().default(""),
     deliveryDate: text("delivery_date"),
     deliverySlot: text("delivery_slot"),
-    /** qpay | bank | cod — or a legacy value (socialpay, card, cash) on imported orders. */
+    /** qpay | cod — or a legacy value (socialpay, card, cash, bank) on older orders. */
     payment: text("payment").notNull(),
     paymentStatus: text("payment_status", { enum: ["pending", "paid", "failed", "refunded"] }).notNull().default("pending"),
     status: text("status", {

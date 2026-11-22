@@ -59,16 +59,15 @@ export const LEGACY_STATUS_MAP: Record<string, OrderStatus> = { delivery: "shipp
 
 /* ----------------------------------------------------------------- Payment */
 
-/** Methods offered at checkout. */
-export const PAYMENT_METHODS = ["qpay", "bank", "cod"] as const;
+/** Methods offered at checkout. (Bank transfer was dropped in phase 4.) */
+export const PAYMENT_METHODS = ["qpay", "cod"] as const;
 export type PaymentMethod = (typeof PAYMENT_METHODS)[number];
 /** Values that only exist on old orders. Kept as-is, never converted. */
-export type LegacyPaymentMethod = "socialpay" | "card" | "cash";
+export type LegacyPaymentMethod = "socialpay" | "card" | "cash" | "bank";
 export type AnyPaymentMethod = PaymentMethod | LegacyPaymentMethod;
 
 export const PAYMENT_LABEL: Record<PaymentMethod, string> = {
   qpay: "QPay",
-  bank: "Дансаар шилжүүлэх",
   cod: "Хүлээн авахдаа төлөх",
 };
 
@@ -76,6 +75,7 @@ const LEGACY_PAYMENT_LABEL: Record<LegacyPaymentMethod, string> = {
   socialpay: "SocialPay (хуучин)",
   card: "Банкны карт (хуучин)",
   cash: "Бэлнээр (хуучин)",
+  bank: "Дансаар шилжүүлэх (хуучин)",
 };
 
 export function isPaymentMethod(v: unknown): v is PaymentMethod {
@@ -250,11 +250,7 @@ export interface AuditEntry {
 
 export interface PaymentSettings {
   qpay: boolean;
-  bank: boolean;
   cod: boolean;
-  bankName: string;
-  bankAccount: string;
-  bankAccountName: string;
 }
 
 export interface StoreSettings {
@@ -288,7 +284,7 @@ export const DEFAULT_SETTINGS: StoreSettings = {
   freeDeliveryThreshold: 200_000,
   nextDayCutoff: "16:00",
   oversizedFee: 10_000,
-  payments: { qpay: true, bank: true, cod: true, bankName: "Хаан банк", bankAccount: "", bankAccountName: "" },
+  payments: { qpay: true, cod: true },
   notifyNewOrder: true,
   notifyLowStock: true,
   smsOrderConfirm: true,
@@ -300,7 +296,11 @@ export function withSettingsDefaults(stored: Partial<StoreSettings> | null | und
   return {
     ...DEFAULT_SETTINGS,
     ...stored,
-    payments: { ...DEFAULT_SETTINGS.payments, ...stored?.payments },
+    // Only the current methods: settings saved before phase 4 may still carry bank-transfer keys.
+    payments: {
+      qpay: stored?.payments?.qpay ?? DEFAULT_SETTINGS.payments.qpay,
+      cod: stored?.payments?.cod ?? DEFAULT_SETTINGS.payments.cod,
+    },
   };
 }
 
