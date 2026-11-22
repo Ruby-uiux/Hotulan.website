@@ -10,7 +10,13 @@ export const dynamic = "force-dynamic";
  * Public GET (storefront): published products only, without purchase cost.
  * Staff with products:view also get drafts and cost.
  */
-export const GET = handle(async () => {
+export const GET = handle(async (request: Request) => {
+  // ?ids=a,b,c — the cart only needs its own lines (up to 100; unknown or unpublished ids are omitted).
+  const idsParam = new URL(request.url).searchParams.get("ids");
+  const ids = idsParam ? new Set(idsParam.split(",").filter(Boolean).slice(0, 100)) : null;
+  if (ids) {
+    return { products: (await listStoreProducts()).filter((p) => ids.has(p.id)) };
+  }
   const staff = await getStaffSession();
   return { products: staff && can(staff.role, "products", "view") ? await listProducts() : await listStoreProducts() };
 });

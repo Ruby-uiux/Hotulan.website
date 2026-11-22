@@ -1,26 +1,19 @@
 "use client";
 
-import { ArrowUp, CheckCircle2 } from "lucide-react";
+import { ArrowUp } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState, type ReactNode } from "react";
+import { useRouter } from "next/navigation";
 import {
-  MAX_PER_PRODUCT,
   SORT_OPTIONS,
-  purchaseLimit,
-  type CartLine,
   type CategoryFilter,
   type PriceBandId,
   type Product,
   type SortKey,
 } from "@/lib/catalog";
-import { useRouter } from "next/navigation";
-import { api, ApiError } from "@/lib/api-client";
-import type { Order, PaymentMethod } from "@/lib/admin-data";
-import type { DeliveryZone } from "@/lib/delivery";
 import { applyCatalogQuery, countByCategory } from "@/lib/filtering";
 import { CatalogProvider, type NavCategory } from "./CatalogContext";
-import CartDrawer, { type CartItem, type CheckoutDetails, type PlacedOrder } from "./CartDrawer";
 import FilterBar from "./FilterBar";
-import Header from "./Header";
+import { useCart } from "./cart/CartProvider";
 import ProductGrid from "./ProductGrid";
 import ProductModal from "./ProductModal";
 
@@ -31,37 +24,17 @@ interface StoreFrontProps {
   categories: NavCategory[];
   /** id → name for every category, including subcategories. */
   categoryNames: Record<string, string>;
-  /** Active delivery districts with fees. */
-  zones: DeliveryZone[];
-  /** Payment methods enabled in settings. */
-  paymentMethods: PaymentMethod[];
-  oversizedFee: number;
-  freeDeliveryThreshold: number;
-  supportPhone: string;
   /** Server-rendered hero, slotted in so it stays out of the client bundle. */
   hero: ReactNode;
   /** Server-rendered sections shown after the catalog (trust markers, etc.). */
   children?: ReactNode;
 }
 
-interface ToastState {
-  id: number;
-  message: string;
-}
-
-const TOAST_DURATION_MS = 2600;
-
-const CART_STORAGE_KEY = "hotulan.cart.v1";
 
 export default function StoreFront({
   products,
   categories,
   categoryNames,
-  zones,
-  paymentMethods,
-  oversizedFee,
-  freeDeliveryThreshold,
-  supportPhone,
   hero,
   children,
 }: StoreFrontProps) {
@@ -72,58 +45,14 @@ export default function StoreFront({
   const [priceBand, setPriceBand] = useState<PriceBandId>("all");
   const [sort, setSort] = useState<SortKey>("featured");
 
-  // Commerce state
-  const [cart, setCart] = useState<CartLine[]>([]);
-  const [isCartOpen, setCartOpen] = useState(false);
   const [detailId, setDetailId] = useState<string | null>(null);
-  const [toast, setToast] = useState<ToastState | null>(null);
+  const cart = useCart();
 
   const catalogRef = useRef<HTMLElement>(null);
   const resultsRef = useRef<HTMLDivElement>(null);
 
   const productById = useMemo(() => new Map(products.map((p) => [p.id, p])), [products]);
 
-  // ——— Cart persistence ———
-  // Restored after mount (not in the initial state) so server and client HTML match.
-  const [cartRestored, setCartRestored] = useState(false);
-  useEffect(() => {
-    try {
-      const saved = JSON.parse(window.localStorage.getItem(CART_STORAGE_KEY) ?? "[]") as CartLine[];
-      if (Array.isArray(saved)) {
-        setCart(saved.filter((l) => typeof l?.productId === "string" && Number.isInteger(l?.quantity) && l.quantity > 0));
-      }
-    } catch {
-      // Private mode or corrupted value: start with an empty cart.
-    }
-    setCartRestored(true);
-  }, []);
-
-  useEffect(() => {
-    if (!cartRestored) return;
-    try {
-      window.localStorage.setItem(CART_STORAGE_KEY, JSON.stringify(cart));
-    } catch {
-      // Storage full/blocked — the cart still works for this visit.
-    }
-  }, [cart, cartRestored]);
-
-  /**
-   * Stock is owned by the server and can change under us (admin edits, other shoppers).
-   * Whenever fresh products arrive, clamp cart lines to what's actually available.
-   */
-  useEffect(() => {
-    if (!cartRestored) return;
-    setCart((prev) => {
-      let changed = false;
-      const next = prev.flatMap((line) => {
-        const product = productById.get(line.productId);
-        const quantity = Math.min(line.quantity, product ? purchaseLimit(product) : 0);
-        if (quantity !== line.quantity) changed = true;
-        return quantity > 0 ? [{ ...line, quantity }] : [];
-      });
-      return changed ? next : prev;
-    });
-  }, [productById, cartRestored]);
 
   // Re-fetch the catalog when the shopper returns to the tab, so prices/stock are current.
   useEffect(() => {
@@ -144,77 +73,17 @@ export default function StoreFront({
     [products, query, priceBand, categoryNames],
   );
 
-  // Lines whose product vanished from the catalog (e.g. delisted between sessions) are dropped silently.
-  const cartItems = useMemo<CartItem[]>(
-    () =>
-      cart.flatMap((line) => {
-        const product = productById.get(line.productId);
-        return product ? [{ product, quantity: line.quantity }] : [];
-      }),
-    [cart, productById],
-  );
-
   const quantities = useMemo(
-    () => Object.fromEntries(cart.map((l) => [l.productId, l.quantity])) as Record<string, number>,
+    () => Object.fromEntries(cart.items.map((i) => [i.productId, cart.quantityOf(i.productId)])) as Record<string, number>,
     [cart],
-  );
-
-  const cartCount = useMemo(() => cartItems.reduce((n, i) => n + i.quantity, 0), [cartItems]);
-  const subtotal = useMemo(() => cartItems.reduce((s, i) => s + i.product.price * i.quantity, 0), [cartItems]);
-
-  const showToast = useCallback((message: string) => {
-    setToast({ id: Date.now(), message });
-  }, []);
-
-  useEffect(() => {
-    if (!toast) return;
-    const timer = window.setTimeout(() => setToast(null), TOAST_DURATION_MS);
-    return () => window.clearTimeout(timer);
-  }, [toast]);
-
-  /**
-   * Single source of truth for quantity changes. Clamps to [0, stock] so no UI path
-   * (double clicks, modal + card, stale props) can oversell; 0 removes the line.
-   */
-  const setLineQuantity = useCallback(
-    (productId: string, next: (current: number) => number) => {
-      const product = productById.get(productId);
-      if (!product) return;
-
-      setCart((prev) => {
-        const existing = prev.find((l) => l.productId === productId);
-        const current = existing?.quantity ?? 0;
-        const target = Math.max(0, Math.min(purchaseLimit(product), next(current)));
-
-        if (target === current) return prev;
-        if (target === 0) return prev.filter((l) => l.productId !== productId);
-        if (!existing) return [...prev, { productId, quantity: target }];
-        return prev.map((l) => (l.productId === productId ? { ...l, quantity: target } : l));
-      });
-    },
-    [productById],
   );
 
   const addToCart = useCallback(
     (productId: string, amount = 1) => {
       const product = productById.get(productId);
-      if (!product || product.stock === 0) return;
-
-      const alreadyInCart = quantities[productId] ?? 0;
-      const limit = purchaseLimit(product);
-      const addable = Math.min(amount, limit - alreadyInCart);
-      if (addable <= 0) {
-        showToast(
-          limit < product.stock
-            ? `Нэг захиалгад ${MAX_PER_PRODUCT} ширхэгээс ихгүй авах боломжтой`
-            : "Энэ барааны үлдэгдэл таны сагсанд бүрэн орсон байна",
-        );
-        return;
-      }
-      setLineQuantity(productId, (q) => q + addable);
-      showToast(addable < amount ? `Боломжит хэмжээгээр ${addable} ширхэг нэмэгдлээ` : "Сагсанд нэмэгдлээ");
+      if (product) cart.add(product, { quantity: amount });
     },
-    [productById, quantities, setLineQuantity, showToast],
+    [productById, cart],
   );
 
   const handleModalAdd = useCallback(
@@ -299,44 +168,12 @@ export default function StoreFront({
     requestReveal("soft");
   }, [requestReveal]);
 
-  const placeOrder = useCallback(
-    async (details: CheckoutDetails): Promise<PlacedOrder> => {
-      try {
-        const { order, total } = await api<{ order: Order; total: number }>("/api/orders", {
-          method: "POST",
-          body: { ...details, lines: cart.map(({ productId, quantity }) => ({ productId, quantity })) },
-        });
-        setCart([]);
-        router.refresh(); // pull the decremented stock into the grid
-        return { id: order.id, total, itemCount: order.lines.reduce((n, l) => n + l.quantity, 0) };
-      } catch (err) {
-        // Stock conflict: refresh so the cart clamps to real availability, then let the shopper retry.
-        if (err instanceof ApiError && err.status === 409) router.refresh();
-        throw err;
-      }
-    },
-    [cart, router],
-  );
-
-  const closeCart = useCallback(() => setCartOpen(false), []);
   const closeDetail = useCallback(() => setDetailId(null), []);
 
   const detailProduct = detailId ? (productById.get(detailId) ?? null) : null;
 
   return (
     <CatalogProvider categories={categories} names={categoryNames}>
-      <Header
-        query={query}
-        onQueryChange={handleQueryChange}
-        onSearchSubmit={() => requestReveal("force")}
-        category={category}
-        onCategoryChange={(c) => updateCategory(c, "force")}
-        cartCount={cartCount}
-        onOpenCart={() => setCartOpen(true)}
-        freeDeliveryThreshold={freeDeliveryThreshold}
-        supportPhone={supportPhone}
-      />
-
       <main id="top">
         {hero}
 
@@ -387,21 +224,6 @@ export default function StoreFront({
         {children}
       </main>
 
-      <CartDrawer
-        open={isCartOpen}
-        onClose={closeCart}
-        items={cartItems}
-        subtotal={subtotal}
-        onIncrement={(id) => setLineQuantity(id, (q) => q + 1)}
-        onDecrement={(id) => setLineQuantity(id, (q) => q - 1)}
-        onRemove={(id) => setLineQuantity(id, () => 0)}
-        freeDeliveryThreshold={freeDeliveryThreshold}
-        oversizedFee={oversizedFee}
-        zones={zones}
-        paymentMethods={paymentMethods}
-        onPlaceOrder={placeOrder}
-      />
-
       <ProductModal
         product={detailProduct}
         quantityInCart={detailId ? (quantities[detailId] ?? 0) : 0}
@@ -409,27 +231,6 @@ export default function StoreFront({
         onAddToCart={handleModalAdd}
       />
 
-      <div aria-live="polite" className="pointer-events-none fixed inset-x-0 bottom-6 z-[60]">
-        {toast && (
-          <div
-            key={toast.id}
-            className="pointer-events-auto absolute left-1/2 flex w-[calc(100%-2rem)] max-w-sm animate-toast-in items-center gap-3 rounded-2xl bg-slate-900 py-3 pl-4 pr-3 text-sm text-white shadow-2xl"
-          >
-            <CheckCircle2 className="h-5 w-5 shrink-0 text-emerald-400" aria-hidden="true" />
-            <span className="flex-1 font-medium">{toast.message}</span>
-            <button
-              type="button"
-              onClick={() => {
-                setToast(null);
-                setCartOpen(true);
-              }}
-              className="rounded-md bg-white/10 px-3 py-1.5 text-xs font-bold transition hover:bg-white/20"
-            >
-              Сагс харах
-            </button>
-          </div>
-        )}
-      </div>
     </CatalogProvider>
   );
 }
