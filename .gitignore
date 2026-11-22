@@ -156,3 +156,7 @@ data/
 
 # uploaded images (lib/server/storage.ts — local driver)
 public/uploads/
+
+# Playwright screenshots and the comparison report (npm run screenshots); notes are kept
+screenshots/*
+!screenshots/notes.json

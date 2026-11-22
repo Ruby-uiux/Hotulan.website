@@ -69,6 +69,14 @@ export async function verifySessionToken(token: string | undefined, secret: stri
 }
 
 /** Session signing key. Missing or shorter than 32 characters → fail closed: /admin stays locked. */
+/** Why SESSION_SECRET is unusable, or null if it's fine (checked at server start in production). */
+export function sessionSecretProblem(): string | null {
+  const secret = process.env.SESSION_SECRET;
+  if (!secret) return "тохируулагдаагүй байна.";
+  if (secret.length < 32) return `хэт богино байна (${secret.length} тэмдэгт, дор хаяж 32 хэрэгтэй).`;
+  return null;
+}
+
 export function readSessionSecret(): string | null {
   const secret = process.env.SESSION_SECRET;
   return secret && secret.length >= 32 ? secret : null;

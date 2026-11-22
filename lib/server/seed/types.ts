@@ -8,8 +8,9 @@ export interface SeedProduct {
   category: string;
   price: number;
   compareAtPrice?: number;
-  rating: number;
-  reviewCount: number;
+  /** Ignored: imported/demo ratings were never real reviews (flaw #17); always stored as 0. */
+  rating?: number;
+  reviewCount?: number;
   image: string;
   badge?: string;
   stock: number;

@@ -2,6 +2,7 @@ import { requireStaff } from "@/lib/server/actor";
 import { HttpError } from "@/lib/server/errors";
 import { handle, readJson } from "@/lib/server/http";
 import { clientIp, hit, retryAfter, type Limit } from "@/lib/server/rate-limit";
+import { orderAccessUrl } from "@/lib/server/order-token";
 import { createOrder, listOrders } from "@/lib/server/repo/orders";
 import { parseCheckout } from "@/lib/server/validate";
 
@@ -38,5 +39,6 @@ export const POST = handle(async (request: Request) => {
 
   const order = await createOrder(input);
   for (const k of keys) hit(k, ORDER_LIMIT);
-  return Response.json({ order, total: order.total }, { status: 201, headers: { "Cache-Control": "no-store" } });
+  // accessUrl is the only way back to the confirmation page (/order/[id] needs its token).
+  return Response.json({ order, total: order.total, accessUrl: orderAccessUrl(order.id) }, { status: 201, headers: { "Cache-Control": "no-store" } });
 });

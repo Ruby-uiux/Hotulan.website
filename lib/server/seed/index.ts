@@ -73,8 +73,9 @@ export async function insertSeedProducts(db: DbOrTx, items: SeedProduct[]): Prom
       subcategoryId: sub && known.has(sub) && sub.startsWith(`${p.category}-`) ? sub : null,
       price: p.price,
       compareAtPrice: p.compareAtPrice ?? null,
-      rating: p.rating ?? 0,
-      reviewCount: p.reviewCount ?? 0,
+      // Ratings in store.json and the demo catalogue were made up — start from zero until real reviews exist.
+      rating: 0,
+      reviewCount: 0,
       image: p.image ?? "",
       gallery: [],
       badge: toBadge(p.badge),

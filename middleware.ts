@@ -4,7 +4,8 @@ import { SESSION_COOKIE, readSessionSecret, verifySessionToken } from "@/lib/aut
 /**
  * Gatekeeper for /admin and the API.
  *
- * Public (shoppers):  GET /api/products, GET /api/settings, POST /api/orders, /api/auth/*
+ * Public (shoppers):  GET /api/products, GET /api/settings, POST /api/orders,
+ *                     POST /api/checkout/quote, /api/auth/*
  * Everything else under /api and /admin requires a validly signed session cookie.
  * Notably GET /api/orders is private — it contains customer names and phone numbers.
  *
@@ -17,6 +18,7 @@ const PUBLIC_API: ReadonlyArray<{ path: string; method: string }> = [
   { path: "/api/products", method: "GET" },
   { path: "/api/settings", method: "GET" },
   { path: "/api/orders", method: "POST" },
+  { path: "/api/checkout/quote", method: "POST" },
 ];
 
 function isPublicApi(pathname: string, method: string): boolean {
