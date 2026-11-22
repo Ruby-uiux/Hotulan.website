@@ -11,7 +11,7 @@ import { getStoreSettings } from "@/lib/server/repo/settings";
 import { demoDataAllowed } from "@/lib/server/seed";
 
 export const metadata: Metadata = {
-  title: "Админ — hotulan.mn",
+  title: { absolute: "Админ — hotulan.mn" },
   robots: { index: false, follow: false },
 };
 

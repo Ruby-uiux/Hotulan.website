@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { cache } from "react";
+import JsonLd, { breadcrumbLd } from "@/components/store/JsonLd";
 import { Breadcrumbs } from "@/components/store/listing/Listing";
 import ProductGallery from "@/components/store/product/ProductGallery";
 import ProductImage from "@/components/store/product/ProductImage";
@@ -12,6 +13,7 @@ import { discountPercent, formatMNT, isPublished, type Product } from "@/lib/cat
 import { boughtTogether } from "@/lib/server/repo/orders";
 import { getProduct, stripPrivate } from "@/lib/server/repo/products";
 import { categoryIcons, getAllCategories, getStoreProducts, getStoreShell } from "@/lib/server/storefront";
+import { siteUrl } from "@/lib/site";
 
 type Props = { params: Promise<{ id: string }> };
 
@@ -68,8 +70,39 @@ export default async function ProductPage({ params }: Props) {
     .slice(0, 3);
   const related = together.length > 0 ? { title: "Хамт авдаг", items: together } : { title: "Төстэй бараа", items: similar };
 
+  // No aggregateRating: there are no real reviews yet (flaw #17).
+  const base = siteUrl();
+  const images = [product.image, ...product.gallery].filter(Boolean);
+  const productLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: product.title,
+    description: product.summary || product.description || undefined,
+    image: images.length ? images : undefined,
+    sku: product.sku ?? undefined,
+    gtin: product.barcode ?? undefined,
+    brand: product.brand ? { "@type": "Brand", name: product.brand } : undefined,
+    category: [root?.name, sub?.name].filter(Boolean).join(" > ") || undefined,
+    offers: {
+      "@type": "Offer",
+      url: `${base}/p/${encodeURIComponent(product.id)}`,
+      priceCurrency: "MNT",
+      price: product.price,
+      availability: product.stock > 0 ? "https://schema.org/InStock" : "https://schema.org/OutOfStock",
+      itemCondition: "https://schema.org/NewCondition",
+    },
+  };
+  const crumbs = [
+    { name: "Нүүр", path: "/" },
+    ...(root ? [{ name: root.name, path: `/c/${root.slug}` }] : []),
+    ...(sub ? [{ name: sub.name, path: `/c/${sub.slug}` }] : []),
+    { name: product.title, path: `/p/${encodeURIComponent(product.id)}` },
+  ];
+
   return (
     <main className="mx-auto flex max-w-[1280px] flex-col gap-6 px-4 pt-4 pb-28 lg:px-6 lg:pt-5 lg:pb-16">
+      <JsonLd data={productLd} />
+      <JsonLd data={breadcrumbLd(crumbs)} />
       <div className="hidden lg:block">
         <Breadcrumbs
           items={[

@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import { ToastProvider } from "@/components/ui/Toast";
+import { SITE_DESCRIPTION, SITE_NAME, siteUrl } from "@/lib/site";
 import "./globals.css";
 
 // Cyrillic subset is required — Mongolian glyphs (Ө, Ү) fall back to system fonts otherwise.
@@ -11,9 +12,11 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "hotulan.mn — Хүүхдийн тоглоом ба Гэр ахуйн барааны албан ёсны дэлгүүр",
-  description:
-    "Албан ёсны баталгаатай тоглоом, гэр ахуй, цахилгаан бараа, спортын хэрэгсэл. Улаанбаатар хотод хурдан хүргэлт.",
+  metadataBase: new URL(siteUrl()),
+  // Pages set a short title ("Хүүхдийн тоглоом"); the store name is appended.
+  title: { default: `${SITE_NAME} — тоглоом, гэр ахуй, цахилгаан бараа`, template: `%s — ${SITE_NAME}` },
+  description: SITE_DESCRIPTION,
+  openGraph: { siteName: SITE_NAME, locale: "mn_MN", type: "website" },
 };
 
 export const viewport: Viewport = {

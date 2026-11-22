@@ -6,7 +6,7 @@ import { readSessionSecret } from "@/lib/auth/session";
 import { getStaffSession } from "@/lib/server/actor";
 
 export const metadata: Metadata = {
-  title: "Нэвтрэх — hotulan.mn админ",
+  title: { absolute: "Нэвтрэх — hotulan.mn админ" },
   robots: { index: false, follow: false },
 };
 

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
+import JsonLd, { breadcrumbLd } from "@/components/store/JsonLd";
 import { Breadcrumbs, Listing, PillLinks } from "@/components/store/listing/Listing";
 import { filtersToQuery, parseFilters, queryCatalog, type SortKey } from "@/lib/filtering";
 import { categoryIcons, getAllCategories, getSales, getStoreProducts, getStoreShell } from "@/lib/server/storefront";
@@ -61,6 +62,13 @@ export default async function CategoryPage({ params, searchParams }: Props) {
 
   return (
     <main className="mx-auto flex max-w-[1280px] flex-col gap-4 px-4 pt-4 pb-16 lg:gap-5 lg:px-6 lg:pt-5">
+      <JsonLd
+        data={breadcrumbLd([
+          { name: "Нүүр", path: "/" },
+          ...(isRoot ? [] : [{ name: root.name, path: `/c/${root.slug}` }]),
+          { name: current.name, path: `/c/${current.slug}` },
+        ])}
+      />
       <Breadcrumbs items={[{ label: "Нүүр", href: "/" }, ...(isRoot ? [] : [{ label: root.name, href: `/c/${root.slug}` }]), { label: current.name }]} />
       <div className="flex flex-wrap items-baseline gap-3">
         <h1 className="text-2xl font-extrabold tracking-[-0.02em] lg:text-[32px]">{current.name}</h1>

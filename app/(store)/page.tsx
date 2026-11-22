@@ -1,9 +1,11 @@
 import { CreditCard, RotateCcw, ShieldCheck, Truck } from "lucide-react";
+import type { Metadata } from "next";
 import Link from "next/link";
 import type { ReactNode } from "react";
 import Countdown from "@/components/store/home/Countdown";
 import HeroCarousel from "@/components/store/home/HeroCarousel";
 import LegacyHashRedirect from "@/components/store/home/LegacyHashRedirect";
+import JsonLd from "@/components/store/JsonLd";
 import NewArrivals from "@/components/store/home/NewArrivals";
 import ProductCard from "@/components/store/product/ProductCard";
 import CategoryIcon from "@/components/store/shell/CategoryIcon";
@@ -13,6 +15,9 @@ import type { CategoryNode } from "@/lib/categories";
 import { discountPercent, formatMNT, type Product } from "@/lib/catalog";
 import { listHomeSections, listLiveBanners } from "@/lib/server/repo/marketing";
 import { categoryIcons, getAllCategories, getStoreProducts, getStoreShell } from "@/lib/server/storefront";
+import { SITE_NAME, siteUrl } from "@/lib/site";
+
+export const metadata: Metadata = { alternates: { canonical: "/" } };
 
 /** design/Home (desktop) and design/MHome (phones). Sections follow Админ → Харагдах байдал. */
 export default async function HomePage() {
@@ -43,6 +48,15 @@ export default async function HomePage() {
   return (
     <main className="mx-auto flex max-w-[1280px] flex-col gap-6 px-4 pt-4 pb-16 lg:gap-12 lg:px-6 lg:pt-6">
       <LegacyHashRedirect slugById={slugById} />
+      <JsonLd
+        data={{
+          "@context": "https://schema.org",
+          "@type": "WebSite",
+          name: settings.storeName || SITE_NAME,
+          url: `${siteUrl()}/`,
+          potentialAction: { "@type": "SearchAction", target: `${siteUrl()}/search?q={search_term_string}`, "query-input": "required name=search_term_string" },
+        }}
+      />
       {sections
         .filter((s) => s.enabled && render[s.key])
         .map((s) => (
