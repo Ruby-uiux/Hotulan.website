@@ -5,6 +5,7 @@ import { formatMNT } from "@/lib/catalog";
 import CartButton from "./shell/CartButton";
 import { AllCategoriesButton, MenuButton, MobileCategoryDrawer, type MenuCategory } from "./shell/CategoryMenu";
 import Logo from "./shell/Logo";
+import HideOnPaths from "./shell/HideOnPaths";
 import SearchForm from "./shell/SearchForm";
 
 export interface StoreHeaderProps {
@@ -34,13 +35,14 @@ export default function StoreHeader({ storeName, supportPhone, freeDeliveryThres
   );
 
   return (
-    <header id="site-header" className="relative z-30 border-b border-slate-200 bg-white text-slate-900">
-      {/* ——— Phones ——— */}
+    <header id="site-header" className="relative z-30 bg-white text-slate-900 lg:border-b lg:border-slate-200">
+      {/* ——— Phones (product pages draw their own, see HideOnPaths) ——— */}
+      <HideOnPaths>
       <div className="lg:hidden">
         <div className="bg-[#020617] px-4 py-2 text-center text-xs text-slate-200">
           {announcement ? bar : `Зөвхөн Улаанбаатарт · ${formatMNT(freeDeliveryThreshold)}-өөс дээш үнэгүй`}
         </div>
-        <div className="flex flex-col gap-3 px-4 py-3">
+        <div className="flex flex-col gap-3 border-b border-slate-200 px-4 py-3">
           <div className="flex items-center gap-2.5">
             <MenuButton />
             <Logo name={storeName} withMark={false} className="flex-1 [&>span]:text-[19px]" />
@@ -52,6 +54,7 @@ export default function StoreHeader({ storeName, supportPhone, freeDeliveryThres
         </div>
         <MobileCategoryDrawer categories={categories} />
       </div>
+      </HideOnPaths>
 
       {/* ——— Desktop ——— */}
       <div className="hidden lg:block">

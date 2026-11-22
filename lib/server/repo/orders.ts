@@ -432,6 +432,30 @@ export async function salesByProduct(days = 90, now = Date.now()): Promise<Recor
   return out;
 }
 
+/**
+ * Products most often in the same order as `productId` (cancelled/returned excluded) —
+ * the product page's "Хамт авдаг", from real orders rather than a guess.
+ */
+export async function boughtTogether(productId: string, limit = 3): Promise<string[]> {
+  const db = await getDb();
+  const orderIds = (
+    await db
+      .select({ id: t.orderLines.orderId })
+      .from(t.orderLines)
+      .innerJoin(t.orders, eq(t.orderLines.orderId, t.orders.id))
+      .where(and(eq(t.orderLines.productId, productId), notInArray(t.orders.status, ["cancelled", "returned"])))
+  ).map((r) => r.id);
+  if (orderIds.length === 0) return [];
+  const rows = await db
+    .select({ productId: t.orderLines.productId, n: count() })
+    .from(t.orderLines)
+    .where(and(inArray(t.orderLines.orderId, orderIds), ne(t.orderLines.productId, productId)))
+    .groupBy(t.orderLines.productId)
+    .orderBy(desc(count()))
+    .limit(limit);
+  return rows.map((r) => r.productId);
+}
+
 /* ------------------------------------------------------- QPay reservations */
 
 /**

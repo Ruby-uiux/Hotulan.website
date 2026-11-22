@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 import { cn } from "@/components/ui";
 import { useCart } from "../cart/CartProvider";
+import { usesOwnPhoneChrome } from "./HideOnPaths";
 import { useShell } from "./ShellProvider";
 
 const item = "relative flex flex-col items-center justify-center gap-[3px] text-[11px]";
@@ -28,6 +29,7 @@ export default function MobileTabBar() {
   const { openMenu, menuOpen } = useShell();
   const { count, ready, open, isOpen } = useCart();
   const shown = ready ? count : 0;
+  if (usesOwnPhoneChrome(pathname)) return null;
 
   const home = pathname === "/";
   const browsing = menuOpen || pathname.startsWith("/c");
