@@ -2,6 +2,7 @@ import { cache } from "react";
 import { enabledPaymentMethods } from "@/lib/admin-data";
 import type { Category, CategoryNode } from "@/lib/categories";
 import { getStoreCategoryTree, listCategories } from "./repo/categories";
+import { salesByProduct } from "./repo/orders";
 import { listStoreProducts } from "./repo/products";
 import { listZones } from "./repo/delivery";
 import { getAppearance, getStoreSettings } from "./repo/settings";
@@ -31,6 +32,9 @@ export const getAllCategories = cache(listCategories);
 
 /** Published products (admin-only fields stripped), once per request. */
 export const getStoreProducts = cache(listStoreProducts);
+
+/** Units sold per product, last 90 days — the "popular" sort. */
+export const getSales = cache(() => salesByProduct(90));
 
 /** The category menu shape used by the header (and the mobile drawer). */
 export function toMenuCategories(tree: CategoryNode[]) {

@@ -414,6 +414,24 @@ export async function slotUsage(deliveryDate: string): Promise<Record<string, nu
   return Object.fromEntries(rows.filter((r) => r.slot).map((r) => [r.slot!, r.n]));
 }
 
+/**
+ * Units sold per product over the last `days` (cancelled and returned orders excluded) —
+ * what "Эрэлттэй нь эхэнд" sorts by, instead of an invented popularity score.
+ */
+export async function salesByProduct(days = 90, now = Date.now()): Promise<Record<string, number>> {
+  const db = await getDb();
+  const rows = await db
+    .select({ productId: t.orderLines.productId, quantity: t.orderLines.quantity, createdAt: t.orders.createdAt })
+    .from(t.orderLines)
+    .innerJoin(t.orders, eq(t.orderLines.orderId, t.orders.id))
+    .where(notInArray(t.orders.status, ["cancelled", "returned"]));
+  const cutoff = now - days * 86_400_000;
+  const out: Record<string, number> = {};
+  // Compare instants in JS: stored timestamps mix "Z" and "+08:00" offsets.
+  for (const r of rows) if (Date.parse(r.createdAt) >= cutoff) out[r.productId] = (out[r.productId] ?? 0) + r.quantity;
+  return out;
+}
+
 /* ------------------------------------------------------- QPay reservations */
 
 /**

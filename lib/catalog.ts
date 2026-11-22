@@ -6,9 +6,6 @@
 
 /** Category id (stable, string). Seeded roots keep their old slugs: toys, home, electronics, sports. */
 export type CategoryId = string;
-/** "all" or a root category id — the storefront filter value. */
-export type CategoryFilter = CategoryId | "all";
-export type SortKey = "featured" | "price-asc" | "price-desc" | "rating";
 
 export interface ProductSpec {
   label: string;
@@ -89,22 +86,6 @@ export function isPublished(p: Pick<Product, "status" | "publishAt">, now = Date
   return p.status === "scheduled" && p.publishAt !== null && Date.parse(p.publishAt) <= now;
 }
 
-export const PRICE_BANDS = [
-  { id: "all", label: "Бүх үнэ", min: 0, max: Number.POSITIVE_INFINITY },
-  { id: "under-100k", label: "100,000₮ хүртэл", min: 0, max: 100_000 },
-  { id: "100k-500k", label: "100,000₮ – 500,000₮", min: 100_000, max: 500_000 },
-  { id: "500k-1500k", label: "500,000₮ – 1,500,000₮", min: 500_000, max: 1_500_000 },
-  { id: "over-1500k", label: "1,500,000₮-өөс дээш", min: 1_500_000, max: Number.POSITIVE_INFINITY },
-] as const;
-
-export type PriceBandId = (typeof PRICE_BANDS)[number]["id"];
-
-export const SORT_OPTIONS: ReadonlyArray<{ id: SortKey; label: string }> = [
-  { id: "featured", label: "Санал болгох" },
-  { id: "price-asc", label: "Үнэ: Багаас их" },
-  { id: "price-desc", label: "Үнэ: Ихээс бага" },
-  { id: "rating", label: "Үнэлгээ өндөр" },
-];
 
 /**
  * Fixed en-US grouping keeps server and client output identical (no hydration drift
